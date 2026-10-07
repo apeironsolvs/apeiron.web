@@ -101,12 +101,91 @@ p{margin:0 0 1em}
   .sec::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(6,8,10,0),rgba(6,8,10,.78) 22%,rgba(6,8,10,.78) 82%,rgba(6,8,10,0))}
 }
 
-/* buttons */
-.btn{display:inline-flex;align-items:center;gap:.6em;font:500 15px/1 var(--f);padding:16px 26px;border-radius:999px;border:1px solid var(--glass-border-primary);color:var(--text);background:var(--glass-bg-subtle);-webkit-backdrop-filter:blur(var(--glass-blur-subtle));backdrop-filter:blur(var(--glass-blur-subtle));box-shadow:var(--glass-highlight-subtle),var(--glass-shadow-level1);cursor:pointer;text-decoration:none;transition:background .25s,border-color .25s,color .25s,box-shadow .25s,transform .25s}
-.btn:hover{border-color:var(--glass-border-hover);color:var(--cyan);background:var(--glass-bg-primary);box-shadow:var(--glass-highlight),0 6px 20px rgba(56,213,255,.16)}
-.btn.primary{background:var(--cyan);border-color:var(--cyan);color:#021218;box-shadow:0 4px 22px rgba(56,213,255,.3)}
-.btn.primary:hover{background:#7fe6ff;color:#021218;box-shadow:0 6px 28px rgba(56,213,255,.45)}
-.btn.sm{padding:11px 18px;font-size:14px}
+/* Liquid Metal Button System (MetalFx Preset: Chromatic & Silver) */
+@keyframes metalShimmer{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+@keyframes metalGlowPulse{
+  0%,100%{opacity:.25;filter:blur(8px)}
+  50%{opacity:.45;filter:blur(14px)}
+}
+
+.btn{
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  gap:.6em;
+  font:500 15px/1 var(--f);
+  padding:16px 26px;
+  border-radius:999px;
+  border:0;
+  color:var(--text);
+  background:linear-gradient(135deg,rgba(22,32,44,.85) 0%,rgba(10,14,20,.95) 100%);
+  -webkit-backdrop-filter:blur(var(--glass-blur-primary));
+  backdrop-filter:blur(var(--glass-blur-primary));
+  box-shadow:0 10px 30px rgba(0,0,0,.5),inset 0 1px 1px rgba(255,255,255,.22);
+  cursor:pointer;
+  text-decoration:none;
+  isolation:isolate;
+  transition:transform .25s cubic-bezier(.2,.8,.2,1),box-shadow .25s,color .25s;
+}
+.btn::before{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  border-radius:999px;
+  padding:2px;
+  background:linear-gradient(90deg,#38d5ff,#67e8f9,#a78bfa,#f43f5e,#38d5ff);
+  background-size:300% 300%;
+  animation:metalShimmer 4s ease-in-out infinite;
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;
+  mask-composite:exclude;
+  z-index:-1;
+  opacity:.75;
+  transition:opacity .3s,filter .3s;
+}
+.btn::after{
+  content:"";
+  position:absolute;
+  inset:-6px;
+  border-radius:999px;
+  background:linear-gradient(90deg,#38d5ff,#67e8f9,#a78bfa,#38d5ff);
+  background-size:300% 300%;
+  animation:metalShimmer 4s ease-in-out infinite,metalGlowPulse 3s ease-in-out infinite;
+  z-index:-2;
+  opacity:.25;
+  transition:opacity .3s;
+}
+.btn:hover{
+  transform:translateY(-1px) scale(1.02);
+  color:#fff;
+  box-shadow:0 14px 40px rgba(56,213,255,.25),inset 0 1px 2px rgba(255,255,255,.35);
+}
+.btn:hover::before{opacity:1;filter:brightness(1.2)}
+.btn:hover::after{opacity:.5}
+.btn:active{transform:translateY(0) scale(0.98)}
+
+.btn.primary{
+  background:linear-gradient(135deg,#38d5ff 0%,#67e8f9 50%,#a78bfa 100%);
+  color:#021218;
+  font-weight:600;
+  box-shadow:0 8px 32px rgba(56,213,255,.4),inset 0 1px 2px rgba(255,255,255,.6);
+}
+.btn.primary::before{
+  background:linear-gradient(90deg,#ffffff,#67e8f9,#a78bfa,#ffffff);
+  background-size:300% 300%;
+  opacity:.9;
+}
+.btn.primary:hover{
+  color:#021218;
+  background:linear-gradient(135deg,#67e8f9 0%,#7fe6ff 50%,#c4b5fd 100%);
+  box-shadow:0 12px 42px rgba(56,213,255,.6),inset 0 1px 3px rgba(255,255,255,.8);
+}
+.btn.sm{padding:11px 20px;font-size:14px}
 .cta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
 
 /* nav */
