@@ -221,14 +221,14 @@ header.nav.compact{padding-top:calc(12px + env(safe-area-inset-top,0px));padding
 .ticker li.on{color:var(--cyan);border-color:var(--cyan)}
 
 /* problem / solution Q&A defs */
-#problem .col{max-width:clamp(600px,72vw,960px)}
+#problem .col{max-width:clamp(720px,80vw,1080px)}
 .qa-defs{margin-top:26px}
-.qa-defs div{display:grid;grid-template-columns:minmax(0,0.42fr) minmax(0,0.58fr);gap:clamp(24px,3.2vw,44px);align-items:start;padding:18px 0;border-top:1px solid var(--glass-border-subtle);height:auto;width:100%}
+.qa-defs div{display:grid;grid-template-columns:clamp(300px,38%,400px) 1fr;gap:clamp(24px,3.2vw,44px);align-items:start;padding:18px 0;border-top:1px solid var(--glass-border-subtle);height:auto;width:100%}
 .qa-defs div:first-child{border-top:0;padding-top:0}
-.qa-defs dt{font-family:var(--fh);font-weight:700;font-size:19px;color:var(--text);display:grid;grid-template-columns:28px minmax(0,1fr);gap:12px;align-items:start;line-height:1.35;min-width:0;width:100%;overflow-wrap:break-word;word-break:break-word}
-.qa-defs dt .q-badge{display:inline-flex;align-items:center;justify-content:center;width:28px;min-width:28px;height:28px;border-radius:50%;background:rgba(56,213,255,.14);border:1px solid rgba(56,213,255,.45);color:var(--cyan);font:600 13px var(--m);flex-shrink:0;box-shadow:0 0 10px rgba(56,213,255,.2);margin-top:1px}
-.qa-defs dt .q-text,.qa-defs dt span:not(.q-badge){min-width:0;overflow-wrap:break-word;word-break:break-word;display:block;width:100%}
-.defs dd,.qa-defs dd{margin:0;min-width:0;max-width:none;color:#c3ccd4;font-size:15px;line-height:1.7;overflow-wrap:break-word;word-break:break-word}
+.qa-defs dt{font-family:var(--fh);font-weight:700;font-size:19px;color:var(--text);display:block;line-height:1.35;width:100%}
+.qa-defs dt .q-badge{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:rgba(56,213,255,.14);border:1px solid rgba(56,213,255,.45);color:var(--cyan);font:600 13px var(--m);margin-right:12px;vertical-align:top;margin-top:1px;box-shadow:0 0 10px rgba(56,213,255,.2)}
+.qa-defs dt .q-text,.qa-defs dt span:not(.q-badge){display:inline;overflow-wrap:break-word;word-break:normal}
+.defs dd,.qa-defs dd{margin:0;min-width:0;max-width:none;color:#c3ccd4;font-size:15px;line-height:1.7;overflow-wrap:break-word;word-break:normal}
 .qa-defs dd strong{color:var(--cyan);font-weight:600;display:inline}
 @media (max-width:819px){
   .qa-defs div{grid-template-columns:1fr;gap:10px}
