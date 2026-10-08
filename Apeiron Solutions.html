@@ -223,14 +223,15 @@ header.nav.compact{padding-top:calc(12px + env(safe-area-inset-top,0px));padding
 /* problem / solution Q&A defs */
 #problem .col{max-width:clamp(600px,72vw,960px)}
 .qa-defs{margin-top:26px}
-.defs div, .qa-defs div{display:grid;grid-template-columns:minmax(0,0.9fr) minmax(0,1.1fr);gap:clamp(24px,3.2vw,44px);align-items:start;padding:18px 0;border-top:1px solid var(--glass-border-subtle);height:auto}
-.defs div:first-child, .qa-defs div:first-child{border-top:0;padding-top:0}
-.defs dt, .qa-defs dt{font-family:var(--fh);font-weight:700;font-size:19px;color:var(--text);display:flex;align-items:flex-start;gap:12px;line-height:1.35;min-width:0;overflow-wrap:break-word;word-break:break-word}
+.qa-defs div{display:grid;grid-template-columns:minmax(0,0.42fr) minmax(0,0.58fr);gap:clamp(24px,3.2vw,44px);align-items:start;padding:18px 0;border-top:1px solid var(--glass-border-subtle);height:auto;width:100%}
+.qa-defs div:first-child{border-top:0;padding-top:0}
+.qa-defs dt{font-family:var(--fh);font-weight:700;font-size:19px;color:var(--text);display:grid;grid-template-columns:28px minmax(0,1fr);gap:12px;align-items:start;line-height:1.35;min-width:0;width:100%;overflow-wrap:break-word;word-break:break-word}
 .qa-defs dt .q-badge{display:inline-flex;align-items:center;justify-content:center;width:28px;min-width:28px;height:28px;border-radius:50%;background:rgba(56,213,255,.14);border:1px solid rgba(56,213,255,.45);color:var(--cyan);font:600 13px var(--m);flex-shrink:0;box-shadow:0 0 10px rgba(56,213,255,.2);margin-top:1px}
-.defs dd, .qa-defs dd{margin:0;min-width:0;max-width:none;color:#c3ccd4;font-size:15px;line-height:1.7;overflow-wrap:break-word;word-break:break-word}
+.qa-defs dt .q-text,.qa-defs dt span:not(.q-badge){min-width:0;overflow-wrap:break-word;word-break:break-word;display:block;width:100%}
+.defs dd,.qa-defs dd{margin:0;min-width:0;max-width:none;color:#c3ccd4;font-size:15px;line-height:1.7;overflow-wrap:break-word;word-break:break-word}
 .qa-defs dd strong{color:var(--cyan);font-weight:600;display:inline}
 @media (max-width:819px){
-  .defs div, .qa-defs div{grid-template-columns:1fr;gap:10px}
+  .qa-defs div{grid-template-columns:1fr;gap:10px}
 }
 .sync{background:var(--glass-bg-primary);-webkit-backdrop-filter:blur(var(--glass-blur-primary));backdrop-filter:blur(var(--glass-blur-primary));border:1px solid var(--glass-border-primary);border-radius:20px;padding:24px 28px;box-shadow:var(--glass-shadow-level1),var(--glass-highlight-subtle);margin-top:20px}
 .sync li{color:#56626c;transition:color .5s}
@@ -328,12 +329,12 @@ dl.case dd{margin:0;color:#c3ccd4}
 
 /* why / trust */
 .defs{margin:34px 0 0;background:var(--glass-bg-primary);-webkit-backdrop-filter:blur(var(--glass-blur-primary));backdrop-filter:blur(var(--glass-blur-primary));border:1px solid var(--glass-border-primary);border-radius:20px;padding:22px 26px;box-shadow:var(--glass-shadow-level1),var(--glass-highlight-subtle)}
-.defs div{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.4fr);gap:24px;padding:16px 0;border-top:1px solid var(--glass-border-subtle)}
-.defs div:first-child{border-top:0}
-.defs dt{font-weight:500;font-size:19px}
-.defs dd{margin:0;color:#b8c2cb}
+.defs:not(.qa-defs) div{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.4fr);gap:24px;padding:16px 0;border-top:1px solid var(--glass-border-subtle)}
+.defs:not(.qa-defs) div:first-child{border-top:0}
+.defs:not(.qa-defs) dt{font-weight:500;font-size:19px;min-width:0;overflow-wrap:break-word;word-break:break-word}
+.defs:not(.qa-defs) dd{margin:0;color:#b8c2cb;min-width:0;overflow-wrap:break-word;word-break:break-word}
 .quote{font-size:clamp(20px,2vw,28px);line-height:1.3;letter-spacing:-.015em;margin-top:36px;max-width:22em}
-@media (max-width:560px){.defs div{grid-template-columns:1fr;gap:4px}}
+@media (max-width:560px){.defs:not(.qa-defs) div{grid-template-columns:1fr;gap:4px}}
 
 /* about + cta */
 .center{text-align:center;margin-inline:auto}
@@ -452,31 +453,31 @@ a, button { cursor: pointer; }
       <p class="lede" style="margin-top:28px">Plenty of people have an excellent technology idea and no clear way to build it. The questions arrive before a single line of code is written — and Apeiron is the answer to every single one:</p>
       <dl class="defs qa-defs">
         <div>
-          <dt><span class="q-badge" aria-hidden="true">?</span>How do I build it?</dt>
+          <dt><span class="q-badge" aria-hidden="true">?</span><span class="q-text">How do I build it?</span></dt>
           <dd><strong>We architect the plan:</strong> You don't have to figure out development alone. Apeiron translates your raw concept into an actionable engineering blueprint, complete system specs, and production milestones from day one.</dd>
         </div>
         <div>
-          <dt><span class="q-badge" aria-hidden="true">?</span>Which technology should I use?</dt>
+          <dt><span class="q-badge" aria-hidden="true">?</span><span class="q-text">Which technology should I use?</span></dt>
           <dd><strong>We select the exact stack:</strong> No biases, no guesswork. Whether it's modern web frameworks, native iOS &amp; Android, resilient backend APIs, or scalable databases, we choose the optimal stack engineered for your speed, security, and budget.</dd>
         </div>
         <div>
-          <dt><span class="q-badge" aria-hidden="true">?</span>What architecture does it need?</dt>
+          <dt><span class="q-badge" aria-hidden="true">?</span><span class="q-text">What architecture does it need?</span></dt>
           <dd><strong>We build for scale and reliability:</strong> We design clean, future-proof, cloud-native architectures from the ground up — ensuring your software runs smoothly from your first 10 users to millions of global requests without painful rewrites.</dd>
         </div>
         <div>
-          <dt><span class="q-badge" aria-hidden="true">?</span>How much technical manpower is required?</dt>
+          <dt><span class="q-badge" aria-hidden="true">?</span><span class="q-text">How much technical manpower is required?</span></dt>
           <dd><strong>We provide the full team:</strong> Zero recruiting friction or hiring overhead. Apeiron brings an elite, cross-functional engineering squad — software architects, full-stack developers, AI specialists, and UI/UX designers — scaled perfectly to your build.</dd>
         </div>
         <div>
-          <dt><span class="q-badge" aria-hidden="true">?</span>How do I create the first version?</dt>
+          <dt><span class="q-badge" aria-hidden="true">?</span><span class="q-text">How do I create the first version?</span></dt>
           <dd><strong>We deliver rapid, high-impact MVPs:</strong> We focus on high-priority core functionality to ship a polished, functional first release fast — getting real software into users' hands in weeks, not months.</dd>
         </div>
         <div>
-          <dt><span class="q-badge" aria-hidden="true">?</span>How do I bring in AI?</dt>
+          <dt><span class="q-badge" aria-hidden="true">?</span><span class="q-text">How do I bring in AI?</span></dt>
           <dd><strong>We embed practical, intelligent AI:</strong> From autonomous AI agents and large language models (LLMs) to custom workflows and predictive intelligence, we integrate state-of-the-art AI seamlessly where it generates actual business value.</dd>
         </div>
         <div>
-          <dt><span class="q-badge" aria-hidden="true">?</span>How does a concept become production software?</dt>
+          <dt><span class="q-badge" aria-hidden="true">?</span><span class="q-text">How does a concept become production software?</span></dt>
           <dd><strong>We manage the entire lifecycle:</strong> Through our end-to-end delivery engine — Discovery &amp; Strategy → Intuitive UI/UX Design → Agile Engineering → Rigorous QA Testing → Cloud Deployment &amp; Continuous Scale. We solve every query so you can focus on your vision.</dd>
         </div>
       </dl>
