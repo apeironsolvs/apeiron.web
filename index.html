@@ -19,8 +19,6 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600&family=Big+Shoulders+Stencil+Text:wght@600;700;800;900&display=swap" rel="stylesheet">
 <link href="https://api.fontshare.com/v2/css?f[]=bespoke-stencil@400,500,700,900&display=swap" rel="stylesheet">
 <style>
-@import url('https://api.fontshare.com/v2/css?f[]=bespoke-stencil@400,500,700,900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Stencil+Text:wght@600;700;800;900&family=Saira+Stencil+One&display=swap');
 :root{
   --ink:#06080a; --panel:#0d1216; --line:#1c252c; --text:#edf1f4; --mute:#8d98a2; --cyan:#38d5ff;
   --f:'Space Grotesk',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
@@ -222,6 +220,14 @@ header.nav.compact{padding-top:calc(12px + env(safe-area-inset-top,0px));padding
 .ticker li.on{color:var(--cyan);border-color:var(--cyan)}
 
 /* problem / solution */
+#problem .col{max-width:clamp(600px,72vw,920px)}
+.qa-defs{margin-top:26px}
+.qa-defs div{display:flex;flex-direction:column;gap:8px;padding:24px 0;border-top:1px solid var(--glass-border-subtle)}
+.qa-defs div:first-child{border-top:0;padding-top:0}
+.qa-defs dt{font-weight:600;font-size:19px;color:var(--text);display:flex;align-items:center;gap:12px;line-height:1.4}
+.qa-defs dt .q-badge{display:inline-flex;align-items:center;justify-content:center;width:28px;min-width:28px;height:28px;border-radius:50%;background:rgba(56,213,255,.14);border:1px solid rgba(56,213,255,.45);color:var(--cyan);font:600 13px var(--m);flex-shrink:0;box-shadow:0 0 10px rgba(56,213,255,.2)}
+.qa-defs dd{margin:0 0 0 40px;color:#c3ccd4;font-size:15px;line-height:1.7}
+.qa-defs dd strong{color:var(--cyan);font-weight:600;display:inline}
 .sync{background:var(--glass-bg-primary);-webkit-backdrop-filter:blur(var(--glass-blur-primary));backdrop-filter:blur(var(--glass-blur-primary));border:1px solid var(--glass-border-primary);border-radius:20px;padding:24px 28px;box-shadow:var(--glass-shadow-level1),var(--glass-highlight-subtle);margin-top:20px}
 .sync li{color:#56626c;transition:color .5s}
 .sync li.on{color:var(--text)}
@@ -377,14 +383,7 @@ legend .q{display:block;font-family:var(--fh);font-size:clamp(30px,4.6vw,56px);l
 pre.sum{white-space:pre-wrap;font:400 13px/1.6 var(--m);color:#b8c2cb;background:var(--glass-bg-primary);-webkit-backdrop-filter:blur(var(--glass-blur-subtle));backdrop-filter:blur(var(--glass-blur-subtle));border:1px solid var(--glass-border-primary);border-radius:12px;padding:16px;max-height:220px;overflow:auto;box-shadow:var(--glass-highlight-subtle)}
 
 /* cursor */
-.cursor{position:fixed;left:0;top:0;z-index:200;pointer-events:none;display:none}
-html.has-cursor .cursor{display:block}
-html.has-cursor,html.has-cursor a,html.has-cursor button,html.has-cursor label{cursor:none}
-html.has-cursor textarea,html.has-cursor input[type=text],html.has-cursor input[type=email]{cursor:text}
-.cursor i{position:absolute;left:-4px;top:-4px;width:8px;height:8px;border-radius:50%;background:var(--cyan);transition:opacity .2s}
-.cursor b{position:absolute;left:-42px;top:-42px;width:84px;height:84px;border-radius:50%;border:1px solid rgba(56,213,255,.6);background:rgba(6,8,10,.55);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);font:500 11px/82px var(--m);letter-spacing:.1em;text-align:center;color:var(--text);opacity:0;transform:scale(.3);transition:opacity .2s,transform .3s cubic-bezier(.2,.8,.2,1)}
-.cursor.big b{opacity:1;transform:scale(1)}
-#glow-cursor-canvas{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:199;mix-blend-mode:screen}
+a, button { cursor: pointer; }
 
 /* Fallback for browsers without backdrop-filter support */
 @supports not (backdrop-filter: blur(1px)){
@@ -401,19 +400,17 @@ html.has-cursor textarea,html.has-cursor input[type=text],html.has-cursor input[
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <canvas id="gl" aria-hidden="true"></canvas>
-<canvas id="glow-cursor-canvas" aria-hidden="true"></canvas>
-<div class="cursor" id="cursor" aria-hidden="true"><i></i><b></b></div>
 
 <header class="nav" id="nav">
   <a class="logo" href="#hero" aria-label="Apeiron, back to top"><i></i>APEIRON</a>
   <nav aria-label="Primary">
-    <a href="#build" data-cursor="DISCOVER">What We Build</a>
-    <a href="#how" data-cursor="DISCOVER">How We Work</a>
-    <a href="#people" data-cursor="DISCOVER">Capabilities</a>
-    <a href="#projects" data-cursor="DISCOVER">Projects</a>
-    <a href="#about" data-cursor="DISCOVER">About</a>
+    <a href="#build">What We Build</a>
+    <a href="#how">How We Work</a>
+    <a href="#people">Capabilities</a>
+    <a href="#projects">Projects</a>
+    <a href="#about">About</a>
   </nav>
-  <button class="btn primary sm" type="button" data-open-intake data-cursor="BUILD →">Bring your idea →</button>
+  <button class="btn primary sm" type="button" data-open-intake>Bring your idea →</button>
   <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
 </header>
 <div class="menu" id="menu">
@@ -437,8 +434,8 @@ html.has-cursor textarea,html.has-cursor input[type=text],html.has-cursor input[
       </h1>
       <p class="lede">From websites and applications to AI-powered products and completely custom software, Apeiron turns your technological ideas into real, working products.</p>
       <div class="cta-row">
-        <button class="btn primary" type="button" data-open-intake data-cursor="BUILD →">Bring your idea →</button>
-        <a class="btn" href="#build" data-cursor="DISCOVER">Explore what we build →</a>
+        <button class="btn primary" type="button" data-open-intake>Bring your idea →</button>
+        <a class="btn" href="#build">Explore what we build →</a>
       </div>
       <ol class="ticker" id="ticker" aria-hidden="true"><li>Idea</li><li>Concept</li><li>System</li><li>Product</li><li>Reality</li></ol>
     </div>
@@ -448,17 +445,38 @@ html.has-cursor textarea,html.has-cursor input[type=text],html.has-cursor input[
   <section id="problem" class="sec" aria-labelledby="problem-h">
     <div class="wrap"><div class="col">
       <h2 id="problem-h" class="mask">Great ideas shouldn't stay ideas.</h2>
-      <p class="lede" style="margin-top:28px">Plenty of people have an excellent technology idea and no clear way to build it. The questions arrive before a single line of code is written:</p>
-      <ul class="ul">
-        <li>How do I build it?</li>
-        <li>Which technology should I use?</li>
-        <li>What architecture does it need?</li>
-        <li>How much technical manpower is required?</li>
-        <li>How do I create the first version?</li>
-        <li>How do I bring in AI?</li>
-        <li>How does a concept become production software?</li>
-      </ul>
-      <p class="note">Idea, design, code, database, AI, cloud, infrastructure: every piece exists somewhere. Nothing connects them yet.</p>
+      <p class="lede" style="margin-top:28px">Plenty of people have an excellent technology idea and no clear way to build it. The questions arrive before a single line of code is written — and Apeiron is the answer to every single one:</p>
+      <dl class="defs qa-defs">
+        <div>
+          <dt><span class="q-badge" aria-hidden="true">?</span>How do I build it?</dt>
+          <dd><strong>We architect the plan:</strong> You don't have to figure out development alone. Apeiron translates your raw concept into an actionable engineering blueprint, complete system specs, and production milestones from day one.</dd>
+        </div>
+        <div>
+          <dt><span class="q-badge" aria-hidden="true">?</span>Which technology should I use?</dt>
+          <dd><strong>We select the exact stack:</strong> No biases, no guesswork. Whether it's modern web frameworks, native iOS &amp; Android, resilient backend APIs, or scalable databases, we choose the optimal stack engineered for your speed, security, and budget.</dd>
+        </div>
+        <div>
+          <dt><span class="q-badge" aria-hidden="true">?</span>What architecture does it need?</dt>
+          <dd><strong>We build for scale and reliability:</strong> We design clean, future-proof, cloud-native architectures from the ground up — ensuring your software runs smoothly from your first 10 users to millions of global requests without painful rewrites.</dd>
+        </div>
+        <div>
+          <dt><span class="q-badge" aria-hidden="true">?</span>How much technical manpower is required?</dt>
+          <dd><strong>We provide the full team:</strong> Zero recruiting friction or hiring overhead. Apeiron brings an elite, cross-functional engineering squad — software architects, full-stack developers, AI specialists, and UI/UX designers — scaled perfectly to your build.</dd>
+        </div>
+        <div>
+          <dt><span class="q-badge" aria-hidden="true">?</span>How do I create the first version?</dt>
+          <dd><strong>We deliver rapid, high-impact MVPs:</strong> We focus on high-priority core functionality to ship a polished, functional first release fast — getting real software into users' hands in weeks, not months.</dd>
+        </div>
+        <div>
+          <dt><span class="q-badge" aria-hidden="true">?</span>How do I bring in AI?</dt>
+          <dd><strong>We embed practical, intelligent AI:</strong> From autonomous AI agents and large language models (LLMs) to custom workflows and predictive intelligence, we integrate state-of-the-art AI seamlessly where it generates actual business value.</dd>
+        </div>
+        <div>
+          <dt><span class="q-badge" aria-hidden="true">?</span>How does a concept become production software?</dt>
+          <dd><strong>We manage the entire lifecycle:</strong> Through our end-to-end delivery engine — Discovery &amp; Strategy → Intuitive UI/UX Design → Agile Engineering → Rigorous QA Testing → Cloud Deployment &amp; Continuous Scale. We solve every query so you can focus on your vision.</dd>
+        </div>
+      </dl>
+      <p class="note" style="margin-top:28px"><strong>One team for every question:</strong> Frontend, backend, mobile apps, AI models, cloud infrastructure, and databases — we connect every piece and solve every technical query across the board.</p>
     </div></div>
   </section>
 
@@ -488,7 +506,7 @@ html.has-cursor textarea,html.has-cursor input[type=text],html.has-cursor input[
           <div class="hover-expand-wrap" id="hover-expand-wrap"></div>
         </div>
       </div>
-      <div class="stage" data-cursor="EXPLORE" aria-hidden="true"></div>
+      <div class="stage" aria-hidden="true"></div>
     </div></div>
   </section>
 
@@ -523,28 +541,28 @@ html.has-cursor textarea,html.has-cursor input[type=text],html.has-cursor input[
         <p class="lede" style="margin:24px 0 18px">Describe it in your own words. The shape on the right reads your description and shows the parts it could need.</p>
         <label class="sr" for="idea-in">Describe your idea</label>
         <textarea class="ta" id="idea-in" rows="4" placeholder="I want to build an AI platform that helps small businesses automate customer support."></textarea>
-        <p style="margin:8px 0 0"><button class="linkbtn" type="button" id="idea-ex" data-cursor="DISCOVER">Try the example</button></p>
+        <p style="margin:8px 0 0"><button class="linkbtn" type="button" id="idea-ex">Try the example</button></p>
         <div id="idea-out" aria-live="polite">
           <div class="chips" id="chips"></div>
           <p class="mono" id="become-h" hidden>Your idea could become</p>
           <ul class="become" id="become"></ul>
         </div>
         <p class="note">This is a keyword-based preview that runs in your browser. It is not an AI analysis, and nothing you type here is sent anywhere.</p>
-        <div class="cta-row" id="idea-cta" hidden><button class="btn primary" type="button" data-open-intake data-from-idea data-cursor="BUILD →">Start with this idea →</button></div>
+        <div class="cta-row" id="idea-cta" hidden><button class="btn primary" type="button" data-open-intake data-from-idea>Start with this idea →</button></div>
       </div>
-      <div class="stage" data-cursor="EXPLORE" aria-hidden="true"></div>
+      <div class="stage" aria-hidden="true"></div>
     </div></div>
   </section>
 
   <!-- TEAM -->
   <section id="people" class="sec" aria-labelledby="people-h">
     <div class="wrap"><div class="grid flip">
-      <div class="stage" data-cursor="EXPLORE" aria-hidden="true"></div>
+      <div class="stage" aria-hidden="true"></div>
       <div class="col">
         <h2 id="people-h" class="mask sm">The people behind the build.</h2>
         <p class="lede" style="margin-top:24px">Your project gets the specialists it needs, working as one team under one plan. Select a role to see what it adds to the product.</p>
         <div class="roles" id="roles"></div>
-        <p style="margin:0"><button class="linkbtn" type="button" id="team-all" data-cursor="DISCOVER">Assemble the full team</button></p>
+        <p style="margin:0"><button class="linkbtn" type="button" id="team-all">Assemble the full team</button></p>
         <p class="mono" style="margin-top:34px">Across a project, that can include</p>
         <ul class="rolelist">
           <li>Software engineers</li><li>Frontend engineers</li><li>Backend engineers</li><li>Full-stack engineers</li>
@@ -564,7 +582,7 @@ html.has-cursor textarea,html.has-cursor input[type=text],html.has-cursor input[
         <li>Experimental products</li><li>New platforms</li><li>Complex automation</li><li>AI concepts</li>
         <li>Research-driven software</li><li>Custom business systems</li><li>New digital experiences</li>
       </ul>
-      <button class="btn primary" type="button" data-open-intake data-type="Custom" data-cursor="BUILD →">Tell us your idea →</button>
+      <button class="btn primary" type="button" data-open-intake data-type="Custom">Tell us your idea →</button>
     </div></div>
   </section>
 
@@ -576,7 +594,7 @@ html.has-cursor textarea,html.has-cursor input[type=text],html.has-cursor input[
         <div class="ptabs" id="ptabs" role="tablist" aria-label="Projects"></div>
         <div id="pcase" role="tabpanel"></div>
       </div>
-      <div class="stage" data-cursor="VIEW" aria-hidden="true"></div>
+      <div class="stage" aria-hidden="true"></div>
     </div></div>
   </section>
 
@@ -598,7 +616,7 @@ html.has-cursor textarea,html.has-cursor input[type=text],html.has-cursor input[
         </dl>
         <p class="quote">We don't just build what you ask for. We help figure out how your idea should become a real product.</p>
       </div>
-      <div class="stage" data-cursor="EXPLORE" aria-hidden="true"></div>
+      <div class="stage" aria-hidden="true"></div>
     </div></div>
   </section>
 
@@ -636,8 +654,8 @@ html.has-cursor textarea,html.has-cursor input[type=text],html.has-cursor input[
       <h2 id="cta-h">Have an idea?<br>Let's build it.</h2>
       <p class="lede">You don't need to know how to build it. Start by telling us what you're imagining.</p>
       <div class="cta-row">
-        <button class="btn primary" type="button" data-open-intake data-cursor="BUILD →">Bring your idea →</button>
-        <button class="btn" type="button" data-open-intake data-need="Consultation" data-cursor="BUILD →">Talk to a technical expert →</button>
+        <button class="btn primary" type="button" data-open-intake>Bring your idea →</button>
+        <button class="btn" type="button" data-open-intake data-need="Consultation">Talk to a technical expert →</button>
       </div>
       <p class="sign"><strong>APEIRON SOLUTIONS</strong>From idea to reality. You bring the vision. We build the technology.</p>
     </div>
@@ -656,7 +674,7 @@ html.has-cursor textarea,html.has-cursor input[type=text],html.has-cursor input[
         <li><a href="#build">What We Build</a></li><li><a href="#how">How We Work</a></li><li><a href="#people">Capabilities</a></li>
         <li><a href="#projects">Projects</a></li><li><a href="#about">About</a></li><li><a href="#cta">Contact</a></li></ul></div>
       <div><h3>Legal</h3><ul><li><a href="#">Privacy</a></li><li><a href="#">Terms</a></li><li><a href="#">Security</a></li></ul></div>
-      <div><h3>Follow</h3><ul><li><a href="#">LinkedIn</a></li><li><a href="#">X</a></li><li><a href="#">GitHub</a></li></ul></div>
+      <div><h3>Follow</h3><ul><li><a href="https://www.linkedin.com/in/apeiron-solvs-a54866441" target="_blank" rel="noopener noreferrer">LinkedIn</a></li><li><a href="#">X</a></li><li><a href="https://github.com/apeironsolvs" target="_blank" rel="noopener noreferrer">GitHub</a></li></ul></div>
     </div>
     <p class="copy">© Apeiron Solutions</p>
   </div>
@@ -667,24 +685,14 @@ html.has-cursor textarea,html.has-cursor input[type=text],html.has-cursor input[
   <div class="ipanel">
     <button class="iclose" id="iclose" type="button" aria-label="Close">×</button>
     <div id="iflow">
-      <div class="prog" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
-      <p class="mono" id="istep-label">Step 1 of 5</p>
+      <div class="prog" aria-hidden="true"><i></i><i></i></div>
+      <p class="mono" id="istep-label">Step 1 of 2</p>
       <form id="iform" novalidate>
         <fieldset data-step="0"><legend><span class="q">What are you imagining?</span></legend>
           <label class="sr" for="f-idea">Describe your idea</label>
           <textarea class="ta" id="f-idea" rows="5" placeholder="A few sentences is plenty. What should it do, and for whom?"></textarea>
         </fieldset>
-        <fieldset data-step="1" hidden><legend><span class="q">What kind of product is it?</span></legend>
-          <div class="opts" id="o-type"></div>
-        </fieldset>
-        <fieldset data-step="2" hidden><legend><span class="q">How far along are you?</span></legend>
-          <div class="opts" id="o-stage"></div>
-        </fieldset>
-        <fieldset data-step="3" hidden><legend><span class="q">What do you need from us?</span></legend>
-          <p class="mono" style="margin-bottom:14px">Choose all that apply</p>
-          <div class="opts" id="o-need"></div>
-        </fieldset>
-        <fieldset data-step="4" hidden><legend><span class="q">Let's talk.</span></legend>
+        <fieldset data-step="1" hidden><legend><span class="q">Let's talk.</span></legend>
           <label class="fld"><span>Name</span><input type="text" id="f-name" autocomplete="name"></label>
           <label class="fld"><span>Email</span><input type="email" id="f-email" autocomplete="email"></label>
           <label class="fld"><span>Company (optional)</span><input type="text" id="f-company" autocomplete="organization"></label>
@@ -694,7 +702,7 @@ html.has-cursor textarea,html.has-cursor input[type=text],html.has-cursor input[
       <p class="err" id="ierr" role="alert"></p>
       <div class="inav">
         <button class="btn" type="button" id="iback">Back</button>
-        <button class="btn primary" type="button" id="inext" data-cursor="BUILD →">Continue</button>
+        <button class="btn primary" type="button" id="inext">Continue</button>
       </div>
     </div>
     <div id="idone" hidden>
@@ -850,7 +858,7 @@ function syncHoverExpandTabs(key){
 
 const tabsEl=$('#tabs');
 Object.entries(CAPS).forEach(([k,c])=>{
-  const b=document.createElement('button');b.type='button';b.className='tab';b.setAttribute('role','tab');b.id='tab-'+k;b.textContent=c.label;b.dataset.k=k;b.dataset.cursor='DISCOVER';
+  const b=document.createElement('button');b.type='button';b.className='tab';b.setAttribute('role','tab');b.id='tab-'+k;b.textContent=c.label;b.dataset.k=k;
   b.addEventListener('click',()=>{st.cap=k;st.capHover=-1;syncHoverExpandTabs(k)});tabsEl.append(b);
 });
 roving(tabsEl,'.tab');
@@ -861,7 +869,7 @@ const rail=$('#rail');
 STAGES.forEach((s,i)=>{
   const li=document.createElement('li'),b=document.createElement('button');
   b.type='button';b.innerHTML=`${String(i+1).padStart(2,'0')}<span class="nm">${s[0]}</span>`;
-  b.setAttribute('aria-label',`Go to stage ${i+1}: ${s[0]}`);b.dataset.cursor='DISCOVER';
+  b.setAttribute('aria-label',`Go to stage ${i+1}: ${s[0]}`);
   b.addEventListener('click',()=>{const S=secs.find(x=>x.id==='how');scrollTo({top:S.top+((i+.5)/8)*(S.h-innerHeight),behavior:reduce?'auto':'smooth'})});
   li.append(b);rail.append(li);
 });
@@ -898,7 +906,7 @@ $('#idea-ex').addEventListener('click',()=>{ideaIn.value=ideaIn.placeholder;rend
 /* ---------- UI: team ---------- */
 const rolesEl=$('#roles');
 ROLES.forEach(([g,n])=>{
-  const b=document.createElement('button');b.type='button';b.className='role';b.textContent=n;b.setAttribute('aria-pressed','false');b.dataset.g=g;b.dataset.cursor='DISCOVER';
+  const b=document.createElement('button');b.type='button';b.className='role';b.textContent=n;b.setAttribute('aria-pressed','false');b.dataset.g=g;
   b.addEventListener('click',()=>{if(st.team.has(g))st.team.delete(g);else st.team.add(g);syncTeam()});
   b.addEventListener('mouseenter',()=>st.teamHover=g);b.addEventListener('focus',()=>st.teamHover=g);
   b.addEventListener('mouseleave',()=>st.teamHover=-1);b.addEventListener('blur',()=>st.teamHover=-1);
@@ -913,7 +921,7 @@ $('#team-all').addEventListener('click',()=>{if(st.team.size===ROLES.length)st.t
 /* ---------- UI: projects ---------- */
 const ptabs=$('#ptabs');
 PROJ.forEach((p,i)=>{
-  const b=document.createElement('button');b.type='button';b.className='ptab';b.setAttribute('role','tab');b.id='ptab-'+i;b.innerHTML=`<small>${p.n}</small>${p.title}`;b.dataset.cursor='VIEW';
+  const b=document.createElement('button');b.type='button';b.className='ptab';b.setAttribute('role','tab');b.id='ptab-'+i;b.innerHTML=`<small>${p.n}</small>${p.title}`;
   b.addEventListener('click',()=>{st.proj=i;st.flowHover=-1;renderProj()});ptabs.append(b);
 });
 roving(ptabs,'.ptab');
@@ -932,7 +940,7 @@ function renderProj(){
   <ol class="flow" aria-label="Architecture"></ol>`;
   const fl=$('.flow',box);
   p.flow.forEach((n,i)=>{
-    const li=document.createElement('li'),b=document.createElement('button');b.type='button';b.textContent=n;b.dataset.cursor='VIEW';
+    const li=document.createElement('li'),b=document.createElement('button');b.type='button';b.textContent=n;
     const on=()=>st.flowHover=i,off=()=>st.flowHover=-1;
     b.addEventListener('mouseenter',on);b.addEventListener('focus',on);b.addEventListener('mouseleave',off);b.addEventListener('blur',off);
     li.append(b);fl.append(li);
@@ -941,35 +949,29 @@ function renderProj(){
 renderProj();
 
 /* ---------- UI: intake ---------- */
-const INT_SH=['point','nebula','lattice','stack','sphere'];
-const OPT={
-  type:['Website','Web App','Mobile App','AI Product','SaaS','Automation','Custom','Not Sure'],
-  stage:['Just an idea','Prototype','Existing product','Need improvements','Scaling'],
-  need:['Full development','Technical team','AI integration','Architecture','UI/UX','Consultation','Not sure yet']
-};
+const INT_SH=['point','sphere'];
+const OPT={};
 function buildOpts(id,name,vals,type){
   const box=$('#'+id);
   vals.forEach(v=>{const l=document.createElement('label');l.innerHTML=`<input type="${type}" name="${name}" value="${v}"><span>${v}</span>`;box.append(l)});
 }
-buildOpts('o-type','type',OPT.type,'radio');buildOpts('o-stage','stage',OPT.stage,'radio');buildOpts('o-need','need',OPT.need,'checkbox');
+
 const intake=$('#intake'),steps=$$('fieldset[data-step]',intake),prog=$$('.prog i',intake),ierr=$('#ierr');
 let lastFocus=null;
 function showStep(n){
   st.intake.step=n;
   steps.forEach((f,i)=>f.hidden=i!==n);
   prog.forEach((p,i)=>p.classList.toggle('on',i<=n));
-  $('#istep-label').textContent=`Step ${n+1} of 5`;
+  $('#istep-label').textContent=`Step ${n+1} of 2`;
   $('#iback').style.visibility=n===0?'hidden':'visible';
-  $('#inext').textContent=n===4?'Start the conversation →':'Continue';
+  $('#inext').textContent=n===1?'Start the conversation →':'Continue';
   ierr.textContent='';
-  const f=$('textarea,input',steps[n]);if(f&&n!==1&&n!==2&&n!==3)f.focus();else{const c=$('input:checked',steps[n])||$('input',steps[n]);c&&c.focus()}
+  const f=$('textarea,input',steps[n]);if(f)f.focus();
 }
 function setInert(v){['#main','#nav','footer','#menu'].forEach(s=>{const e=$(s);if(e)e.inert=v})}
 function openIntake(opts={}){
   lastFocus=document.activeElement;
   if(opts.fromIdea&&ideaIn.value.trim())$('#f-idea').value=ideaIn.value.trim();
-  if(opts.type){const r=$(`input[name=type][value="${opts.type}"]`);if(r)r.checked=true}
-  if(opts.need){const r=$(`input[name=need][value="${opts.need}"]`);if(r)r.checked=true}
   $('#iflow').hidden=false;$('#idone').hidden=true;
   intake.classList.add('open');document.body.style.overflow='hidden';setInert(true);st.intake.open=true;
   showStep(0);
@@ -989,10 +991,7 @@ $('#iback').addEventListener('click',()=>showStep(Math.max(0,st.intake.step-1)))
 $('#iform').addEventListener('submit',e=>e.preventDefault());
 function validate(n){
   if(n===0&&$('#f-idea').value.trim().length<3)return'Tell us a sentence or two so we know where to start.';
-  if(n===1&&!$('input[name=type]:checked'))return'Pick one. "Not Sure" is a fine answer.';
-  if(n===2&&!$('input[name=stage]:checked'))return'Pick the closest match.';
-  if(n===3&&!$('input[name=need]:checked'))return'Choose at least one. "Not sure yet" is fine.';
-  if(n===4){
+  if(n===1){
     if(!$('#f-name').value.trim())return'Add your name so we know who to reply to.';
     if(!/^\S+@\S+\.\S+$/.test($('#f-email').value.trim()))return'Enter a valid email address, like name@company.com.';
   }
@@ -1002,10 +1001,7 @@ function summary(){
   const v=id=>$('#'+id).value.trim();
   return[
     'New project idea','',
-    'Idea: '+v('f-idea'),
-    'Product type: '+($('input[name=type]:checked')?.value||''),
-    'Stage: '+($('input[name=stage]:checked')?.value||''),
-    'Needs: '+$$('input[name=need]:checked').map(i=>i.value).join(', '),'',
+    'Idea: '+v('f-idea'),'',
     'Name: '+v('f-name'),'Email: '+v('f-email'),
     'Company: '+(v('f-company')||'-'),'Contact: '+(v('f-phone')||'-')
   ].join('\n');
@@ -1013,7 +1009,7 @@ function summary(){
 $('#inext').addEventListener('click',async()=>{
   const n=st.intake.step,msg=validate(n);
   if(msg){ierr.textContent=msg;return}
-  if(n<4){showStep(n+1);return}
+  if(n<1){showStep(n+1);return}
   const sum=summary();$('#isum').textContent=sum;
   $('#iflow').hidden=true;$('#idone').hidden=false;
   const p=$('#idone-p');
@@ -1034,179 +1030,8 @@ $('#icopy').addEventListener('click',async e=>{
   try{await navigator.clipboard.writeText($('#isum').textContent);e.target.textContent='Copied'}catch(_){e.target.textContent='Select the text and copy it'}
 });
 
-/* ---------- GlowCursor WebGL Fluid Trail Engine ---------- */
-function initGlowCursor(){
-  const canvas=$('#glow-cursor-canvas');if(!canvas)return;
-  const gl=canvas.getContext('webgl',{alpha:true,depth:false,stencil:false,antialias:false,premultipliedAlpha:false});
-  if(!gl)return;
-
-  const MAX_POINTS=64;
-  const V_SHADER=`attribute vec2 position;attribute vec2 uv;varying vec2 vUv;void main(){vUv=uv;gl_Position=vec4(position,0.0,1.0);}`;
-  const F_SHADER=`precision highp float;
-    #define MAX_POINTS 64
-    uniform vec2 uResolution;uniform vec2 uPoints[MAX_POINTS];uniform float uPointCount;
-    uniform vec3 uColor;uniform vec3 uSecondaryColor;uniform float uTrailWidth;uniform float uTaper;
-    uniform float uGlowIntensity;uniform float uGlowSpread;uniform float uHotspot;uniform float uBrightness;
-    uniform float uOpacity;uniform float uPulseSpeed;uniform float uNoiseStrength;uniform float uTime;uniform float uFade;
-    varying vec2 vUv;
-    float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453123);}
-    float filmGrain(vec2 p,float time){
-      float frame=time*18.0;float frameIndex=mod(floor(frame),256.0);float nextFrameIndex=mod(frameIndex+1.0,256.0);
-      float blend=fract(frame);blend=blend*blend*(3.0-2.0*blend);vec2 pixel=floor(p);
-      float current=hash(pixel+vec2(frameIndex*17.0,frameIndex*31.0));
-      float next=hash(pixel+vec2(nextFrameIndex*17.0,nextFrameIndex*31.0));
-      return mix(current,next,blend)*2.0-1.0;
-    }
-    void main(){
-      vec2 pixel=vUv*uResolution;float denominator=max(uPointCount-1.0,1.0);
-      float strongest=0.0;float strongestCore=0.0;float colorWeight=0.0;vec3 colorSum=vec3(0.0);
-      for(int i=0;i<MAX_POINTS-1;i++){
-        float index=float(i);if(index>=uPointCount-1.0)break;
-        vec2 start=uPoints[i];vec2 end=uPoints[i+1];
-        vec2 toPixel=pixel-start;vec2 segment=end-start;
-        float along=clamp(dot(toPixel,segment)/max(dot(segment,segment),0.0001),0.0,1.0);
-        float progress=clamp((index+along)/denominator,0.0,1.0);
-        float life=pow(max(1.0-progress,0.0),mix(0.55,1.25,uTaper));
-        float width=uTrailWidth*mix(1.0,0.25,pow(progress,mix(0.55,1.6,uTaper)));
-        float distanceToTrail=length(toPixel-segment*along);
-        float falloff=max(width*(0.8+uGlowSpread*1.4),0.5);
-        float beam=min(1.0,(falloff*falloff)/(distanceToTrail*distanceToTrail+falloff*falloff));
-        float core=exp(-pow(distanceToTrail/max(width,0.5),2.0)*2.5);
-        float pulse=1.0+sin(uTime*uPulseSpeed*3.0-progress*11.0)*0.16;
-        float intensity=(core+beam*uGlowIntensity*0.55)*life*pulse;
-        vec3 segmentColor=mix(uColor,uSecondaryColor,progress);
-        strongest=max(strongest,intensity);
-        strongestCore=max(strongestCore,core*life);
-        colorSum+=segmentColor*intensity;
-        colorWeight+=intensity;
-      }
-      float grain=filmGrain(pixel,uTime);
-      float noiseAmount=(1.0-exp(-uNoiseStrength*2.2))*0.4;
-      float alpha=clamp(strongest*uOpacity*uFade,0.0,1.0);
-      if(alpha<0.0005)discard;
-      vec3 color=colorSum/max(colorWeight,0.0001);
-      color=mix(color,vec3(1.0),smoothstep(0.25,0.95,strongestCore)*uHotspot);
-      float luminance=clamp(strongest*uBrightness,0.0,1.0)*(1.0+grain*noiseAmount);
-      gl_FragColor=vec4(color*luminance,alpha);
-    }`;
-
-  function compileShader(src,type){
-    const s=gl.createShader(type);gl.shaderSource(s,src);gl.compileShader(s);
-    if(!gl.getShaderParameter(s,gl.COMPILE_STATUS)){console.warn(gl.getShaderInfoLog(s));gl.deleteShader(s);return null;}
-    return s;
-  }
-  const vs=compileShader(V_SHADER,gl.VERTEX_SHADER),fs=compileShader(F_SHADER,gl.FRAGMENT_SHADER);
-  if(!vs||!fs)return;
-  const prog=gl.createProgram();gl.attachShader(prog,vs);gl.attachShader(prog,fs);gl.linkProgram(prog);
-  if(!gl.getProgramParameter(prog,gl.LINK_STATUS))return;
-  gl.useProgram(prog);
-
-  const posBuf=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,posBuf);
-  gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1, 1,-1, -1,1, 1,1]),gl.STATIC_DRAW);
-  const aPos=gl.getAttribLocation(prog,'position');gl.enableVertexAttribArray(aPos);gl.vertexAttribPointer(aPos,2,gl.FLOAT,false,0,0);
-
-  const uvBuf=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,uvBuf);
-  gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([0,0, 1,0, 0,1, 1,1]),gl.STATIC_DRAW);
-  const aUv=gl.getAttribLocation(prog,'uv');gl.enableVertexAttribArray(aUv);gl.vertexAttribPointer(aUv,2,gl.FLOAT,false,0,0);
-
-  const uRes=gl.getUniformLocation(prog,'uResolution'),uPts=gl.getUniformLocation(prog,'uPoints');
-  const uCnt=gl.getUniformLocation(prog,'uPointCount'),uCol=gl.getUniformLocation(prog,'uColor');
-  const uSecCol=gl.getUniformLocation(prog,'uSecondaryColor'),uWidth=gl.getUniformLocation(prog,'uTrailWidth');
-  const uTaperLoc=gl.getUniformLocation(prog,'uTaper'),uGI=gl.getUniformLocation(prog,'uGlowIntensity');
-  const uGS=gl.getUniformLocation(prog,'uGlowSpread'),uHS=gl.getUniformLocation(prog,'uHotspot');
-  const uB=gl.getUniformLocation(prog,'uBrightness'),uOp=gl.getUniformLocation(prog,'uOpacity');
-  const uPS=gl.getUniformLocation(prog,'uPulseSpeed'),uNS=gl.getUniformLocation(prog,'uNoiseStrength');
-  const uTimeLoc=gl.getUniformLocation(prog,'uTime'),uFadeLoc=gl.getUniformLocation(prog,'uFade');
-
-  const pointData=new Float32Array(MAX_POINTS*2);
-  const points=Array.from({length:MAX_POINTS},()=>({x:0,y:0}));
-  const head={x:0,y:0},target={x:0,y:0};
-  let initialized=false,pointerInside=false,fade=0,lastInput=performance.now(),lastFrame=performance.now();
-
-  function resize(){
-    const w=innerWidth,h=innerHeight,pr=Math.min(devicePixelRatio||1,1.5);
-    canvas.width=w*pr;canvas.height=h*pr;
-    gl.viewport(0,0,canvas.width,canvas.height);
-    gl.uniform2f(uRes,canvas.width,canvas.height);
-  }
-  resize();addEventListener('resize',resize,{passive:true});
-
-  addEventListener('pointermove',e=>{
-    if(e.pointerType!=='mouse')return;
-    const pr=Math.min(devicePixelRatio||1,1.5);
-    const x=e.clientX*pr,y=(innerHeight-e.clientY)*pr;
-    if(!initialized){
-      head.x=target.x=x;head.y=target.y=y;
-      points.forEach(p=>{p.x=x;p.y=y});
-      initialized=true;fade=1;
-    }
-    target.x=x;target.y=y;
-    pointerInside=true;lastInput=performance.now();
-  },{passive:true});
-
-  document.addEventListener('mouseleave',()=>{pointerInside=false;lastInput=performance.now()});
-
-  function render(now){
-    requestAnimationFrame(render);
-    if(document.hidden)return;
-    const delta=Math.min((now-lastFrame)/16.667,3);lastFrame=now;
-    if(initialized){
-      const headEase=1-Math.pow(1-0.16,delta);
-      const chainEase=1-Math.pow(1-0.33,delta);
-      head.x+=(target.x-head.x)*headEase;
-      head.y+=(target.y-head.y)*headEase;
-      points[0].x=head.x;points[0].y=head.y;
-      for(let i=1;i<MAX_POINTS;i++){
-        points[i].x+=(points[i-1].x-points[i].x)*chainEase;
-        points[i].y+=(points[i-1].y-points[i].y)*chainEase;
-      }
-      for(let i=0;i<MAX_POINTS;i++){
-        pointData[i*2]=points[i].x;
-        pointData[i*2+1]=points[i].y;
-      }
-    }
-
-    const idleFor=now-lastInput;
-    const shouldFade=!pointerInside||idleFor>700;
-    const fadeTarget=(initialized&&!shouldFade)?1:0;
-    fade+=(fadeTarget-fade)*Math.min(1,(16.667*delta/900)*7);
-
-    gl.useProgram(prog);
-    gl.uniform1f(uCnt,40);
-    gl.uniform3f(uCol,0.22,0.84,1.0);
-    gl.uniform3f(uSecCol,0.65,0.55,0.98);
-    gl.uniform1f(uWidth,8.0);
-    gl.uniform1f(uTaperLoc,0.8);
-    gl.uniform1f(uGI,1.9);
-    gl.uniform1f(uGS,1.2);
-    gl.uniform1f(uHS,0.65);
-    gl.uniform1f(uB,1.25);
-    gl.uniform1f(uOp,1.0);
-    gl.uniform1f(uPS,1.1);
-    gl.uniform1f(uNS,0.035);
-    gl.uniform1f(uTimeLoc,now*0.001);
-    gl.uniform1f(uFadeLoc,fade);
-    gl.uniform2fv(uPts,pointData);
-
-    gl.clear(gl.COLOR_BUFFER_BIT);
-    gl.drawArrays(gl.TRIANGLE_STRIP,0,4);
-  }
-  requestAnimationFrame(render);
-}
-
 /* ---------- cursor ---------- */
-const curEl=$('#cursor');let cx=-100,cy=-100,tx=-100,ty=-100;
-if(!coarse){
-  if(!reduce)initGlowCursor();
-  addEventListener('pointermove',e=>{
-    if(e.pointerType==='mouse'){document.documentElement.classList.add('has-cursor');tx=e.clientX;ty=e.clientY}
-  },{passive:true});
-  document.addEventListener('pointerover',e=>{
-    const t=e.target.closest&&e.target.closest('[data-cursor]');
-    curEl.classList.toggle('big',!!t);if(t)$('b',curEl).textContent=t.dataset.cursor;
-  });
-  document.addEventListener('mouseleave',()=>{tx=ty=-100});
-}
+// Custom cursor disabled — standard browser cursor used.
 
 /* ---------- scene sections ---------- */
 const HERO_STOPS=['point','nebula','lattice','stack','knot'];
@@ -1359,7 +1184,7 @@ let GL=null;
 function initGL(){
   if(!window.THREE)throw new Error('three missing');
   const mobile=isMobile()||coarse,cores=navigator.hardwareConcurrency||4;
-  const N=mobile?1100:(cores<=4?1700:2600),NN=mobile?140:240;
+  const N=mobile?1200:(cores<=4?1900:2800),NN=mobile?160:270;
   const canvas=$('#gl');
   const renderer=new THREE.WebGLRenderer({canvas,antialias:false,alpha:true,powerPreference:'high-performance'});
   renderer.setClearColor(0x000000,0);
@@ -1497,7 +1322,7 @@ function initGL(){
 
   /* points */
   const pos=new Float32Array(N*3),cur=new Float32Array(N*3),hotA=new Float32Array(N),alA=new Float32Array(N),sz=new Float32Array(N);
-  for(let i=0;i<N;i++)sz[i]=i<NN?3.4+Math.random()*1.6:1.5+Math.random()*1.1;
+  for(let i=0;i<N;i++)sz[i]=i<NN?5.2+Math.random()*2.6:2.4+Math.random()*1.6;
   cur.set(getShape('point').P);pos.set(cur);alA.fill(.9);
   const geo=new THREE.BufferGeometry();
   geo.setAttribute('position',new THREE.BufferAttribute(pos,3));
@@ -1508,10 +1333,16 @@ function initGL(){
     uniforms:{uPR:{value:1},uCyan:{value:new THREE.Color(0x38d5ff)}},
     vertexShader:`attribute float aHot;attribute float aAlpha;attribute float aSize;uniform float uPR;varying float vHot;varying float vA;
       void main(){vec4 mv=modelViewMatrix*vec4(position,1.0);gl_Position=projectionMatrix*mv;
-      gl_PointSize=aSize*(1.0+aHot*.8)*uPR*(7.2/-mv.z);vHot=aHot;vA=aAlpha*(0.5+0.5*clamp(1.0-(-mv.z-5.0)/6.0,0.0,1.0));}`,
+      gl_PointSize=aSize*(1.0+aHot*0.85)*uPR*(7.2/-mv.z);vHot=aHot;vA=aAlpha*(0.5+0.5*clamp(1.0-(-mv.z-5.0)/6.0,0.0,1.0));}`,
     fragmentShader:`uniform vec3 uCyan;varying float vHot;varying float vA;
-      void main(){float d=length(gl_PointCoord-.5);if(d>.5)discard;float a=smoothstep(.5,.08,d);
-      vec3 c=mix(vec3(.82,.88,.93),uCyan,clamp(vHot,0.0,1.0));gl_FragColor=vec4(c,a*vA*(.55+.45*clamp(vHot,0.0,1.0)));}`,
+      void main(){float d=length(gl_PointCoord-0.5);if(d>0.5)discard;
+      float core=smoothstep(0.18,0.0,d);float halo=smoothstep(0.5,0.04,d);float glow=pow(max(0.0,1.0-d*2.0),2.0);
+      float a=(halo*0.65+glow*0.35);
+      vec3 electricBlue=vec3(0.06,0.65,1.0);vec3 brightCyan=uCyan;
+      vec3 baseColor=mix(electricBlue,brightCyan,clamp(vHot*0.7+0.4,0.0,1.0));
+      vec3 finalColor=mix(baseColor,vec3(1.0,1.0,1.0),core*0.88);
+      float brightness=0.85+0.45*clamp(vHot,0.0,1.0);
+      gl_FragColor=vec4(finalColor,clamp(a*vA*brightness,0.0,1.0));}`,
     transparent:true,depthWrite:false,blending:THREE.AdditiveBlending
   });
   const points=new THREE.Points(geo,mat);points.frustumCulled=false;group.add(points);
@@ -1524,7 +1355,7 @@ function initGL(){
   lgeo.setDrawRange(0,0);
   const lines=new THREE.LineSegments(lgeo,new THREE.LineBasicMaterial({vertexColors:true,transparent:true,blending:THREE.AdditiveBlending,depthWrite:false}));
   lines.frustumCulled=false;group.add(lines);
-  let ne=0;const MAXD=1.1,MAXD2=MAXD*MAXD;
+  let ne=0;const MAXD=1.2,MAXD2=MAXD*MAXD;
   function rebuildEdges(){
     ne=0;
     for(let a=0;a<NN;a++){
@@ -1566,7 +1397,7 @@ function initGL(){
     /* camera & group transform */
     const mob=isMobile(),vH=2*Math.tan(21*Math.PI/180)*7.2,vW=vH*camera.aspect;
     const fit=Math.min(1,(vW+3)/9);
-    const link=lerp(pspec.link??1,spec.link??1,enter),scl=lerp(pspec.scale??1,spec.scale??1,enter)*fit*(mob?1:1);
+    const link=lerp(pspec.link??1,spec.link??1,enter),scl=lerp(pspec.scale??1,spec.scale??1,enter)*fit*(mob?1.1:1.2);
     const ox=mob?0:lerp((secs[secs.indexOf(s)-1]||s).ox??0,s.ox,enter),oy=mob?vH*.2:0;
     const useOx=st.intake.open&&!mob?intakeSec.ox:ox;
     spx+=(px-spx)*k3;spy+=(py-spy)*k3;
@@ -1616,8 +1447,8 @@ function initGL(){
       const a=E[e]*3,b=E[e+1]*3;
       lp[v]=pos[a];lp[v+1]=pos[a+1];lp[v+2]=pos[a+2];lp[v+3]=pos[b];lp[v+4]=pos[b+1];lp[v+5]=pos[b+2];
       const dx=pos[a]-pos[b],dy=pos[a+1]-pos[b+1],dz=pos[a+2]-pos[b+2];
-      const fade=clamp(1-Math.sqrt(dx*dx+dy*dy+dz*dz)/MAXD)*amt*(.35+.65*clamp((hotA[E[e]]+hotA[E[e+1]])*.5));
-      lc[v]=lc[v+3]=.22*fade;lc[v+1]=lc[v+4]=.84*fade;lc[v+2]=lc[v+5]=fade;
+      const fade=clamp(1-Math.sqrt(dx*dx+dy*dy+dz*dz)/MAXD)*amt*(.45+.55*clamp((hotA[E[e]]+hotA[E[e+1]])*.5));
+      lc[v]=lc[v+3]=.20*fade;lc[v+1]=lc[v+4]=.86*fade;lc[v+2]=lc[v+5]=fade;
     }
     lgeo.setDrawRange(0,ne);lgeo.attributes.position.needsUpdate=true;lgeo.attributes.color.needsUpdate=true;
     renderer.render(scene,camera);
@@ -1638,7 +1469,7 @@ try{GL=initGL()}catch(err){document.body.classList.add('no-gl');console.warn('3D
     const P=pts.map(p=>{const a=p.a+t*.0002*p.s*4,r=p.r*(.4+.6*grow)*92;return[110+r*Math.cos(a),110+r*Math.sin(a)*.9]});
     x.lineWidth=1;
     for(let i=0;i<n;i++)for(let j=i+1;j<n;j++){const d=Math.hypot(P[i][0]-P[j][0],P[i][1]-P[j][1]);if(d<48){x.strokeStyle=`rgba(56,213,255,${(1-d/48)*.45})`;x.beginPath();x.moveTo(P[i][0],P[i][1]);x.lineTo(P[j][0],P[j][1]);x.stroke()}}
-    P.forEach((p,i)=>{x.fillStyle=i%5===0?'#38d5ff':'rgba(220,230,240,.8)';x.beginPath();x.arc(p[0],p[1],i%5===0?3:1.8,0,TAU);x.fill()});
+    P.forEach((p,i)=>{x.fillStyle=i%5===0?'#38d5ff':'rgba(103,232,249,.85)';x.beginPath();x.arc(p[0],p[1],i%5===0?3.8:2.2,0,TAU);x.fill()});
   }
   if(reduce){draw(2500);return}
   (function loop(t){requestAnimationFrame(loop);if(vis&&!document.hidden)draw(t)})(0);
@@ -1653,7 +1484,6 @@ function loop(now){
   if(!reduce)intro=Math.max(intro,clamp((time-.6)/5)*.12);
   const sc=sceneTarget();
   uiTick();
-  if(!coarse){cx+=(tx-cx)*.3;cy+=(ty-cy)*.3;curEl.style.transform=`translate(${cx}px,${cy}px)`}
   if(GL)GL.render(sc,dt,time);
 }
 requestAnimationFrame(loop);
