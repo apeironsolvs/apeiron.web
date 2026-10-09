@@ -1,0 +1,23 @@
+<!-- ====== PASTE INSIDE <head> of index.html (replace the existing <script type="application/ld+json"> block) ====== -->
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="site.webmanifest">
+<link rel="canonical" href="https://YOUR-DOMAIN.com/">
+<meta property="og:url" content="https://YOUR-DOMAIN.com/">
+<meta property="og:image" content="https://YOUR-DOMAIN.com/og-image.png"> <!-- create a 1200x630 PNG -->
+<meta name="twitter:image" content="https://YOUR-DOMAIN.com/og-image.png">
+<link rel="stylesheet" href="upgrade.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"Organization","@id":"https://YOUR-DOMAIN.com/#org","name":"Apeiron Solutions","url":"https://YOUR-DOMAIN.com/","slogan":"Ideas into reality.","sameAs":["https://www.linkedin.com/in/apeiron-solvs-a54866441","https://github.com/apeironsolvs"]},
+{"@type":"ProfessionalService","name":"Apeiron Solutions","description":"Software development, AI, web, mobile, and custom technology solutions for founders and businesses.","url":"https://YOUR-DOMAIN.com/","parentOrganization":{"@id":"https://YOUR-DOMAIN.com/#org"}},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"Do I need technical knowledge?","acceptedAnswer":{"@type":"Answer","text":"No. We explain every decision in plain language, so you stay in control of the vision without having to learn the engineering."}},
+{"@type":"Question","name":"How long does a project take?","acceptedAnswer":{"@type":"Answer","text":"It depends on scope. After the discovery stage we give you a build order and a timeline you can plan around."}},
+{"@type":"Question","name":"How is pricing handled?","acceptedAnswer":{"@type":"Answer","text":"Pricing follows scope. We estimate after understanding your idea and are open about what drives the cost."}},
+{"@type":"Question","name":"Who owns the product and the code?","acceptedAnswer":{"@type":"Answer","text":"You own what we build for you. Ownership terms are written into the agreement before work begins."}},
+{"@type":"Question","name":"Can you add AI to a product I already have?","acceptedAnswer":{"@type":"Answer","text":"Yes. We can integrate assistants, retrieval systems, and automation into an existing product, or build the AI layer as a new service."}},
+{"@type":"Question","name":"What happens after launch?","acceptedAnswer":{"@type":"Answer","text":"We keep going if you want us to: monitoring, fixes, new features, and scaling."}}
+]}]}
+</script>
+<!-- ====== END ====== -->
+<!-- And just before </body>, after your existing scripts:  <script src="upgrade.js" defer></script> -->
