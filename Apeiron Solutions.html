@@ -13,7 +13,26 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Apeiron Solutions — Turning Technology Ideas Into Reality">
 <meta name="twitter:description" content="You bring the vision. We build the technology.">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Apeiron Solutions","description":"Apeiron Solutions helps businesses, founders, and innovators turn technology ideas into real products through software development, AI, web, mobile, and custom technology solutions.","slogan":"Ideas into reality."}</script>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="site.webmanifest">
+<link rel="canonical" href="https://YOUR-DOMAIN.com/">
+<meta property="og:url" content="https://YOUR-DOMAIN.com/">
+<meta property="og:image" content="https://YOUR-DOMAIN.com/og-image.png">
+<meta name="twitter:image" content="https://YOUR-DOMAIN.com/og-image.png">
+<link rel="stylesheet" href="upgrade.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"Organization","@id":"https://YOUR-DOMAIN.com/#org","name":"Apeiron Solutions","url":"https://YOUR-DOMAIN.com/","slogan":"Ideas into reality.","sameAs":["https://www.linkedin.com/in/apeiron-solvs-a54866441","https://github.com/apeironsolvs"]},
+{"@type":"ProfessionalService","name":"Apeiron Solutions","description":"Software development, AI, web, mobile, and custom technology solutions for founders and businesses.","url":"https://YOUR-DOMAIN.com/","parentOrganization":{"@id":"https://YOUR-DOMAIN.com/#org"}},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"Do I need technical knowledge?","acceptedAnswer":{"@type":"Answer","text":"No. We explain every decision in plain language, so you stay in control of the vision without having to learn the engineering."}},
+{"@type":"Question","name":"How long does a project take?","acceptedAnswer":{"@type":"Answer","text":"It depends on scope. After the discovery stage we give you a build order and a timeline you can plan around."}},
+{"@type":"Question","name":"How is pricing handled?","acceptedAnswer":{"@type":"Answer","text":"Pricing follows scope. We estimate after understanding your idea and are open about what drives the cost."}},
+{"@type":"Question","name":"Who owns the product and the code?","acceptedAnswer":{"@type":"Answer","text":"You own what we build for you. Ownership terms are written into the agreement before work begins."}},
+{"@type":"Question","name":"Can you add AI to a product I already have?","acceptedAnswer":{"@type":"Answer","text":"Yes. We can integrate assistants, retrieval systems, and automation into an existing product, or build the AI layer as a new service."}},
+{"@type":"Question","name":"What happens after launch?","acceptedAnswer":{"@type":"Answer","text":"We keep going if you want us to: monitoring, fixes, new features, and scaling."}}
+]}]}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600&family=Big+Shoulders+Stencil+Text:wght@600;700;800;900&display=swap" rel="stylesheet">
@@ -413,6 +432,8 @@ a, button { cursor: pointer; }
     <a href="#how">How We Work</a>
     <a href="#people">Capabilities</a>
     <a href="#projects">Projects</a>
+    <a href="#engage">Start</a>
+    <a href="#faq">FAQ</a>
     <a href="#about">About</a>
   </nav>
   <button class="btn primary sm" type="button" data-open-intake>Bring your idea →</button>
@@ -423,6 +444,8 @@ a, button { cursor: pointer; }
   <a href="#how">How We Work</a>
   <a href="#people">Capabilities</a>
   <a href="#projects">Projects</a>
+  <a href="#engage">Start</a>
+  <a href="#faq">FAQ</a>
   <a href="#about">About</a>
   <p style="margin-top:20px"><button class="btn primary" type="button" data-open-intake>Bring your idea →</button></p>
 </div>
@@ -645,6 +668,60 @@ a, button { cursor: pointer; }
     </div></div>
   </section>
 
+  <!-- ENGAGEMENT -->
+  <section id="engage" class="sec" aria-labelledby="engage-h">
+    <div class="wrap">
+      <h2 id="engage-h" class="mask sm">Three ways to start.</h2>
+      <p class="lede rv" style="margin-top:24px">Pick the one that matches where your idea is today. You can move between them as the product grows.</p>
+      <div class="u-eng">
+        <article class="u-card rv">
+          <h3>Idea Sprint</h3>
+          <p>A short, focused engagement that turns a rough idea into a plan you can act on.</p>
+          <ul><li>Requirements and user goals</li><li>Architecture and technology choices</li><li>Design direction</li><li>A scoped build roadmap</li></ul>
+          <p class="u-fit"><b>Best for:</b> you have the idea but not yet the plan.</p>
+          <button class="btn sm" type="button" data-open-intake data-need="Idea Sprint">Start a sprint →</button>
+        </article>
+        <article class="u-card focal rv">
+          <h3>MVP Build</h3>
+          <p>We design and build the first working version, focused on the features that prove the idea.</p>
+          <ul><li>Product design and UX</li><li>Frontend, backend, and AI as needed</li><li>Testing and cloud deployment</li><li>Launch support</li></ul>
+          <p class="u-fit"><b>Best for:</b> you know what to build and want it live.</p>
+          <button class="btn primary sm" type="button" data-open-intake data-need="MVP Build">Build my MVP →</button>
+        </article>
+        <article class="u-card rv">
+          <h3>Product Team</h3>
+          <p>An ongoing cross-functional team that keeps improving and scaling your product after launch.</p>
+          <ul><li>Continuous delivery</li><li>Performance and security upkeep</li><li>New features and integrations</li><li>Scaling with your users</li></ul>
+          <p class="u-fit"><b>Best for:</b> you have a live product and need steady momentum.</p>
+          <button class="btn sm" type="button" data-open-intake data-need="Product Team">Talk to us →</button>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- STACK MARQUEE -->
+  <section id="stack" class="u-stack" aria-labelledby="stack-h">
+    <h2 id="stack-h">Technologies we build with</h2>
+    <div class="u-track" id="u-track" aria-label="Technologies">
+      <span class="u-pill">React</span><span class="u-pill">Next.js</span><span class="u-pill">TypeScript</span><span class="u-pill">Node.js</span><span class="u-pill">Python</span><span class="u-pill">PostgreSQL</span><span class="u-pill">MongoDB</span><span class="u-pill">Swift</span><span class="u-pill">Kotlin</span><span class="u-pill">Flutter</span><span class="u-pill">React Native</span><span class="u-pill">AWS</span><span class="u-pill">Google Cloud</span><span class="u-pill">Azure</span><span class="u-pill">Docker</span><span class="u-pill">Kubernetes</span><span class="u-pill">LLMs and RAG</span><span class="u-pill">Three.js and WebGL</span>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="sec" aria-labelledby="faq-h">
+    <div class="wrap">
+      <h2 id="faq-h" class="mask sm">Questions people ask first.</h2>
+      <div class="u-faq rv">
+        <details><summary>Do I need technical knowledge?</summary><div class="ans"><p>No. We explain every decision in plain language, so you stay in control of the vision without having to learn the engineering.</p></div></details>
+        <details><summary>How long does a project take?</summary><div class="ans"><p>It depends on scope. After the discovery stage we give you a build order and a timeline you can plan around, so you are not guessing.</p></div></details>
+        <details><summary>How is pricing handled?</summary><div class="ans"><p>Pricing follows scope. We estimate after understanding your idea, and we are open about what drives the cost so you can make trade-offs early.</p></div></details>
+        <details><summary>Who owns the product and the code?</summary><div class="ans"><p>You own what we build for you. Ownership terms are written into the agreement before work begins.</p></div></details>
+        <details><summary>Can you add AI to a product I already have?</summary><div class="ans"><p>Yes. We can integrate assistants, retrieval systems, and automation into an existing product, or build the AI layer as a new service next to it.</p></div></details>
+        <details><summary>What happens after launch?</summary><div class="ans"><p>We keep going if you want us to: monitoring, fixes, new features, and scaling, through the Product Team model.</p></div></details>
+      </div>
+    </div>
+  </section>
+
   <!-- ABOUT -->
   <section id="about" class="sec about" aria-labelledby="about-h">
     <div class="wrap center">
@@ -677,8 +754,8 @@ a, button { cursor: pointer; }
       </div>
       <div><h3>Explore</h3><ul>
         <li><a href="#build">What We Build</a></li><li><a href="#how">How We Work</a></li><li><a href="#people">Capabilities</a></li>
-        <li><a href="#projects">Projects</a></li><li><a href="#about">About</a></li><li><a href="#cta">Contact</a></li></ul></div>
-      <div><h3>Legal</h3><ul><li><a href="#">Privacy</a></li><li><a href="#">Terms</a></li><li><a href="#">Security</a></li></ul></div>
+        <li><a href="#projects">Projects</a></li><li><a href="#engage">Start</a></li><li><a href="#faq">FAQ</a></li><li><a href="#about">About</a></li><li><a href="#cta">Contact</a></li></ul></div>
+      <div><h3>Legal</h3><ul><li><a href="privacy.html">Privacy</a></li><li><a href="terms.html">Terms</a></li><li><a href="security.html">Security</a></li></ul></div>
       <div><h3>Follow</h3><ul><li><a href="https://www.linkedin.com/in/apeiron-solvs-a54866441" target="_blank" rel="noopener noreferrer">LinkedIn</a></li><li><a href="#">X</a></li><li><a href="https://github.com/apeironsolvs" target="_blank" rel="noopener noreferrer">GitHub</a></li></ul></div>
     </div>
     <p class="copy">© Apeiron Solutions</p>
@@ -977,6 +1054,7 @@ function setInert(v){['#main','#nav','footer','#menu'].forEach(s=>{const e=$(s);
 function openIntake(opts={}){
   lastFocus=document.activeElement;
   if(opts.fromIdea&&ideaIn.value.trim())$('#f-idea').value=ideaIn.value.trim();
+  if(opts.need&&!$('#f-idea').value.trim())$('#f-idea').value=`[${opts.need}] `;
   $('#iflow').hidden=false;$('#idone').hidden=true;
   intake.classList.add('open');document.body.style.overflow='hidden';setInert(true);st.intake.open=true;
   showStep(0);
@@ -1494,5 +1572,6 @@ function loop(now){
 requestAnimationFrame(loop);
 })();
 </script>
+<script src="upgrade.js" defer></script>
 </body>
 </html>
