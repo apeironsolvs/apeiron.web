@@ -38,4 +38,45 @@ faq.forEach(d=>d.addEventListener('toggle',()=>{if(d.open)faq.forEach(o=>{if(o!=
 /* footer year */
 const copy=$('.copy');
 if(copy&&!/\d{4}/.test(copy.textContent))copy.textContent=`© ${new Date().getFullYear()} Apeiron Solutions`;
+
+/* Apeiron Energy Flow Infinity Logo Controller */
+if(!reduce){
+  const logoWraps=$$('.apeiron-logo-wrap');
+  if(logoWraps.length){
+    const triggerFlow=(wrap)=>{
+      if(!wrap||wrap.dataset.flowing==='true')return;
+      wrap.dataset.flowing='true';
+      wrap.classList.remove('is-flowing');
+      void wrap.offsetWidth; // force DOM reflow
+      wrap.classList.add('is-flowing');
+    };
+
+    logoWraps.forEach(wrap=>{
+      wrap.addEventListener('animationend',(e)=>{
+        if(e.target&&e.target.classList.contains('energy-core')){
+          wrap.classList.remove('is-flowing');
+          wrap.dataset.flowing='false';
+        }
+      });
+
+      const link=wrap.closest('a');
+      if(link){
+        link.addEventListener('mouseenter',()=>triggerFlow(wrap));
+        link.addEventListener('focus',()=>triggerFlow(wrap));
+      }
+    });
+
+    const logoObs=new IntersectionObserver((entries,obs)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          triggerFlow(entry.target);
+          obs.unobserve(entry.target);
+        }
+      });
+    },{threshold:0.15});
+
+    logoWraps.forEach(wrap=>logoObs.observe(wrap));
+  }
+}
 })();
+

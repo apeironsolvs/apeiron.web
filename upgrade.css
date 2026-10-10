@@ -53,3 +53,162 @@
 .u-contact{display:flex;flex-wrap:wrap;justify-content:center;gap:12px 28px;margin-top:36px;color:var(--mute);font-size:15px}
 .u-contact a{color:#c3ccd4;text-decoration:underline;text-underline-offset:4px;text-decoration-color:var(--glass-border-primary);transition:color .2s,text-decoration-color .2s}
 .u-contact a:hover{color:var(--cyan);text-decoration-color:var(--cyan)}
+
+/* ==========================================================================
+   Apeiron Solutions — Energy Flow Infinity Logo Animation
+   ========================================================================== */
+.apeiron-logo-link {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  line-height: 1;
+  position: relative;
+  padding: 2px 4px;
+  border-radius: 8px;
+  background: transparent;
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.25s;
+}
+
+.apeiron-logo-link:hover {
+  transform: translateY(-1px) scale(1.02);
+  filter: drop-shadow(0 4px 16px rgba(56, 213, 255, 0.22));
+}
+
+.apeiron-logo-link:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 4px;
+  border-radius: 8px;
+}
+
+.apeiron-logo-wrap {
+  position: relative;
+  display: block;
+  height: 48px;
+  width: auto;
+  aspect-ratio: 1024 / 572;
+  flex-shrink: 0;
+  overflow: visible;
+  isolation: isolate;
+}
+
+header.nav.compact .apeiron-logo-wrap {
+  height: 40px;
+}
+
+@media (max-width: 640px) {
+  .apeiron-logo-wrap {
+    height: 38px;
+  }
+  header.nav.compact .apeiron-logo-wrap {
+    height: 34px;
+  }
+}
+
+/* Footer brand logo styling */
+.foot .brand .apeiron-logo-wrap {
+  height: 64px;
+}
+
+.apeiron-logo-art {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.apeiron-energy-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: visible;
+  mix-blend-mode: screen;
+}
+
+/* Base state: dormant energy */
+.apeiron-energy-svg path {
+  fill: none;
+  opacity: 0;
+  pointer-events: none;
+  stroke-dasharray: 400 2080;
+  stroke-dashoffset: 420;
+}
+
+/* Active flowing state */
+.apeiron-logo-wrap.is-flowing .energy-glow {
+  animation: apeironFlowGlow 3.3s cubic-bezier(0.35, 0.05, 0.25, 1) forwards;
+}
+
+.apeiron-logo-wrap.is-flowing .energy-mid {
+  animation: apeironFlowMid 3.3s cubic-bezier(0.35, 0.05, 0.25, 1) forwards;
+}
+
+.apeiron-logo-wrap.is-flowing .energy-core {
+  animation: apeironFlowCore 3.3s cubic-bezier(0.35, 0.05, 0.25, 1) forwards;
+}
+
+@keyframes apeironFlowGlow {
+  0% {
+    stroke-dashoffset: 420;
+    opacity: 0;
+  }
+  4% {
+    opacity: 0.75;
+  }
+  86% {
+    opacity: 0.75;
+  }
+  100% {
+    stroke-dashoffset: -2080;
+    opacity: 0;
+  }
+}
+
+@keyframes apeironFlowMid {
+  0% {
+    stroke-dashoffset: 400;
+    opacity: 0;
+  }
+  4% {
+    opacity: 0.95;
+  }
+  86% {
+    opacity: 0.95;
+  }
+  100% {
+    stroke-dashoffset: -2100;
+    opacity: 0;
+  }
+}
+
+@keyframes apeironFlowCore {
+  0% {
+    stroke-dashoffset: 360;
+    opacity: 0;
+  }
+  4% {
+    opacity: 1;
+  }
+  86% {
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: -2140;
+    opacity: 0;
+  }
+}
+
+/* Accessibility: respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .apeiron-energy-svg {
+    display: none !important;
+  }
+  .apeiron-logo-link:hover {
+    transform: none;
+  }
+}
+
