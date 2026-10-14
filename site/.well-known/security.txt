@@ -1,0 +1,5 @@
+Contact: mailto:security@YOUR-DOMAIN.com
+Expires: 2027-10-11T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://YOUR-DOMAIN.com/.well-known/security.txt
+Policy: https://YOUR-DOMAIN.com/security.html

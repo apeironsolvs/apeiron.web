@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Insight Board — concept demo</title><meta name="robots" content="noindex,nofollow"><link rel="stylesheet" href="../_shared/base.css"><link rel="stylesheet" href="style.css"></head>
+<body>
+
+<div class="shell"><header><h1>Insight<span>.</span> Board</h1><label class="sel">Region <select id="reg"><option value="all">All regions</option><option value="north">North</option><option value="south">South</option><option value="west">West</option></select></label></header>
+<div class="grid g4 kpi"><div class="card"><span class="mut">Revenue</span><b id="k1"></b></div><div class="card"><span class="mut">Orders</span><b id="k2"></b></div><div class="card"><span class="mut">Avg. order</span><b id="k3"></b></div><div class="card"><span class="mut">Best month</span><b id="k4"></b></div></div>
+<section class="card"><h2>Monthly revenue <span class="mut">(₹ lakh)</span></h2><svg id="chart" viewBox="0 0 600 240" role="img" aria-label="Monthly revenue bar chart"></svg></section>
+<section class="card"><h2>Top products</h2><table><thead><tr><th>Product</th><th>Units</th><th>Share</th></tr></thead><tbody id="tb"></tbody></table></section></div>
+
+<div class="demo-foot">Concept demo by Apeiron Solutions · fictional company, sample data · Data</div>
+<script src="app.js"></script></body></html>

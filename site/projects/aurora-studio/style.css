@@ -1,0 +1,6 @@
+:root{--bg:#05060f;--fg:#eaf0ff;--mut:#8f9bbd;--ac:#5eead4;--acfg:#031412;--card:#0c1020;--line:#1c2442;--r:14px}
+main{position:relative;height:100vh;min-height:480px;overflow:hidden}#c{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none}
+.nav{position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;padding:20px 28px;z-index:2;pointer-events:none}.nav *{pointer-events:auto}.nav b{font-size:22px}.nav span{color:var(--ac)}.nav a{margin-left:22px;text-decoration:none;font-size:14px}
+.hero{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);text-align:center;z-index:2;pointer-events:none;width:min(720px,90vw)}.hero a{pointer-events:auto}
+.eyebrow{font:600 12px system-ui;letter-spacing:.18em;text-transform:uppercase;color:var(--ac)}h1{font-size:clamp(38px,7vw,78px);line-height:1.02;margin:16px 0;text-shadow:0 2px 30px #05060f}.hero p.mut{margin-bottom:22px}
+.caps{padding:60px 24px}

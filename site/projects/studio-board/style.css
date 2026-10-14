@@ -1,0 +1,5 @@
+:root{--bg:#0b0e13;--fg:#e8edf2;--mut:#8a97a6;--ac:#34d399;--acfg:#04140d;--card:#121820;--line:#212b36;--r:10px}
+.shell{max-width:1000px;margin:0 auto;padding:18px 20px}header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}h1{font-size:24px}h1 span{color:var(--ac)}
+.pres{display:flex;gap:8px}.pres span{display:flex;align-items:center;gap:6px;font-size:13px;border:1px solid var(--line);border-radius:99px;padding:4px 10px}.pres i{width:9px;height:9px;border-radius:50%}
+.tools{display:flex;gap:10px;align-items:center;margin:12px 0}.tools .btn{padding:8px 14px}.board{position:relative;height:min(62vh,520px);background:#0f141b;border:1px solid var(--line);border-radius:14px;overflow:hidden;background-image:radial-gradient(#1b2530 1px,transparent 1px);background-size:22px 22px}
+#c{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:crosshair}.cur{position:absolute;left:0;top:0;pointer-events:none;font:600 12px system-ui;padding:2px 8px;border-radius:99px;color:#04140d;white-space:nowrap;transition:opacity .3s}

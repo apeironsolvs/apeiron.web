@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Apeiron Solutions — Turning Technology Ideas Into Reality</title>
+<meta name="description" content="Apeiron Solutions helps businesses, founders, and innovators turn technology ideas into real products through software development, AI, web, mobile, and custom technology solutions.">
+<meta name="theme-color" content="#06080a">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Apeiron Solutions">
+<meta property="og:title" content="Apeiron Solutions — Turning Technology Ideas Into Reality">
+<meta property="og:description" content="You bring the vision. We build the technology. Software, AI, web, mobile, and custom technology, from idea to real product.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Apeiron Solutions — Turning Technology Ideas Into Reality">
+<meta name="twitter:description" content="You bring the vision. We build the technology.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="site.webmanifest">
+<link rel="canonical" href="https://YOUR-DOMAIN.com/">
+<meta property="og:url" content="https://YOUR-DOMAIN.com/">
+<meta property="og:image" content="https://YOUR-DOMAIN.com/og-image.png">
+<meta name="twitter:image" content="https://YOUR-DOMAIN.com/og-image.png">
+<noscript><style>.mask{clip-path:none!important;transform:none!important}.rv{opacity:1!important;transform:none!important}</style></noscript>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"Organization","@id":"https://YOUR-DOMAIN.com/#org","name":"Apeiron Solutions","url":"https://YOUR-DOMAIN.com/","slogan":"Ideas into reality.","sameAs":["https://www.linkedin.com/in/apeiron-solvs-a54866441","https://github.com/apeironsolvs"]},
+{"@type":"ProfessionalService","name":"Apeiron Solutions","description":"Software development, AI, web, mobile, and custom technology solutions for founders and businesses.","url":"https://YOUR-DOMAIN.com/","parentOrganization":{"@id":"https://YOUR-DOMAIN.com/#org"}},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"Do I need technical knowledge?","acceptedAnswer":{"@type":"Answer","text":"No. We explain every decision in plain language, so you stay in control of the vision without having to learn the engineering."}},
+{"@type":"Question","name":"How long does a project take?","acceptedAnswer":{"@type":"Answer","text":"It depends on scope. After the discovery stage we give you a build order and a timeline you can plan around."}},
+{"@type":"Question","name":"How is pricing handled?","acceptedAnswer":{"@type":"Answer","text":"Pricing follows scope. We estimate after understanding your idea and are open about what drives the cost."}},
+{"@type":"Question","name":"Who owns the product and the code?","acceptedAnswer":{"@type":"Answer","text":"You own what we build for you. Ownership terms are written into the agreement before work begins."}},
+{"@type":"Question","name":"Can you add AI to a product I already have?","acceptedAnswer":{"@type":"Answer","text":"Yes. We can integrate assistants, retrieval systems, and automation into an existing product, or build the AI layer as a new service."}},
+{"@type":"Question","name":"What happens after launch?","acceptedAnswer":{"@type":"Answer","text":"We keep going if you want us to: monitoring, fixes, new features, and scaling."}}
+]}]}
+</script>
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="upgrade.css">
+<link rel="stylesheet" href="css/projects.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<canvas id="gl" aria-hidden="true"></canvas>
+<canvas id="glow-cursor-canvas" aria-hidden="true"></canvas>
+
+<header class="nav" id="nav">
+  <a class="logo apeiron-logo-link" href="#hero" aria-label="Apeiron Solutions, back to top">
+    <span class="apeiron-logo-wrap">
+      <img src="apeiron-logo-sm.webp" alt="Apeiron Solutions" class="apeiron-logo-art" width="1024" height="572" fetchpriority="high">
+      <svg class="apeiron-energy-svg" viewBox="0 0 1024 572" aria-hidden="true" focusable="false">
+        <defs>
+          <linearGradient id="apeironEnergyGradNav" x1="95" y1="235" x2="925" y2="235" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#38D5FF" stop-opacity="0.9"/>
+            <stop offset="35%" stop-color="#38D5FF" stop-opacity="0.95"/>
+            <stop offset="46%" stop-color="#4ac5f8" stop-opacity="0.95"/>
+            <stop offset="54%" stop-color="#e6b84a" stop-opacity="0.95"/>
+            <stop offset="65%" stop-color="#FFAA45" stop-opacity="0.95"/>
+            <stop offset="100%" stop-color="#FFAA45" stop-opacity="0.9"/>
+          </linearGradient>
+          <linearGradient id="apeironCoreGradNav" x1="95" y1="235" x2="925" y2="235" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#e0f8ff"/>
+            <stop offset="35%" stop-color="#e8faff"/>
+            <stop offset="50%" stop-color="#ffffff"/>
+            <stop offset="65%" stop-color="#fff5e6"/>
+            <stop offset="100%" stop-color="#ffebd0"/>
+          </linearGradient>
+          <filter id="apeironSoftGlowNav" x="-25%" y="-25%" width="150%" height="150%">
+            <feGaussianBlur stdDeviation="11" result="blur"/>
+          </filter>
+          <filter id="apeironCrispGlowNav" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="3.2" result="blur"/>
+          </filter>
+        </defs>
+        <path class="energy-glow"
+          d="M 260 370 C 165 370, 95 315, 95 235 C 95 155, 165 100, 265 100 C 365 100, 435 160, 512 232 C 590 305, 665 368, 760 368 C 850 368, 925 315, 925 250 C 925 185, 850 125, 755 125 C 665 125, 590 165, 512 232 C 435 300, 355 370, 260 370 Z"
+          stroke="url(#apeironEnergyGradNav)" stroke-width="22" stroke-linecap="round" filter="url(#apeironSoftGlowNav)"/>
+        <path class="energy-mid"
+          d="M 260 370 C 165 370, 95 315, 95 235 C 95 155, 165 100, 265 100 C 365 100, 435 160, 512 232 C 590 305, 665 368, 760 368 C 850 368, 925 315, 925 250 C 925 185, 850 125, 755 125 C 665 125, 590 165, 512 232 C 435 300, 355 370, 260 370 Z"
+          stroke="url(#apeironEnergyGradNav)" stroke-width="9" stroke-linecap="round" filter="url(#apeironCrispGlowNav)"/>
+        <path class="energy-core"
+          d="M 260 370 C 165 370, 95 315, 95 235 C 95 155, 165 100, 265 100 C 365 100, 435 160, 512 232 C 590 305, 665 368, 760 368 C 850 368, 925 315, 925 250 C 925 185, 850 125, 755 125 C 665 125, 590 165, 512 232 C 435 300, 355 370, 260 370 Z"
+          stroke="url(#apeironCoreGradNav)" stroke-width="3.2" stroke-linecap="round"/>
+      </svg>
+    </span>
+  </a>
+  <nav aria-label="Primary">
+    <a href="#build">What We Build</a>
+    <a href="#how">How We Work</a>
+    <a href="#people">Team</a>
+    <a href="#projects">Projects</a>
+    <a href="#engage">Start</a>
+    <a href="#faq">FAQ</a>
+    <a href="#about">About</a>
+  </nav>
+  <button class="nav-login" type="button" data-login>Log in</button>
+  <button class="btn primary sm" type="button" data-open-intake>Bring your idea →</button>
+  <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
+</header>
+<div class="menu" id="menu">
+  <a href="#build">What We Build</a>
+  <a href="#how">How We Work</a>
+  <a href="#people">Team</a>
+  <a href="#projects">Projects</a>
+  <a href="#engage">Start</a>
+  <a href="#faq">FAQ</a>
+  <a href="#about">About</a>
+  <p style="margin-top:20px"><button class="btn primary" type="button" data-open-intake>Bring your idea →</button> <button class="btn" type="button" data-login>Log in</button></p>
+</div>
+
+<main id="main">
+
+  <!-- HERO -->
+  <section id="hero" class="tall" aria-label="Introduction">
+    <div class="stick hero-in">
+      <p class="mono">Apeiron Solutions</p>
+      <h1 aria-label="You have the idea. We build the rest.">
+        <span class="a" aria-hidden="true">You have<br>the idea.</span>
+        <span class="b" aria-hidden="true">We build<br>the rest.</span>
+      </h1>
+      <p class="lede">From websites and applications to AI-powered products and completely custom software, Apeiron turns your technological ideas into real, working products.</p>
+      <div class="cta-row">
+        <button class="btn primary" type="button" data-open-intake>Bring your idea →</button>
+        <a class="btn" href="#build">Explore what we build →</a>
+      </div>
+      <ol class="ticker" id="ticker" aria-hidden="true"><li>Idea</li><li>Concept</li><li>System</li><li>Product</li><li>Reality</li></ol>
+    </div>
+  </section>
+
+  <!-- PROBLEM -->
+  <section id="problem" class="sec" aria-labelledby="problem-h">
+    <div class="wrap"><div class="col">
+      <h2 id="problem-h" class="mask">Great ideas shouldn't stay ideas.</h2>
+      <p class="lede" style="margin-top:28px">Plenty of people have an excellent technology idea and no clear way to build it. The questions arrive before a single line of code is written — and Apeiron is the answer to every single one:</p>
+      <dl class="defs qa-defs">
+        <div>
+          <dt><span class="q-badge" aria-hidden="true">?</span><span class="q-text">How do I build it?</span></dt>
+          <dd><strong>We architect the plan:</strong> You don't have to figure out development alone. Apeiron translates your raw concept into an actionable engineering blueprint, complete system specs, and production milestones from day one.</dd>
+        </div>
+        <div>
+          <dt><span class="q-badge" aria-hidden="true">?</span><span class="q-text">Which technology should I use?</span></dt>
+          <dd><strong>We select the exact stack:</strong> No biases, no guesswork. Whether it's modern web frameworks, native iOS &amp; Android, resilient backend APIs, or scalable databases, we choose the optimal stack engineered for your speed, security, and budget.</dd>
+        </div>
+        <div>
+          <dt><span class="q-badge" aria-hidden="true">?</span><span class="q-text">What architecture does it need?</span></dt>
+          <dd><strong>We build for scale and reliability:</strong> We design clean, future-proof, cloud-native architectures from the ground up — ensuring your software runs smoothly from your first 10 users to millions of global requests without painful rewrites.</dd>
+        </div>
+        <div>
+          <dt><span class="q-badge" aria-hidden="true">?</span><span class="q-text">How much technical manpower is required?</span></dt>
+          <dd><strong>We provide the full team:</strong> Zero recruiting friction or hiring overhead. Apeiron brings an elite, cross-functional engineering squad — software architects, full-stack developers, AI specialists, and UI/UX designers — scaled perfectly to your build.</dd>
+        </div>
+        <div>
+          <dt><span class="q-badge" aria-hidden="true">?</span><span class="q-text">How do I create the first version?</span></dt>
+          <dd><strong>We deliver rapid, high-impact MVPs:</strong> We focus on high-priority core functionality to ship a polished, functional first release fast — getting real software into users' hands in weeks, not months.</dd>
+        </div>
+        <div>
+          <dt><span class="q-badge" aria-hidden="true">?</span><span class="q-text">How do I bring in AI?</span></dt>
+          <dd><strong>We embed practical, intelligent AI:</strong> From autonomous AI agents and large language models (LLMs) to custom workflows and predictive intelligence, we integrate state-of-the-art AI seamlessly where it generates actual business value.</dd>
+        </div>
+        <div>
+          <dt><span class="q-badge" aria-hidden="true">?</span><span class="q-text">How does a concept become production software?</span></dt>
+          <dd><strong>We manage the entire lifecycle:</strong> Through our end-to-end delivery engine — Discovery &amp; Strategy → Intuitive UI/UX Design → Agile Engineering → Rigorous QA Testing → Cloud Deployment &amp; Continuous Scale. We solve every query so you can focus on your vision.</dd>
+        </div>
+      </dl>
+      <p class="note" style="margin-top:28px"><strong>One team for every question:</strong> Frontend, backend, mobile apps, AI models, cloud infrastructure, and databases — we connect every piece and solve every technical query across the board.</p>
+    </div></div>
+  </section>
+
+  <!-- SOLUTION -->
+  <section id="solution" class="sec" aria-labelledby="solution-h">
+    <div class="wrap"><div class="col">
+      <h2 id="solution-h" class="mask">That's where Apeiron comes in.</h2>
+      <p class="lede" style="margin-top:28px">You bring the vision. We figure out the technology, assemble the expertise, and build the product.</p>
+      <ul class="ul sync" id="sync">
+        <li>The interface takes shape</li>
+        <li>APIs connect the parts</li>
+        <li>Backend logic and the AI engine activate</li>
+        <li>The database connects</li>
+        <li>Cloud infrastructure comes online</li>
+      </ul>
+    </div></div>
+  </section>
+
+  <!-- WHAT WE BUILD -->
+  <section id="build" class="sec" aria-labelledby="build-h">
+    <div class="wrap"><div class="grid">
+      <div class="col">
+        <p class="mono" style="margin-bottom:18px">What we build</p>
+        <h2 id="build-h" class="mask sm">If it can be built, let's explore it.</h2>
+        <div class="tabs" id="tabs" role="tablist" aria-label="Technology areas"></div>
+        <div class="panel" id="cap-panel" role="tabpanel">
+          <div class="hover-expand-wrap" id="hover-expand-wrap"></div>
+        </div>
+      </div>
+      <div class="stage" aria-hidden="true"></div>
+    </div></div>
+  </section>
+
+  <!-- PROCESS -->
+  <section id="how" class="tall" aria-label="How we work">
+    <div class="stick proc sticky-cards" id="sticky-cards-root">
+      <div class="sticky-cards-header">
+        <h2>How we turn ideas into products</h2>
+        <p class="mono" id="proc-count">01 / 08</p>
+      </div>
+
+      <div class="sticky-cards-main">
+        <div class="sticky-cards-stage" id="sticky-cards-stage" aria-live="polite">
+        <!-- 01 DISCOVER -->
+        <article class="sticky-card" data-index="0" style="z-index: 1;">
+          <div class="card-media">
+            <img src="stages/stage1.webp" alt="Discover phase: Ideation & Vision" class="card-bg" loading="eager" decoding="async">
+            <div class="card-glass-vignette"></div>
+          </div>
+          <div class="card-glass-content">
+            <div class="card-top">
+              <span class="card-badge"><span class="dot"></span> STAGE 01</span>
+              <span class="card-phase">IDEATION &amp; VISION</span>
+            </div>
+            <div class="card-bottom">
+              <h3 class="card-title">DISCOVER</h3>
+              <p class="card-desc">You tell us what you're imagining.</p>
+              <div class="card-tags">
+                <span class="card-tag">Vision Alignment</span>
+                <span class="card-tag">Opportunity Audit</span>
+                <span class="card-tag">Scope Blueprint</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- 02 DEFINE -->
+        <article class="sticky-card" data-index="1" style="z-index: 2; transform: translate3d(0, 100%, 0);">
+          <div class="card-media">
+            <img src="stages/stage2.webp" alt="Define phase: Requirements & Roadmap" class="card-bg" loading="lazy" decoding="async">
+            <div class="card-glass-vignette"></div>
+          </div>
+          <div class="card-glass-content">
+            <div class="card-top">
+              <span class="card-badge"><span class="dot"></span> STAGE 02</span>
+              <span class="card-phase">REQUIREMENTS &amp; ROADMAP</span>
+            </div>
+            <div class="card-bottom">
+              <h3 class="card-title">DEFINE</h3>
+              <p class="card-desc">We understand the problem, users, requirements, and goals.</p>
+              <div class="card-tags">
+                <span class="card-tag">User Personas</span>
+                <span class="card-tag">Feature Matrix</span>
+                <span class="card-tag">Success Metrics</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- 03 ARCHITECT -->
+        <article class="sticky-card" data-index="2" style="z-index: 3; transform: translate3d(0, 100%, 0);">
+          <div class="card-media">
+            <img src="stages/stage3.webp" alt="Architect phase: System & Tech Selection" class="card-bg" loading="lazy" decoding="async">
+            <div class="card-glass-vignette"></div>
+          </div>
+          <div class="card-glass-content">
+            <div class="card-top">
+              <span class="card-badge"><span class="dot"></span> STAGE 03</span>
+              <span class="card-phase">SYSTEM &amp; TECH SELECTION</span>
+            </div>
+            <div class="card-bottom">
+              <h3 class="card-title">ARCHITECT</h3>
+              <p class="card-desc">We determine the technologies, architecture, and development strategy.</p>
+              <div class="card-tags">
+                <span class="card-tag">Cloud Infrastructure</span>
+                <span class="card-tag">Database Schemas</span>
+                <span class="card-tag">Security &amp; API Design</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- 04 DESIGN -->
+        <article class="sticky-card" data-index="3" style="z-index: 4; transform: translate3d(0, 100%, 0);">
+          <div class="card-media">
+            <img src="stages/stage4.webp" alt="Design phase: UI/UX & Interaction" class="card-bg" loading="lazy" decoding="async">
+            <div class="card-glass-vignette"></div>
+          </div>
+          <div class="card-glass-content">
+            <div class="card-top">
+              <span class="card-badge"><span class="dot"></span> STAGE 04</span>
+              <span class="card-phase">UI/UX &amp; INTERACTION</span>
+            </div>
+            <div class="card-bottom">
+              <h3 class="card-title">DESIGN</h3>
+              <p class="card-desc">We turn the concept into an intuitive product experience.</p>
+              <div class="card-tags">
+                <span class="card-tag">Wireframes &amp; Flows</span>
+                <span class="card-tag">High-Fidelity UI</span>
+                <span class="card-tag">Design Systems</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- 05 BUILD -->
+        <article class="sticky-card" data-index="4" style="z-index: 5; transform: translate3d(0, 100%, 0);">
+          <div class="card-media">
+            <img src="stages/stage5.webp" alt="Build phase: Agile Full-Stack Dev" class="card-bg" loading="lazy" decoding="async">
+            <div class="card-glass-vignette"></div>
+          </div>
+          <div class="card-glass-content">
+            <div class="card-top">
+              <span class="card-badge"><span class="dot"></span> STAGE 05</span>
+              <span class="card-phase">AGILE FULL-STACK DEV</span>
+            </div>
+            <div class="card-bottom">
+              <h3 class="card-title">BUILD</h3>
+              <p class="card-desc">Our engineering team develops the product.</p>
+              <div class="card-tags">
+                <span class="card-tag">Production Code</span>
+                <span class="card-tag">API Integrations</span>
+                <span class="card-tag">Sprint Milestones</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- 06 TEST -->
+        <article class="sticky-card" data-index="5" style="z-index: 6; transform: translate3d(0, 100%, 0);">
+          <div class="card-media">
+            <img src="stages/stage6.webp" alt="Test phase: Quality & Performance" class="card-bg" loading="lazy" decoding="async">
+            <div class="card-glass-vignette"></div>
+          </div>
+          <div class="card-glass-content">
+            <div class="card-top">
+              <span class="card-badge"><span class="dot"></span> STAGE 06</span>
+              <span class="card-phase">QUALITY &amp; PERFORMANCE</span>
+            </div>
+            <div class="card-bottom">
+              <h3 class="card-title">TEST</h3>
+              <p class="card-desc">We validate performance, reliability, usability, and quality.</p>
+              <div class="card-tags">
+                <span class="card-tag">Automated QA</span>
+                <span class="card-tag">End-to-End Testing</span>
+                <span class="card-tag">Security Audits</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- 07 LAUNCH -->
+        <article class="sticky-card" data-index="6" style="z-index: 7; transform: translate3d(0, 100%, 0);">
+          <div class="card-media">
+            <img src="stages/stage7.webp" alt="Launch phase: Deployment & Go-Live" class="card-bg" loading="lazy" decoding="async">
+            <div class="card-glass-vignette"></div>
+          </div>
+          <div class="card-glass-content">
+            <div class="card-top">
+              <span class="card-badge"><span class="dot"></span> STAGE 07</span>
+              <span class="card-phase">DEPLOYMENT &amp; GO-LIVE</span>
+            </div>
+            <div class="card-bottom">
+              <h3 class="card-title">LAUNCH</h3>
+              <p class="card-desc">We deploy the product into the real world.</p>
+              <div class="card-tags">
+                <span class="card-tag">Zero-Downtime Release</span>
+                <span class="card-tag">Domain &amp; SSL Setup</span>
+                <span class="card-tag">Live Monitoring</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- 08 SCALE -->
+        <article class="sticky-card" data-index="7" style="z-index: 8; transform: translate3d(0, 100%, 0);">
+          <div class="card-media">
+            <img src="stages/stage8.webp" alt="Scale phase: Optimization & Growth" class="card-bg" loading="lazy" decoding="async">
+            <div class="card-glass-vignette"></div>
+          </div>
+          <div class="card-glass-content">
+            <div class="card-top">
+              <span class="card-badge"><span class="dot"></span> STAGE 08</span>
+              <span class="card-phase">OPTIMIZATION &amp; GROWTH</span>
+            </div>
+            <div class="card-bottom">
+              <h3 class="card-title">SCALE</h3>
+              <p class="card-desc">We continue improving and expanding it when required.</p>
+              <div class="card-tags">
+                <span class="card-tag">Performance Tuning</span>
+                <span class="card-tag">Feature Expansions</span>
+                <span class="card-tag">24/7 Reliability</span>
+              </div>
+            </div>
+          </div>
+        </article>
+        </div>
+        <div class="sticky-cards-spacer" aria-hidden="true"></div>
+      </div>
+
+      <ol class="rail" id="rail"></ol>
+    </div>
+    <ol class="sr">
+      <li>Discover: You tell us what you're imagining.</li>
+      <li>Define: We understand the problem, users, requirements, and goals.</li>
+      <li>Architect: We determine the technologies, architecture, and development strategy.</li>
+      <li>Design: We turn the concept into an intuitive product experience.</li>
+      <li>Build: Our engineering team develops the product.</li>
+      <li>Test: We validate performance, reliability, usability, and quality.</li>
+      <li>Launch: We deploy the product into the real world.</li>
+      <li>Scale: We continue improving and expanding it when required.</li>
+    </ol>
+  </section>
+
+  <!-- IDEA DEMO -->
+  <section id="idea" class="sec" aria-labelledby="idea-h">
+    <div class="wrap"><div class="grid">
+      <div class="col">
+        <h2 id="idea-h" class="mask sm">What do you want to build?</h2>
+        <p class="lede" style="margin:24px 0 18px">Describe it in your own words. The shape on the right reads your description and shows the parts it could need.</p>
+        <label class="sr" for="idea-in">Describe your idea</label>
+        <textarea class="ta" id="idea-in" rows="4" placeholder="I want to build an AI platform that helps small businesses automate customer support."></textarea>
+        <p style="margin:8px 0 0"><button class="linkbtn" type="button" id="idea-ex">Try the example</button></p>
+        <div id="idea-out" aria-live="polite">
+          <div class="chips" id="chips"></div>
+          <p class="mono" id="become-h" hidden>Your idea could become</p>
+          <ul class="become" id="become"></ul>
+        </div>
+        <p class="note">This is a keyword-based preview that runs in your browser. It is not an AI analysis, and nothing you type here is sent anywhere.</p>
+        <div class="cta-row" id="idea-cta" hidden><button class="btn primary" type="button" data-open-intake data-from-idea>Start with this idea →</button></div>
+      </div>
+      <div class="stage" aria-hidden="true"></div>
+    </div></div>
+  </section>
+
+  <!-- TEAM -->
+  <section id="people" class="sec" aria-labelledby="people-h">
+    <div class="wrap"><div class="grid flip">
+      <div class="stage" aria-hidden="true"></div>
+      <div class="col">
+        <h2 id="people-h" class="mask sm">The people behind the build.</h2>
+        <p class="lede" style="margin-top:24px">Your project gets the specialists it needs, working as one team under one plan. Select a role to see what it adds to the product.</p>
+        <div class="roles" id="roles"></div>
+        <p style="margin:0"><button class="linkbtn" type="button" id="team-all">Assemble the full team</button></p>
+        <p class="mono" style="margin-top:34px">Across a project, that can include</p>
+        <ul class="rolelist">
+          <li>Software engineers</li><li>Frontend engineers</li><li>Backend engineers</li><li>Full-stack engineers</li>
+          <li>AI/ML engineers</li><li>Data engineers</li><li>Mobile developers</li><li>UI/UX designers</li>
+          <li>Cloud engineers</li><li>DevOps engineers</li><li>QA engineers</li><li>Technical architects</li>
+        </ul>
+      </div>
+    </div></div>
+  </section>
+
+  <!-- CUSTOM -->
+  <section id="custom" class="sec" aria-labelledby="custom-h">
+    <div class="wrap"><div class="col">
+      <h2 id="custom-h" class="mask">Have something we didn't list?</h2>
+      <p class="lede" style="margin-top:28px">Good. Some of the most interesting products don't fit inside predefined categories.</p>
+      <ul class="ul">
+        <li>Experimental products</li><li>New platforms</li><li>Complex automation</li><li>AI concepts</li>
+        <li>Research-driven software</li><li>Custom business systems</li><li>New digital experiences</li>
+      </ul>
+      <button class="btn primary" type="button" data-open-intake data-type="Custom">Tell us your idea →</button>
+    </div></div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects" class="sec" aria-labelledby="projects-h">
+    <div class="wrap"><div class="grid">
+      <div class="col" style="max-width:600px">
+        <h2 id="projects-h" class="mask sm">Projects</h2>
+        <div class="ptabs" id="ptabs" role="tablist" aria-label="Projects"></div>
+        <div id="pcase" role="tabpanel"></div>
+      </div>
+      <div class="stage" aria-hidden="true"></div>
+    </div></div>
+  </section>
+
+  <!-- WHY -->
+  <section id="why" class="sec" aria-labelledby="why-h">
+    <div class="wrap"><div class="grid">
+      <div class="col" style="max-width:640px">
+        <h2 id="why-h" class="mask sm">More than development.</h2>
+        <dl class="defs">
+          <div><dt>Understanding the idea</dt><dd>We start with what you want to achieve, who it's for, and what success looks like.</dd></div>
+          <div><dt>Technical planning</dt><dd>Scope, risks, and a build order you can follow.</dd></div>
+          <div><dt>Architecture</dt><dd>Technology and structure chosen to fit the product, not the other way round.</dd></div>
+          <div><dt>Product design</dt><dd>Interfaces that make the idea easy to use.</dd></div>
+          <div><dt>Development</dt><dd>Frontend, backend, mobile, and AI work, planned together.</dd></div>
+          <div><dt>AI integration</dt><dd>Models, assistants, and automation wired in where they help.</dd></div>
+          <div><dt>Testing</dt><dd>Performance, reliability, usability, and quality checked before launch.</dd></div>
+          <div><dt>Deployment</dt><dd>Release into the real world, including cloud setup.</dd></div>
+          <div><dt>Future improvements</dt><dd>Continued work as the product meets real users.</dd></div>
+        </dl>
+        <p class="quote">We don't just build what you ask for. We help figure out how your idea should become a real product.</p>
+      </div>
+      <div class="stage" aria-hidden="true"></div>
+    </div></div>
+  </section>
+
+  <!-- TRUST -->
+  <section id="trust" class="sec" aria-labelledby="trust-h">
+    <div class="wrap"><div class="grid flip">
+      <div class="stage" aria-hidden="true"></div>
+      <div class="col">
+        <h2 id="trust-h" class="mask sm">How we earn your trust.</h2>
+        <dl class="defs">
+          <div><dt>Engineering expertise</dt><dd>Specialists for each layer of the product.</dd></div>
+          <div><dt>Technology capabilities</dt><dd>Web, mobile, AI, cloud, data, and custom work.</dd></div>
+          <div><dt>Development methodology</dt><dd>A clear path from discovery to scale, in the open.</dd></div>
+          <div><dt>Communication</dt><dd>Plain language, whatever your technical background.</dd></div>
+          <div><dt>Transparency</dt><dd>You see what is being built and why.</dd></div>
+          <div><dt>Quality practices</dt><dd>Testing is a stage of the work, not an afterthought.</dd></div>
+          <div><dt>Security awareness</dt><dd>Considered from the architecture onward.</dd></div>
+          <div><dt>Scalable architecture</dt><dd>Built to grow when the idea does.</dd></div>
+        </dl>
+      </div>
+    </div></div>
+  </section>
+
+  <!-- ENGAGEMENT -->
+  <section id="engage" class="sec" aria-labelledby="engage-h">
+    <div class="wrap">
+      <h2 id="engage-h" class="mask sm">Three ways to start.</h2>
+      <p class="lede rv" style="margin-top:24px">Pick the one that matches where your idea is today. You can move between them as the product grows.</p>
+      <div class="u-eng">
+        <article class="u-card rv">
+          <h3>Idea Sprint</h3>
+          <p>A short, focused engagement that turns a rough idea into a plan you can act on.</p>
+          <ul><li>Requirements and user goals</li><li>Architecture and technology choices</li><li>Design direction</li><li>A scoped build roadmap</li></ul>
+          <p class="u-fit"><b>Best for:</b> you have the idea but not yet the plan.</p>
+          <button class="btn sm" type="button" data-open-intake data-need="Idea Sprint">Start a sprint →</button>
+        </article>
+        <article class="u-card focal rv">
+          <h3>MVP Build</h3>
+          <p>We design and build the first working version, focused on the features that prove the idea.</p>
+          <ul><li>Product design and UX</li><li>Frontend, backend, and AI as needed</li><li>Testing and cloud deployment</li><li>Launch support</li></ul>
+          <p class="u-fit"><b>Best for:</b> you know what to build and want it live.</p>
+          <button class="btn primary sm" type="button" data-open-intake data-need="MVP Build">Build my MVP →</button>
+        </article>
+        <article class="u-card rv">
+          <h3>Product Team</h3>
+          <p>An ongoing cross-functional team that keeps improving and scaling your product after launch.</p>
+          <ul><li>Continuous delivery</li><li>Performance and security upkeep</li><li>New features and integrations</li><li>Scaling with your users</li></ul>
+          <p class="u-fit"><b>Best for:</b> you have a live product and need steady momentum.</p>
+          <button class="btn sm" type="button" data-open-support>Talk to us →</button>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- STACK MARQUEE -->
+  <section id="stack" class="u-stack" aria-labelledby="stack-h">
+    <div class="u-stack-header">
+      <h2 id="stack-h">Technologies we build with</h2>
+      <button type="button" class="u-marquee-pause" id="u-marquee-toggle" aria-label="Pause marquee animation" aria-pressed="false">
+        <span class="u-pause-icon" aria-hidden="true">⏸</span>
+        <span class="u-pause-label">Pause</span>
+      </button>
+    </div>
+    <div class="u-track" id="u-track" aria-label="Technologies">
+      <span class="u-pill">React</span><span class="u-pill">Next.js</span><span class="u-pill">TypeScript</span><span class="u-pill">Node.js</span><span class="u-pill">Python</span><span class="u-pill">PostgreSQL</span><span class="u-pill">MongoDB</span><span class="u-pill">Swift</span><span class="u-pill">Kotlin</span><span class="u-pill">Flutter</span><span class="u-pill">React Native</span><span class="u-pill">AWS</span><span class="u-pill">Google Cloud</span><span class="u-pill">Azure</span><span class="u-pill">Docker</span><span class="u-pill">Kubernetes</span><span class="u-pill">LLMs and RAG</span><span class="u-pill">Three.js and WebGL</span>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="sec" aria-labelledby="faq-h">
+    <div class="wrap">
+      <h2 id="faq-h" class="mask sm">Questions people ask first.</h2>
+      <div class="u-faq rv">
+        <details><summary>Do I need technical knowledge?</summary><div class="ans"><p>No. We explain every decision in plain language, so you stay in control of the vision without having to learn the engineering.</p></div></details>
+        <details><summary>How long does a project take?</summary><div class="ans"><p>It depends on scope. After the discovery stage we give you a build order and a timeline you can plan around, so you are not guessing.</p></div></details>
+        <details><summary>How is pricing handled?</summary><div class="ans"><p>Pricing follows scope. We estimate after understanding your idea, and we are open about what drives the cost so you can make trade-offs early.</p></div></details>
+        <details><summary>Who owns the product and the code?</summary><div class="ans"><p>You own what we build for you. Ownership terms are written into the agreement before work begins.</p></div></details>
+        <details><summary>Can you add AI to a product I already have?</summary><div class="ans"><p>Yes. We can integrate assistants, retrieval systems, and automation into an existing product, or build the AI layer as a new service next to it.</p></div></details>
+        <details><summary>What happens after launch?</summary><div class="ans"><p>We keep going if you want us to: monitoring, fixes, new features, and scaling, through the Product Team model.</p></div></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="sec about" aria-labelledby="about-h">
+    <div class="wrap center">
+      <h2 id="about-h" class="mask sm" style="font-size:clamp(34px,5.6vw,84px)">We believe every good idea deserves a chance to exist.</h2>
+      <p>Apeiron was created around a simple belief: people should not need to become software engineers to bring a technology idea to life. You bring the vision. We bring the technical capability.</p>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section id="cta" class="sec" aria-labelledby="cta-h">
+    <div class="wrap center">
+      <h2 id="cta-h">Have an idea?<br>Let's build it.</h2>
+      <p class="lede">You don't need to know how to build it. Start by telling us what you're imagining.</p>
+      <div class="cta-row">
+        <button class="btn primary" type="button" data-open-intake>Bring your idea →</button>
+        <button class="btn" type="button" data-open-support>Talk to support →</button>
+      </div>
+      <p class="sign"><strong>APEIRON SOLUTIONS</strong>From idea to reality. You bring the vision. We build the technology.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div class="brand">
+        <a class="logo apeiron-logo-link" href="#hero" aria-label="Apeiron Solutions, back to top">
+          <span class="apeiron-logo-wrap">
+            <img src="apeiron-logo-sm.webp" alt="Apeiron Solutions" class="apeiron-logo-art" width="1024" height="572" loading="lazy">
+            <svg class="apeiron-energy-svg" viewBox="0 0 1024 572" aria-hidden="true" focusable="false">
+              <defs>
+                <linearGradient id="apeironEnergyGradFoot" x1="95" y1="235" x2="925" y2="235" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="#38D5FF" stop-opacity="0.9"/>
+                  <stop offset="35%" stop-color="#38D5FF" stop-opacity="0.95"/>
+                  <stop offset="46%" stop-color="#4ac5f8" stop-opacity="0.95"/>
+                  <stop offset="54%" stop-color="#e6b84a" stop-opacity="0.95"/>
+                  <stop offset="65%" stop-color="#FFAA45" stop-opacity="0.95"/>
+                  <stop offset="100%" stop-color="#FFAA45" stop-opacity="0.9"/>
+                </linearGradient>
+                <linearGradient id="apeironCoreGradFoot" x1="95" y1="235" x2="925" y2="235" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="#e0f8ff"/>
+                  <stop offset="35%" stop-color="#e8faff"/>
+                  <stop offset="50%" stop-color="#ffffff"/>
+                  <stop offset="65%" stop-color="#fff5e6"/>
+                  <stop offset="100%" stop-color="#ffebd0"/>
+                </linearGradient>
+                <filter id="apeironSoftGlowFoot" x="-25%" y="-25%" width="150%" height="150%">
+                  <feGaussianBlur stdDeviation="11" result="blur"/>
+                </filter>
+                <filter id="apeironCrispGlowFoot" x="-20%" y="-20%" width="140%" height="140%">
+                  <feGaussianBlur stdDeviation="3.2" result="blur"/>
+                </filter>
+              </defs>
+              <path class="energy-glow"
+                d="M 260 370 C 165 370, 95 315, 95 235 C 95 155, 165 100, 265 100 C 365 100, 435 160, 512 232 C 590 305, 665 368, 760 368 C 850 368, 925 315, 925 250 C 925 185, 850 125, 755 125 C 665 125, 590 165, 512 232 C 435 300, 355 370, 260 370 Z"
+                stroke="url(#apeironEnergyGradFoot)" stroke-width="22" stroke-linecap="round" filter="url(#apeironSoftGlowFoot)"/>
+              <path class="energy-mid"
+                d="M 260 370 C 165 370, 95 315, 95 235 C 95 155, 165 100, 265 100 C 365 100, 435 160, 512 232 C 590 305, 665 368, 760 368 C 850 368, 925 315, 925 250 C 925 185, 850 125, 755 125 C 665 125, 590 165, 512 232 C 435 300, 355 370, 260 370 Z"
+                stroke="url(#apeironEnergyGradFoot)" stroke-width="9" stroke-linecap="round" filter="url(#apeironCrispGlowFoot)"/>
+              <path class="energy-core"
+                d="M 260 370 C 165 370, 95 315, 95 235 C 95 155, 165 100, 265 100 C 365 100, 435 160, 512 232 C 590 305, 665 368, 760 368 C 850 368, 925 315, 925 250 C 925 185, 850 125, 755 125 C 665 125, 590 165, 512 232 C 435 300, 355 370, 260 370 Z"
+                stroke="url(#apeironCoreGradFoot)" stroke-width="3.2" stroke-linecap="round"/>
+            </svg>
+          </span>
+        </a>
+        <p>Ideas into reality.</p>
+        <canvas id="mini" width="220" height="220" aria-hidden="true"></canvas>
+      </div>
+      <div><h3>Explore</h3><ul>
+        <li><a href="#build">What We Build</a></li><li><a href="#how">How We Work</a></li><li><a href="#people">Team</a></li>
+        <li><a href="#projects">Projects</a></li><li><a href="#engage">Start</a></li><li><a href="#faq">FAQ</a></li><li><a href="#about">About</a></li><li><a href="#cta">Contact</a></li></ul></div>
+      <div><h3>Legal</h3><ul><li><a href="privacy.html">Privacy</a></li><li><a href="terms.html">Terms</a></li><li><a href="security.html">Security</a></li></ul></div>
+      <div><h3>Follow</h3><ul><li><a href="https://www.linkedin.com/in/apeiron-solvs-a54866441" target="_blank" rel="noopener noreferrer">LinkedIn</a></li><li><a href="https://github.com/apeironsolvs" target="_blank" rel="noopener noreferrer">GitHub</a></li></ul></div>
+    </div>
+    <p class="copy">© Apeiron Solutions</p>
+  </div>
+</footer>
+
+<!-- INTAKE -->
+<div class="intake" id="intake" role="dialog" aria-modal="true" aria-label="Log in or create an account">
+  <div class="ipanel">
+    <button class="iclose" id="iclose" type="button" aria-label="Close">×</button>
+    <div id="iflow">
+      <p class="mono" id="s-kicker">Apeiron account</p>
+      <h2 class="q" id="s-title">Log in to continue.</h2>
+      <div class="seg2" id="seg" role="group" aria-label="Log in or create an account"><button type="button" id="mode-in" aria-pressed="true">Log in</button><button type="button" id="mode-up" aria-pressed="false">Create account</button></div>
+      <p class="lede-s" id="s-lede">Welcome back. Log in and you will stay logged in on this device.</p>
+      <form id="iform" novalidate>
+        <label class="fld" id="s-namebox" hidden><span>Your name</span><input type="text" id="s-name" maxlength="100" autocomplete="name"></label>
+        <label class="fld"><span>Email</span><input type="email" id="s-email" maxlength="254" autocomplete="email"></label>
+        <label class="fld" id="s-codebox" hidden><span>6-digit code from your email</span><input type="text" id="s-code" inputmode="numeric" pattern="[0-9]*" maxlength="6" autocomplete="one-time-code"></label>
+        <label class="fld" id="s-passbox"><span id="s-passlabel">Password</span><input type="password" id="s-pass" maxlength="200" autocomplete="current-password"></label>
+        <label class="chk" id="s-showbox"><input type="checkbox" id="s-show"><span>Show password</span></label>
+        <label class="chk" id="s-termsbox" hidden><input type="checkbox" id="s-terms"><span>I accept the <a href="terms.html" target="_blank" rel="noopener noreferrer">Terms and Conditions</a> and the <a href="privacy.html" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.</span></label>
+        <p class="note" id="s-hint" hidden></p>
+        <p class="note"><button type="button" class="linkbtn" id="s-forgot">Forgot your password?</button></p>
+      </form>
+      <p class="err" id="ierr" role="alert"></p>
+      <div class="inav"><button class="btn" id="iback" type="button" hidden>Back</button><button class="btn primary" id="inext" type="button">Log in</button></div>
+    </div>
+  </div>
+</div>
+
+<noscript><p style="position:relative;z-index:2;padding:24px;text-align:center">Apeiron Solutions turns technology ideas into real products: websites, web and mobile apps, AI, and custom software. This page works best with JavaScript enabled.</p></noscript>
+
+<script src="vendor/three.min.js" defer></script>
+<script type="module" src="js/main.js"></script>
+<script src="upgrade.js" defer></script>
+</body>
+</html>

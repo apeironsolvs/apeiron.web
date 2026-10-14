@@ -1,28 +1,64 @@
-# Apeiron Solutions — Web Application
+# Apeiron Solutions: website, client accounts and admin website
 
-Modern, high-performance interactive website for **Apeiron Solutions** featuring custom WebGL shaders, fluid cursor trails, GSAP-style scroll reveal text animations, and dynamic 3D shape morphing.
+Two websites in one Node server, sharing one SQLite database. **No npm dependencies** (Node 22.5+ built-ins only).
 
-## 🚀 Features
+| Website | Address (local) | Folder | Who |
+|---|---|---|---|
+| Public website + client accounts | http://localhost:8080 | `site/` | visitors and clients |
+| **Admin website** (separate) | http://localhost:8081 | `admin-site/` | Apeiron staff only |
 
-- **3D WebGL Cyan Constellation Background**: Pure cyan (`#38d5ff`) glowing 3D particle system with dynamic line connections, field noise, and smooth shape morphing.
-- **`GlowCursor` WebGL Fluid Engine**: Multi-segment GLSL gradient cursor trail (`#67E8F9` to `#A78BFA`), hotspot white core, film grain noise, pulse modulation, and 700ms idle auto-fade.
-- **`ScrollReveal` Text Animations**: Staggered word-by-word scroll reveal engine (`opacity: 0.10 -> 1.0`, `blur(4px) -> blur(0px)`, and subtle 3° rotation).
-- **`HoverExpand_001` Accordion**: Dynamic flex expansion (`flex: 1 1 380px` active vs `flex: 0 0 44px` collapsed) in the *"What We Build"* section, fully integrated with 3D WebGL morphing models.
-- **Project Intake & Interactive Modals**: Functional contact forms, step-by-step project intake wizard, dynamic summary generator, and direct clipboard copying.
+## Run it locally
+```
+node -v                                  # must be 22.5 or newer
+copy .env.example .env                   # (Mac/Linux: cp .env.example .env), then edit .env
+npm start
+```
+Open http://localhost:8080 for the site and http://localhost:8081 for the admin website.
 
-## 🛠️ Tech Stack
+## First admin login
+Put these two lines in your `.env`, start the site once, then **delete the `ADMIN_PASSWORD` line**. The site creates the admin with a hashed password (it is never stored in readable form):
+```
+ADMIN_EMAIL=your-admin-email
+ADMIN_PASSWORD=a-password-of-12-or-more-characters
+ADMIN_NOTIFY_EMAIL=your-admin-email      # optional: where new-request alerts are emailed (defaults to ADMIN_EMAIL)
+```
+Change the password later with `npm run create-admin -- your-admin-email`. **Never commit `.env`** and never write real passwords in code or docs.
 
-- **HTML5 & CSS3**: Custom design tokens, glassmorphism, responsive grid layout.
-- **Three.js & WebGL (GLSL)**: Custom fragment & vertex shaders for rendering 3D particle shapes and fluid cursor trails.
-- **Vanilla JavaScript (ES6+)**: Zero bulky framework overhead for instant load times and 60fps animations.
+## What clients do
+1. **Bring your idea** (or Log in, top right) opens the **login window**: Log in, or **Create account** (name, email, password, and a required tick-box accepting the Terms and Conditions and the Privacy Policy). Passwords are stored hashed. Logins are remembered for 30 days. Forgot your password? A 6-digit code is emailed.
+2. After login they land on **What do you want to build?** and type their idea.
+3. The site analyses the words (keyword matching, not an AI model) and shows the **options it thinks they need** and why; they can choose several.
+4. **Basic requirements** for each option (pre-ticked from their words).
+5. Two ways to work with us: **Continue building with us** (build cost + monthly subscription fee) or **Just build, then leave** (build cost only).
+6. **Review and send**: price breakdown, payment details, a note that they can negotiate, a comment box, **Send**, and a status beside it: **Pending** (red) until Apeiron approves, then **Accepted** (green), or **Rejected**.
+7. They can follow it, reply and see replies on that page and on **Profile**, which also lets them edit their details or delete their account.
 
-## 💻 Local Development
+## What staff do (admin website)
+Log in, see every request (client, options, plan, totals, comments), **Approve** or **Reject** (with an optional message), reply to comments, set the live project stage, and read support-chat messages. Each new request and comment is emailed to `ADMIN_NOTIFY_EMAIL`; the client is emailed when you approve, reject or reply.
 
-Simply open `index.html` or `Apeiron Solutions.html` in any modern WebGL-enabled browser:
+## Email (needed for codes and alerts)
+Until email is set up, in local mode codes and alerts are printed in the terminal; on a live server password reset is refused with a clear message. Set it up:
+1. Gmail: turn on 2-Step Verification, create an *App password*, then fill `SMTP_USER`, `SMTP_PASS` (the app password) and `MAIL_FROM` in `.env`. (Or use Resend with `RESEND_API_KEY`.)
+2. Restart `npm start`. The log warns "Email is not configured" if something is missing.
 
-```bash
-# Python local server
-python -m http.server 8000
+## Prices
+Starting prices are placeholders in `server/pricing.js`. **Set your real prices there.** Prices are calculated only on the server.
+
+## Test (run before every deploy)
+```
+npm test                                 # 41 backend, security and journey tests
+pip install playwright && playwright install chromium
+python tests/smoke.py                    # the whole journey in a real browser (73 checks)
 ```
 
-Then visit `http://localhost:8000` in your web browser.
+## Deploy
+Use a host that runs Node or Docker: `docker build -t apeiron . && docker run -p 8080:8080 -p 8081:8081 -v apeiron-data:/data --env-file .env apeiron`. Mount a persistent volume for `/data` and back it up (`npm run backup`). Put HTTPS in front. **Never expose the admin website openly**: set `ADMIN_ALLOWED_IPS` (your own IPs) and/or put it behind a firewall or VPN; ideally publish it on its own address such as admin.yourdomain.com. Set `NODE_ENV=production` only on the live server.
+
+## Folders
+`site/` public website, `admin-site/` admin website, `server/` API, `scripts/` tools (`create-admin`, `erase`, `backup`), `tests/`, `docs/` (rules, audit, architecture, memory; not published).
+
+## Privacy requests
+Clients can delete their own account on the Profile page. Staff can run `npm run erase -- person@example.com`.
+
+## Before launch
+Domain (`YOUR-DOMAIN.com`), real prices, legal details and lawyer review of the Terms and Privacy Policy (bump `TERMS_VERSION` in `server/legal.js` whenever they change), contact emails, real case studies and team, `ADMIN_ALLOWED_IPS`, email, backups. See `docs/SECURITY-AUDIT.md` and `docs/task.md`.

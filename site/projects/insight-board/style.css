@@ -1,0 +1,5 @@
+:root{--bg:#0c1016;--fg:#e8edf3;--mut:#8593a3;--ac:#f5a524;--card:#131a22;--line:#212b36;--r:12px}
+.shell{max-width:980px;margin:0 auto;padding:22px 20px;display:grid;gap:16px}header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}h1{font-size:24px}h1 span{color:var(--ac)}h2{font-size:15px;margin-bottom:12px}
+.sel{font-size:14px;color:var(--mut)}select{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px 10px;margin-left:6px}.kpi b{display:block;font-size:28px;margin-top:6px}
+#chart{width:100%;height:auto}#chart text{fill:#8593a3;font-size:11px}.bar{fill:var(--ac);transition:height .4s,y .4s}.bar:hover{fill:#ffc85c}
+table{width:100%;border-collapse:collapse;font-size:14px}th{text-align:left;color:var(--mut);font-weight:500;padding:8px 6px}td{padding:10px 6px;border-top:1px solid var(--line)}.meter{display:inline-block;height:8px;border-radius:9px;background:var(--ac);vertical-align:middle;margin-right:8px}

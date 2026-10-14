@@ -1,0 +1,3 @@
+:root{--bg:#090c11;--fg:#e8edf3;--mut:#8592a3;--ac:#22c55e;--acfg:#03130a;--card:#10151c;--line:#202a35;--r:12px}
+.shell{max-width:1000px;margin:0 auto;padding:20px}header{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:10px}h1{font-size:26px}h1 span{color:var(--ac)}.px{text-align:right}.px b{font-size:36px;font-variant-numeric:tabular-nums;display:block}.up{color:#22c55e}.dn{color:#ef4444}
+.tools{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin:14px 0}.tools .btn{padding:8px 16px}select{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:6px 8px;margin-left:6px}.cw{padding:10px}canvas{width:100%;height:auto;display:block}

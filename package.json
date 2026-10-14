@@ -1,0 +1,17 @@
+{
+  "name": "apeiron-site",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Apeiron Solutions website + API. Zero npm dependencies (Node 22.5+ built-ins only).",
+  "engines": {
+    "node": ">=22.5"
+  },
+  "scripts": {
+    "start": "node --no-warnings=ExperimentalWarning server/index.js",
+    "test": "node --no-warnings=ExperimentalWarning --test tests/api.test.mjs tests/portal.test.mjs",
+    "create-admin": "node --no-warnings=ExperimentalWarning scripts/create-admin.js",
+    "erase": "node --no-warnings=ExperimentalWarning scripts/erase.js",
+    "backup": "node --no-warnings=ExperimentalWarning scripts/backup.js"
+  }
+}

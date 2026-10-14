@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Skyline Ops — concept demo</title><meta name="robots" content="noindex,nofollow"><link rel="stylesheet" href="../_shared/base.css"><link rel="stylesheet" href="style.css"></head>
+<body>
+
+<header class="top"><h1>Skyline<span>.</span> Ops</h1><span class="pill ok" id="overall">All systems operational</span></header>
+<main class="wrap"><div class="grid g4 kpi"><div class="card"><span class="mut">Uptime (30d)</span><b>99.98%</b></div><div class="card"><span class="mut">Requests / sec</span><b id="rps">1,240</b></div><div class="card"><span class="mut">p95 latency</span><b id="lat">182 ms</b></div><div class="card"><span class="mut">Monthly cost</span><b>$4,310</b></div></div>
+<div class="grid g2 mid"><section class="card"><h2>Traffic (live, simulated)</h2><svg id="spark" viewBox="0 0 400 110" preserveAspectRatio="none" role="img" aria-label="Requests per second over time"><polyline id="line" fill="none" stroke="#22d3a6" stroke-width="2.5"/></svg></section>
+<section class="card"><h2>Regions</h2><ul class="reg"><li>Mumbai <span class="pill ok">healthy</span></li><li>Singapore <span class="pill ok">healthy</span></li><li>Frankfurt <span class="pill ok">healthy</span></li><li>Virginia <span class="pill ok">healthy</span></li></ul></section></div>
+<section class="card"><h2>Services</h2><table><thead><tr><th>Service</th><th>Version</th><th>Status</th><th></th></tr></thead><tbody id="svc"></tbody></table></section>
+<section class="card"><h2>Deploy log</h2><ol class="log" id="log" reversed><li>09:12 · api v2.14.0 deployed to all regions</li></ol></section></main>
+
+<div class="demo-foot">Concept demo by Apeiron Solutions · fictional company, sample data · Cloud</div>
+<script src="app.js"></script></body></html>
