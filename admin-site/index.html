@@ -1,27 +1,111 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Apeiron Admin</title><meta name="robots" content="noindex,nofollow"><meta name="referrer" content="no-referrer">
-<link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="admin.css"></head>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Apeiron Solutions · Admin Portal</title>
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="referrer" content="no-referrer">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="admin.css">
+</head>
 <body>
-<header class="top"><b class="brand">APEIRON <span>ADMIN</span></b><span class="who" id="who"></span><button id="out" type="button" hidden>Sign out</button></header>
-<main>
-  <form id="login" novalidate>
-    <h1>Admin sign in</h1>
-    <label>Email<input id="em" type="email" autocomplete="username" required></label>
-    <label>Password<input id="pw" type="password" autocomplete="current-password" required></label>
-    <button type="submit" class="primary">Sign in</button><p id="lerr" class="err" role="alert"></p>
-  </form>
-  <section id="app" hidden>
-    <nav class="tabs" role="tablist"><button role="tab" id="t-req" aria-selected="true">Project requests <span class="count" id="c-req"></span></button><button role="tab" id="t-msg" aria-selected="false">Messages <span class="count" id="c-msg"></span></button></nav>
-    <div id="p-req">
-      <div class="bar"><select id="qf" aria-label="Filter requests"><option value="">All requests</option><option value="submitted">Pending</option><option value="accepted">Accepted</option><option value="declined">Rejected</option><option value="draft">Drafts</option></select><span class="meta" id="live">Updates every 15 seconds</span></div>
-      <div id="quotes"></div>
+<div class="bg-glow" aria-hidden="true"></div>
+
+<header class="top">
+  <div class="brand-bar">
+    <div class="brand-link">
+      <svg class="brand-glyph" viewBox="0 0 64 64" width="28" height="28" aria-hidden="true">
+        <rect width="64" height="64" rx="14" fill="rgba(56,213,255,0.08)"/>
+        <circle cx="32" cy="32" r="18" fill="none" stroke="#38d5ff" stroke-width="3" opacity="0.6"/>
+        <circle cx="32" cy="32" r="7" fill="#38d5ff"/>
+      </svg>
+      <b class="brand">APEIRON <span class="portal-badge">ADMIN</span></b>
     </div>
+  </div>
+  <div class="auth-bar">
+    <div class="user-chip"><span class="status-dot" aria-hidden="true"></span><span class="who" id="who"></span></div>
+    <button id="out" type="button" class="btn-signout" hidden>Sign out</button>
+  </div>
+</header>
+
+<main>
+  <form id="login" class="login-card" novalidate>
+    <div class="login-header">
+      <div class="login-badge">STAFF AUTHENTICATION</div>
+      <h1>Admin sign in</h1>
+      <p class="login-desc">Secure access for Apeiron Solutions operations and client intake management.</p>
+    </div>
+    <label>Email
+      <input id="em" type="email" autocomplete="username" placeholder="admin@apeironsolutions.com" required>
+    </label>
+    <label>Password
+      <input id="pw" type="password" autocomplete="current-password" placeholder="••••••••••••" required>
+    </label>
+    <button type="submit" class="primary">Sign in</button>
+    <p id="lerr" class="err" role="alert"></p>
+  </form>
+
+  <section id="app" hidden>
+    <div class="dashboard-header">
+      <div class="header-titles">
+        <span class="mono-badge">APEIRON CONTROL CONSOLE</span>
+        <h2>Operations & Requests</h2>
+      </div>
+      <div class="header-status">
+        <span class="live-pill"><span class="pulse-dot"></span>System Active</span>
+      </div>
+    </div>
+
+    <nav class="tabs" role="tablist">
+      <button role="tab" id="t-req" aria-selected="true" class="tab-btn">
+        <span class="tab-label">Project requests</span>
+        <span class="count" id="c-req"></span>
+      </button>
+      <button role="tab" id="t-msg" aria-selected="false" class="tab-btn">
+        <span class="tab-label">Messages</span>
+        <span class="count" id="c-msg"></span>
+      </button>
+    </nav>
+
+    <div id="p-req">
+      <div class="bar">
+        <div class="filter-group">
+          <select id="qf" aria-label="Filter requests">
+            <option value="">All requests</option>
+            <option value="submitted">Pending</option>
+            <option value="accepted">Accepted</option>
+            <option value="declined">Rejected</option>
+            <option value="draft">Drafts</option>
+          </select>
+        </div>
+        <span class="meta live-meta" id="live"><span class="sync-icon">⚡</span>Updates every 15 seconds</span>
+      </div>
+      <div id="quotes" class="cards-stream"></div>
+    </div>
+
     <div id="p-msg" hidden>
-      <div class="bar"><input id="q" type="search" placeholder="Search name, email, message" aria-label="Search"><select id="st" aria-label="Status filter"><option value="">All</option><option>new</option><option>contacted</option><option>qualified</option><option>closed</option><option>spam</option></select><a href="/api/admin/export.csv" class="btn">Export CSV</a></div>
-      <div id="list"></div>
+      <div class="bar">
+        <div class="search-wrap">
+          <input id="q" type="search" placeholder="Search name, email, message" aria-label="Search">
+        </div>
+        <div class="filter-group">
+          <select id="st" aria-label="Status filter">
+            <option value="">All</option>
+            <option>new</option>
+            <option>contacted</option>
+            <option>qualified</option>
+            <option>closed</option>
+            <option>spam</option>
+          </select>
+        </div>
+        <a href="/api/admin/export.csv" class="btn btn-export">Export CSV</a>
+      </div>
+      <div id="list" class="cards-stream"></div>
     </div>
   </section>
 </main>
+
 <script src="admin.js"></script>
-</body></html>
+</body>
+</html>
