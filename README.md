@@ -11,9 +11,37 @@ Two websites in one Node server, sharing one SQLite database. **No npm dependenc
 ```
 node -v                                  # must be 22.5 or newer
 copy .env.example .env                   # (Mac/Linux: cp .env.example .env), then edit .env
+npm install                              # installs @supabase/supabase-js
 npm start
 ```
 Open http://localhost:8080 for the site and http://localhost:8081 for the admin website.
+
+## Supabase Cloud Database Setup
+Apeiron connects directly to Supabase Cloud PostgreSQL via the official `@supabase/supabase-js` client.
+
+1. **Create your database tables in Supabase:**
+   - Log into your [Supabase Dashboard](https://supabase.com/dashboard) and open your project.
+   - Click **SQL Editor** in the left sidebar, then click **New Query**.
+   - Open [supabase/schema.sql](file:///supabase/schema.sql), copy its entire contents, paste them into the SQL editor, and click **Run**.
+2. **Add your Supabase credentials to `.env`:**
+   - In Supabase, navigate to **Project Settings** (gear icon) -> **API**.
+   - Copy your **Project URL** and the **service_role** secret API key.
+   - In `.env`, set:
+     ```env
+     SUPABASE_URL=https://your-project-id.supabase.co
+     SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
+     DATABASE_BACKEND=supabase
+     ```
+3. **Verify your connection:**
+   ```bash
+   npm run test-supabase
+   ```
+   This will verify that all 10 tables, indexes, and Row Level Security policies are active.
+4. *(Optional)* **Migrate existing local data:**
+   If you have records in `data/apeiron.db`, push them to Supabase by running:
+   ```bash
+   npm run migrate-supabase
+   ```
 
 ## First admin login
 Put these two lines in your `.env`, start the site once, then **delete the `ADMIN_PASSWORD` line**. The site creates the admin with a hashed password (it is never stored in readable form):

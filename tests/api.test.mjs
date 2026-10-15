@@ -166,7 +166,7 @@ test('backup script writes a private, readable snapshot and prunes old ones', as
     const run = () => execFileSync(process.execPath, ['--no-warnings=ExperimentalWarning', 'scripts/backup.js'], { env, cwd: join(import.meta.dirname, '..') }).toString();
     run(); await new Promise(r => setTimeout(r, 1100)); run(); await new Promise(r => setTimeout(r, 1100)); const out = run();
     const files = readdirSync(join(d, 'backups')); assert.equal(files.length, 2, 'keeps only the newest 2');
-    assert.equal((statSync(join(d, 'backups', files[0])).mode & 0o077), 0, 'owner-only permissions');
+    if (process.platform !== 'win32') assert.equal((statSync(join(d, 'backups', files[0])).mode & 0o077), 0, 'owner-only permissions');
     assert.match(out, /Backup written/);
     const { DatabaseSync } = await import('node:sqlite'); const b = new DatabaseSync(join(d, 'backups', files[1]));
     assert.ok(b.prepare("SELECT name FROM sqlite_master WHERE name='quotes'").get(), 'snapshot contains the tables'); b.close();

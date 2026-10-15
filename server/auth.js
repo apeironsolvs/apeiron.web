@@ -32,19 +32,23 @@ export function clientPasswordError(pw, email = '') {
 export const passwordOk = pw => typeof pw === 'string' && pw.length >= 12 && pw.length <= 200;
 
 const IDLE_MS = 2 * 3600e3, ABSOLUTE_MS = 8 * 3600e3;
-export function createSession(db, userId) {
+export async function createSession(db, userId) {
   const token = randomBytes(32).toString('hex'), csrf = randomBytes(24).toString('hex'), now = Date.now();
-  db.prepare('DELETE FROM sessions WHERE user_id=?').run(userId); // rotation: one live session per user
-  db.prepare('INSERT INTO sessions(id,user_id,csrf,created_at,expires_at,last_seen) VALUES(?,?,?,?,?,?)').run(sha256(token), userId, csrf, now, now + ABSOLUTE_MS, now);
+  await db.sessions.create({ id: sha256(token), user_id: userId, csrf, created_at: now, expires_at: now + ABSOLUTE_MS, last_seen: now });
   return { token, csrf, maxAge: ABSOLUTE_MS / 1000 };
 }
-export function getSession(db, token) {
+export async function getSession(db, token) {
   if (!/^[a-f0-9]{64}$/.test(token || '')) return null;
   const id = sha256(token), now = Date.now();
-  const s = db.prepare('SELECT s.*, u.email, u.role FROM sessions s JOIN users u ON u.id=s.user_id WHERE s.id=?').get(id);
-  if (!s || s.expires_at < now || now - s.last_seen > IDLE_MS) { if (s) db.prepare('DELETE FROM sessions WHERE id=?').run(id); return null; }
-  db.prepare('UPDATE sessions SET last_seen=? WHERE id=?').run(now, id);
+  const s = await db.sessions.get(id);
+  if (!s || s.expires_at < now || now - s.last_seen > IDLE_MS) {
+    if (s) await db.sessions.delete(id);
+    return null;
+  }
+  await db.sessions.touch(id, now);
   return s;
 }
-export const destroySession = (db, token) => db.prepare('DELETE FROM sessions WHERE id=?').run(sha256(token || ''));
+export async function destroySession(db, token) {
+  await db.sessions.delete(sha256(token || ''));
+}
 export const csrfOk = (a, b) => typeof a === 'string' && typeof b === 'string' && a.length === b.length && timingSafeEqual(Buffer.from(a), Buffer.from(b));

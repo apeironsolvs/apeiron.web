@@ -161,5 +161,16 @@ Start Phase 0 in `task.md`, beginning with 0.1 (review the unseen part of `index
 - Built: password register/login/forgot/reset/delete, 30-day sessions, `TERMS_VERSION` gate, quote comments table, admin decision/comment endpoints and emails, `admin-site/`, new `/start/` journey, profile page, updated privacy/terms/security text, support chat answers.
 - Verified (run): `npm test` 41/41; `tests/smoke.py` 73 checks (create account refused without Terms, weak password refused, analysis, options, requirements, two plans, review, Send -> Pending red, admin approve -> client turns Accepted green by itself, remembered login in new tab, forgot password, public site has no admin).
 - Not verified: delivery to a real inbox; behaviour on real phones; the legal text (draft, needs a lawyer).
-- Open: real prices and contact email; Three.js upgrade; MFA for staff; email verification for new accounts; ADMIN_ALLOWED_IPS and email on the live server.
+## 2026-10-16 — Supabase Cloud Database integration
+- Owner request: Connect Supabase to Apeiron project. Online/cloud database using official `@supabase/supabase-js` library.
+- Built:
+  - Installed `@supabase/supabase-js`.
+  - Created `supabase/schema.sql`: Full PostgreSQL schema matching Apeiron domain models (`meta`, `users`, `sessions`, `enquiries`, `clients`, `login_codes`, `csessions`, `quotes`, `quote_comments`, `audit_log`), indexes, and Row Level Security (RLS) policies.
+  - Created `server/supabase.js`: Cloud database adapter with async methods for all entity operations.
+  - Updated `server/db.js`: Unified database layer supporting Supabase Cloud (when `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` are provided in `.env`) and local SQLite fallback.
+  - Modernized `server/auth.js`, `server/portal.js`, and `server/index.js` to use async database methods.
+  - Created `scripts/test-supabase.js`: Diagnostic CLI to verify connectivity, tables, and RLS (`npm run test-supabase`).
+  - Created `scripts/migrate-to-supabase.js`: CLI tool to migrate data from local SQLite to Supabase (`npm run migrate-supabase`).
+  - Fixed Windows CRLF header parsing and file mode permission assertion.
+- Verified (run): `npm test` 41/41 passing tests (100% pass rate).
 

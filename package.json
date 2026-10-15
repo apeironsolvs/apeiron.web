@@ -12,6 +12,11 @@
     "test": "node --no-warnings=ExperimentalWarning --test tests/api.test.mjs tests/portal.test.mjs",
     "create-admin": "node --no-warnings=ExperimentalWarning scripts/create-admin.js",
     "erase": "node --no-warnings=ExperimentalWarning scripts/erase.js",
-    "backup": "node --no-warnings=ExperimentalWarning scripts/backup.js"
+    "backup": "node --no-warnings=ExperimentalWarning scripts/backup.js",
+    "test-supabase": "node --no-warnings=ExperimentalWarning scripts/test-supabase.js",
+    "migrate-supabase": "node --no-warnings=ExperimentalWarning scripts/migrate-to-supabase.js"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.118.0"
   }
 }
