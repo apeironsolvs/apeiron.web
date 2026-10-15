@@ -16,6 +16,14 @@ export function createSupabaseClient(env = process.env) {
 
 export function createSupabaseDb(client, log = console.log) {
   let cachedIpSalt = null;
+  const getNextId = async table => {
+    try {
+      const { data } = await client.from(table).select('id').order('id', { ascending: false }).limit(1);
+      return data && data[0] && Number(data[0].id) ? Number(data[0].id) + 1 : 1;
+    } catch (_) {
+      return undefined;
+    }
+  };
 
   const db = {
     type: 'supabase',
@@ -44,6 +52,7 @@ export function createSupabaseDb(client, log = console.log) {
     async audit(actor, action, target = '') {
       try {
         await client.from('audit_log').insert({
+          id: await getNextId('audit_log'),
           ts: Date.now(),
           actor: String(actor),
           action: String(action),
@@ -72,7 +81,9 @@ export function createSupabaseDb(client, log = console.log) {
         return count || 0;
       },
       async create({ email, pass_hash, role = 'admin', created_at = Date.now() }) {
+        const nextId = await getNextId('users');
         const { data, error } = await client.from('users').insert({
+          id: nextId,
           email: email.toLowerCase(),
           pass_hash,
           role,
@@ -136,8 +147,9 @@ export function createSupabaseDb(client, log = console.log) {
     // ---------------- Enquiries ----------------
     enquiries: {
       async create({ created_at = Date.now(), idea, name, email, company = '', phone = '', status = 'new', notes = '', ip_hash = '', consent = 1, source = 'form' }) {
+        const id = await getNextId('enquiries');
         const { data, error } = await client.from('enquiries').insert({
-          created_at, idea, name, email, company, phone, status, notes, ip_hash, consent, source,
+          id, created_at, idea, name, email, company, phone, status, notes, ip_hash, consent, source,
         }).select('id').single();
         if (error) throw error;
         return data;
@@ -195,7 +207,9 @@ export function createSupabaseDb(client, log = console.log) {
         return data || null;
       },
       async create({ email, name, pass_hash = '', terms_version = '', terms_at = 0, consent_at = Date.now(), created_at = Date.now() }) {
+        const id = await getNextId('clients');
         const { data, error } = await client.from('clients').insert({
+          id,
           email: email.toLowerCase(),
           name,
           pass_hash,
@@ -313,8 +327,9 @@ export function createSupabaseDb(client, log = console.log) {
     // ---------------- Quotes ----------------
     quotes: {
       async create({ client_id, idea, name, company = '', phone = '', services = '[]', reqs = '{}', notes = '{}', plan = '', build_total = 0, monthly = 0, negotiation = '', status = 'draft', project_status = 'received', consent = 1, created_at = Date.now(), updated_at = Date.now() }) {
+        const id = await getNextId('quotes');
         const { data, error } = await client.from('quotes').insert({
-          client_id, idea, name, company, phone, services, reqs, notes, plan, build_total, monthly, negotiation, status, project_status, consent, created_at, updated_at,
+          id, client_id, idea, name, company, phone, services, reqs, notes, plan, build_total, monthly, negotiation, status, project_status, consent, created_at, updated_at,
         }).select('id').single();
         if (error) throw error;
         return data;
@@ -362,8 +377,9 @@ export function createSupabaseDb(client, log = console.log) {
         return data || [];
       },
       async create({ quote_id, author, message, created_at = Date.now() }) {
+        const id = await getNextId('quote_comments');
         const { data, error } = await client.from('quote_comments').insert({
-          quote_id, author, message, created_at,
+          id, quote_id, author, message, created_at,
         }).select().single();
         if (error) throw error;
         return data;
