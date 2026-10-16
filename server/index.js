@@ -26,7 +26,7 @@ export function createApp(env = process.env) {
   if ([siteDir, adminDir].some(d => dataDir === d || dataDir.startsWith(d + sep))) throw new Error('DATA_DIR must NOT be inside the public site folder or the admin site folder: the database would be downloadable.');
   const db = openDb(dataDir, env);
   const rl = limiter();
-  const trustProxy = env.TRUST_PROXY === '1';
+  const trustProxy = env.TRUST_PROXY === '1' || Boolean(env.RENDER || env.RAILWAY_ENVIRONMENT || env.VERCEL);
   const retentionDays = Math.max(1, parseInt(env.RETENTION_DAYS || '365', 10) || 365);
   const allowedOrigin = env.ALLOWED_ORIGIN || '';
   const webhook = /^https:\/\//.test(env.WEBHOOK_URL || '') ? env.WEBHOOK_URL : '';
@@ -56,7 +56,7 @@ export function createApp(env = process.env) {
   if (prod && allowedOrigin && !/^https:\/\//.test(allowedOrigin)) warn('ALLOWED_ORIGIN should be an https:// address in production');
   const log = o => console.log(JSON.stringify({ ts: new Date().toISOString(), ...o }));
   const clientIp = req => {
-    if (trustProxy) { const x = String(req.headers['x-forwarded-for'] || '').split(',').map(s => s.trim()).filter(Boolean); if (x.length) return x[x.length - 1]; }
+    if (trustProxy) { const x = String(req.headers['x-forwarded-for'] || '').split(',').map(s => s.trim()).filter(Boolean); if (x.length) return x[0]; }
     return req.socket.remoteAddress || 'unknown';
   };
   const ipHash = async ip => createHash('sha256').update((await getSalt()) + ip).digest('hex').slice(0, 16);
