@@ -26,7 +26,8 @@ export function createPortal(c) {
   const info = r => ({ email: r.email, name: r.name || '', company: r.company || '', phone: r.phone || '' });
 
   async function lookup(req) {          // returns the live session or null, never writes a response
-    const t = cookies(req)[CK];
+    const c = cookies(req);
+    const t = c[CK] || c['apeiron_c'] || c['__Host-apeiron_c'];
     if (!/^[a-f0-9]{64}$/.test(t || '')) return null;
     const id = sha(t), now = Date.now(), s = await db.csessions.get(id);
     if (!s || s.expires_at < now || now - s.last_seen > REMEMBER) { if (s) await db.csessions.delete(id); return null; }

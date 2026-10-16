@@ -86,11 +86,24 @@ export function createApp(env = process.env) {
     });
   }
   const originOk = req => { const o = req.headers.origin; if (!o) return true; try { return new URL(o).host === req.headers.host || o === allowedOrigin; } catch { return false; } };
-  const cookies = req => Object.fromEntries(String(req.headers.cookie || '').split(';').map(c => c.trim().split('=')).filter(p => p.length === 2));
+  const cookies = req => {
+    const raw = String(req.headers.cookie || '');
+    const out = {};
+    for (const part of raw.split(';')) {
+      const idx = part.indexOf('=');
+      if (idx > 0) {
+        out[part.slice(0, idx).trim()] = part.slice(idx + 1).trim();
+      }
+    }
+    return out;
+  };
   const cookieHeader = (v, maxAge) => `${COOKIE}=${v}; Path=/; HttpOnly; SameSite=Strict; Max-Age=${maxAge}${prod ? '; Secure' : ''}`;
+  const cookieFallback = (v, maxAge) => `apeiron_sid=${v}; Path=/; HttpOnly; SameSite=Lax; Max-Age=${maxAge}${prod ? '; Secure' : ''}`;
 
   async function requireAdmin(req, res, mutating) {
-    const s = await getSession(db, cookies(req)[COOKIE]);
+    const c = cookies(req);
+    const token = c[COOKIE] || c['apeiron_sid'] || c['__Host-apeiron_sid'];
+    const s = await getSession(db, token);
     if (!s || s.role !== 'admin') { fail(res, 401, 'Sign in required.'); return null; }          // deny by default
     if (mutating && (!originOk(req) || !csrfOk(req.headers['x-csrf-token'], s.csrf))) { fail(res, 403, 'Request blocked.'); return null; }
     return s;
@@ -151,13 +164,17 @@ export function createApp(env = process.env) {
         return fail(res, 401, 'Invalid email or password.');               // same message for every failure
       }
       await db.users.resetLockout(u.id);
+      rl.reset?.('login:' + ip);
       const s = await createSession(db, u.id); await audit(db, email, 'login');
-      return send(res, 200, { ok: true, email: u.email, csrf: s.csrf }, { 'Set-Cookie': cookieHeader(s.token, s.maxAge) });
+      const sc = prod ? [cookieHeader(s.token, s.maxAge), cookieFallback(s.token, s.maxAge)] : cookieHeader(s.token, s.maxAge);
+      return send(res, 200, { ok: true, email: u.email, csrf: s.csrf }, { 'Set-Cookie': sc });
     }
     if (pathname === '/api/admin/logout' && m === 'POST') {
       if (!await requireAdmin(req, res, true)) return;
-      await destroySession(db, cookies(req)[COOKIE]);
-      return send(res, 200, { ok: true }, { 'Set-Cookie': cookieHeader('', 0) });
+      const c = cookies(req);
+      await destroySession(db, c[COOKIE] || c['apeiron_sid'] || c['__Host-apeiron_sid']);
+      const sc = prod ? [cookieHeader('', 0), cookieFallback('', 0)] : cookieHeader('', 0);
+      return send(res, 200, { ok: true }, { 'Set-Cookie': sc });
     }
     if (pathname === '/api/admin/me' && m === 'GET') {
       const s = await requireAdmin(req, res, false); if (!s) return;

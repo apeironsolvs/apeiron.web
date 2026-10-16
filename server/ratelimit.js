@@ -11,6 +11,9 @@ export function limiter() {
       if (++h.n > max) return Math.ceil((h.reset - now) / 1000);
       return 0;
     },
+    reset(key) {
+      hits.delete(key);
+    },
     stop: () => clearInterval(timer)
   };
 }

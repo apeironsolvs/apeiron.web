@@ -74,12 +74,16 @@
   }
 
   function enter(email) {
-    $('who').textContent = email; show(true); loadQuotes(true); loadMessages();
+    $('who').textContent = email; show(true);
+    setTimeout(() => { loadQuotes(true); loadMessages(); }, 50);
     clearInterval(poll); poll = setInterval(() => { if (!document.hidden) { loadQuotes(false); } }, 15000);
   }
   $('login').addEventListener('submit', async ev => {
     ev.preventDefault(); $('lerr').textContent = '';
+    const btn = $('login').querySelector('button[type="submit"]') || $('login').querySelector('button.primary') || $('login').querySelector('button');
+    if (btn) btn.disabled = true;
     const r = await api('/api/admin/login', { method: 'POST', body: JSON.stringify({ email: $('em').value, password: $('pw').value }) });
+    if (btn) btn.disabled = false;
     $('pw').value = '';
     if (!r.ok) { $('lerr').textContent = r.status === 429 ? 'Too many attempts. Try again later.' : 'Invalid email or password.'; return; }
     csrf = r.body.csrf; enter(r.body.email);

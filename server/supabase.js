@@ -111,8 +111,8 @@ export function createSupabaseDb(client, log = console.log) {
     // ---------------- Sessions (Admin) ----------------
     sessions: {
       async create({ id, user_id, csrf, created_at, expires_at, last_seen }) {
-        // rotation: delete previous sessions for this user
-        await client.from('sessions').delete().eq('user_id', user_id);
+        // clean up expired sessions
+        await client.from('sessions').delete().lt('expires_at', Date.now());
         const { data, error } = await client.from('sessions').insert({
           id, user_id, csrf, created_at, expires_at, last_seen,
         }).select().single();
