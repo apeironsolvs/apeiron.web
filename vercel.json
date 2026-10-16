@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api/index.js" },
+    { "source": "/admin", "destination": "/admin-site/index.html" },
+    { "source": "/admin/", "destination": "/admin-site/index.html" },
+    { "source": "/admin/(.*)", "destination": "/admin-site/$1" },
+    { "source": "/(.*)", "destination": "/site/$1" }
+  ]
+}

@@ -71,6 +71,12 @@ export function createApp(env = process.env) {
   const fail = (res, status, error, extra) => send(res, status, { error }, extra);
 
   function readJson(req, max = 8192) {
+    if (req.body !== undefined && req.body !== null) {
+      if (typeof req.body === 'object') return Promise.resolve(req.body);
+      if (typeof req.body === 'string') {
+        try { return Promise.resolve(JSON.parse(req.body)); } catch { return Promise.reject({ status: 400, error: 'Invalid JSON.' }); }
+      }
+    }
     return new Promise((ok, no) => {
       if (!/^application\/json(;|$)/i.test(req.headers['content-type'] || '')) return no({ status: 415, error: 'Send JSON.' });
       let size = 0; const parts = [];
@@ -223,7 +229,7 @@ export function createApp(env = process.env) {
 
   portal = createPortal({ db, rl, send, fail, readJson, originOk, cookies, clientIp, prod, mailer, notify, env, audit, requireAdmin, adminMail });
 
-  const isUnified = env.SINGLE_PORT === '1' || (Boolean(env.RENDER || env.RAILWAY_ENVIRONMENT) && !env.ADMIN_PORT);
+  const isUnified = env.SINGLE_PORT === '1' || (Boolean(env.RENDER || env.RAILWAY_ENVIRONMENT || env.VERCEL) && !env.ADMIN_PORT);
 
   const makeServer = kind => http.createServer(async (req, res) => {
     try {
@@ -279,7 +285,7 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
   try { process.loadEnvFile(join(ROOT, '.env')); } catch (_) { /* no .env file: use real environment variables */ }
   const app = createApp(), port = +process.env.PORT || 8080, aport = +process.env.ADMIN_PORT || 8081, ahost = process.env.ADMIN_HOST || '127.0.0.1';
   await app.bootstrapAdmin();
-  const isUnified = process.env.SINGLE_PORT === '1' || port === aport || (Boolean(process.env.RENDER || process.env.RAILWAY_ENVIRONMENT) && !process.env.ADMIN_PORT);
+  const isUnified = process.env.SINGLE_PORT === '1' || port === aport || (Boolean(process.env.RENDER || process.env.RAILWAY_ENVIRONMENT || process.env.VERCEL) && !process.env.ADMIN_PORT);
   if (isUnified) {
     app.server.listen(port, () => console.log(JSON.stringify({ msg: `Apeiron unified server (public + /admin) running on port ${port}`, env: process.env.NODE_ENV || 'development', db: app.db.type })));
   } else {
