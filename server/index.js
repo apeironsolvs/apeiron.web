@@ -229,7 +229,7 @@ export function createApp(env = process.env) {
 
   portal = createPortal({ db, rl, send, fail, readJson, originOk, cookies, clientIp, prod, mailer, notify, env, audit, requireAdmin, adminMail });
 
-  const isUnified = env.SINGLE_PORT === '1' || (Boolean(env.RENDER || env.RAILWAY_ENVIRONMENT || env.VERCEL) && !env.ADMIN_PORT);
+  const isUnified = (env.SINGLE_PORT === '1' || (Boolean(env.RENDER || env.RAILWAY_ENVIRONMENT || env.VERCEL) && !env.ADMIN_PORT)) && env.SERVER_MODE !== 'admin' && env.SERVER_MODE !== 'public';
 
   const makeServer = kind => http.createServer(async (req, res) => {
     try {
@@ -285,8 +285,13 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
   try { process.loadEnvFile(join(ROOT, '.env')); } catch (_) { /* no .env file: use real environment variables */ }
   const app = createApp(), port = +process.env.PORT || 8080, aport = +process.env.ADMIN_PORT || 8081, ahost = process.env.ADMIN_HOST || '127.0.0.1';
   await app.bootstrapAdmin();
-  const isUnified = process.env.SINGLE_PORT === '1' || port === aport || (Boolean(process.env.RENDER || process.env.RAILWAY_ENVIRONMENT || process.env.VERCEL) && !process.env.ADMIN_PORT);
-  if (isUnified) {
+  const mode = String(process.env.SERVER_MODE || '').toLowerCase();
+  const isUnified = (process.env.SINGLE_PORT === '1' || port === aport || (Boolean(process.env.RENDER || process.env.RAILWAY_ENVIRONMENT || process.env.VERCEL) && !process.env.ADMIN_PORT)) && mode !== 'admin' && mode !== 'public';
+  if (mode === 'admin') {
+    app.adminServer.listen(port, () => console.log(JSON.stringify({ msg: `dedicated ADMIN portal running on port ${port}`, env: process.env.NODE_ENV || 'development', db: app.db.type })));
+  } else if (mode === 'public') {
+    app.server.listen(port, () => console.log(JSON.stringify({ msg: `dedicated PUBLIC website running on port ${port}`, env: process.env.NODE_ENV || 'development', db: app.db.type })));
+  } else if (isUnified) {
     app.server.listen(port, () => console.log(JSON.stringify({ msg: `Apeiron unified server (public + /admin) running on port ${port}`, env: process.env.NODE_ENV || 'development', db: app.db.type })));
   } else {
     app.server.listen(port, () => console.log(JSON.stringify({ msg: `public website on port ${port}`, env: process.env.NODE_ENV || 'development', db: app.db.type })));
