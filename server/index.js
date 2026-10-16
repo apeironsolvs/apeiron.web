@@ -223,11 +223,25 @@ export function createApp(env = process.env) {
 
   portal = createPortal({ db, rl, send, fail, readJson, originOk, cookies, clientIp, prod, mailer, notify, env, audit, requireAdmin, adminMail });
 
+  const isUnified = env.SINGLE_PORT === '1' || (Boolean(env.RENDER || env.RAILWAY_ENVIRONMENT) && !env.ADMIN_PORT);
+
   const makeServer = kind => http.createServer(async (req, res) => {
     try {
       const host = req.headers.host || 'localhost';
       const url = new URL(req.url, 'http://' + host);
       if (url.pathname === '/healthz') return send(res, 200, { ok: true });
+      if (isUnified && kind === 'public') {
+        if (url.pathname.startsWith('/api/admin/')) return await api(req, res, url, 'admin');
+        if (url.pathname.startsWith('/api/')) return await api(req, res, url, 'public');
+        if (url.pathname === '/admin') { res.writeHead(301, { Location: '/admin/' }); return res.end(); }
+        if (url.pathname.startsWith('/admin/')) {
+          if (!adminIpOk(clientIp(req))) return notFound(req, res, adminDir);
+          const adminUrl = new URL(req.url, 'http://' + host);
+          adminUrl.pathname = url.pathname.replace(/^\/admin/, '') || '/';
+          return serveStatic(req, res, adminUrl, adminDir);
+        }
+        return serveStatic(req, res, url, siteDir);
+      }
       if (kind === 'admin' && !adminIpOk(clientIp(req))) return notFound(req, res, adminDir);     // other addresses see nothing
       if (url.pathname.startsWith('/api/')) return await api(req, res, url, kind);
       if (kind === 'public' && (url.pathname === '/admin' || url.pathname.startsWith('/admin/'))) return notFound(req, res);
@@ -265,8 +279,14 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
   try { process.loadEnvFile(join(ROOT, '.env')); } catch (_) { /* no .env file: use real environment variables */ }
   const app = createApp(), port = +process.env.PORT || 8080, aport = +process.env.ADMIN_PORT || 8081, ahost = process.env.ADMIN_HOST || '127.0.0.1';
   await app.bootstrapAdmin();
-  app.server.listen(port, () => console.log(JSON.stringify({ msg: `public website on port ${port}`, env: process.env.NODE_ENV || 'development', db: app.db.type })));
-  app.adminServer.listen(aport, ahost, () => console.log(JSON.stringify({ msg: `ADMIN website on ${ahost}:${aport}`, db: app.db.type })));
-  if (process.env.NODE_ENV === 'production' && ahost !== '127.0.0.1' && !process.env.ADMIN_ALLOWED_IPS) console.log(JSON.stringify({ level: 'warn', msg: 'The admin website is reachable from the network and ADMIN_ALLOWED_IPS is not set. Protect it with a firewall, VPN or IP list.' }));
+  const isUnified = process.env.SINGLE_PORT === '1' || port === aport || (Boolean(process.env.RENDER || process.env.RAILWAY_ENVIRONMENT) && !process.env.ADMIN_PORT);
+  if (isUnified) {
+    app.server.listen(port, () => console.log(JSON.stringify({ msg: `Apeiron unified server (public + /admin) running on port ${port}`, env: process.env.NODE_ENV || 'development', db: app.db.type })));
+  } else {
+    app.server.listen(port, () => console.log(JSON.stringify({ msg: `public website on port ${port}`, env: process.env.NODE_ENV || 'development', db: app.db.type })));
+    app.adminServer.listen(aport, ahost, () => console.log(JSON.stringify({ msg: `ADMIN website on ${ahost}:${aport}`, db: app.db.type })));
+    if (process.env.NODE_ENV === 'production' && ahost !== '127.0.0.1' && !process.env.ADMIN_ALLOWED_IPS) console.log(JSON.stringify({ level: 'warn', msg: 'The admin website is reachable from the network and ADMIN_ALLOWED_IPS is not set. Protect it with a firewall, VPN or IP list.' }));
+  }
   for (const sig of ['SIGTERM', 'SIGINT']) process.on(sig, () => app.close().then(() => process.exit(0)));
 }
+

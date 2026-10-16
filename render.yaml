@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: apeiron-web
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_BACKEND
+        value: supabase
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: ADMIN_EMAIL
+        value: apeironsolvs@gmail.com
+      - key: SINGLE_PORT
+        value: "1"
