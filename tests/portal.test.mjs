@@ -278,3 +278,31 @@ test('support chat messages are stored as enquiries tagged "support" and shown t
   const ad = await adminLogin(); const list = await (await fetch(abase + '/api/admin/enquiries?limit=20', { headers: { cookie: ad.cookie } })).json();
   assert.ok(list.rows.some(e => e.email === 'chat@example.com' && e.source === 'support'));
 });
+test('project status check: matching ID and email succeeds, mismatched email or other user returns 404', async () => {
+  const u1 = await reg('client1@example.com', 'Client One');
+  const u2 = await reg('client2@example.com', 'Client Two');
+  const cr = await fetch(base + '/api/client/quotes', authed(u1, { idea: 'Building an AI logistics mobile platform' }));
+  const qid = (await cr.json()).id;
+
+  // 1. Correct quote ID + owner email -> 200 with status info
+  const s1 = await fetch(base + '/api/project-status', J({ id: qid, email: 'client1@example.com' }));
+  assert.equal(s1.status, 200);
+  const j1 = await s1.json();
+  assert.equal(j1.ok, true);
+  assert.equal(j1.project.id, qid);
+  assert.equal(j1.project.status, 'draft');
+
+  // 2. Mismatched email (User 2 attempting to view User 1's project) -> 404 refused
+  const s2 = await fetch(base + '/api/project-status', J({ id: qid, email: 'client2@example.com' }));
+  assert.equal(s2.status, 404);
+
+  // 3. Non-existent ID -> 404
+  const s3 = await fetch(base + '/api/project-status', J({ id: 999999, email: 'client1@example.com' }));
+  assert.equal(s3.status, 404);
+
+  // 4. Invalid input -> 400
+  const s4 = await fetch(base + '/api/project-status', J({ id: 'bad', email: 'notanemail' }));
+  assert.equal(s4.status, 400);
+});
+
+

@@ -66,6 +66,46 @@ export function createPortal(c) {
     const p = url.pathname, m = req.method, ip = clientIp(req);
     if (p === '/api/catalog' && m === 'GET') return send(res, 200, catalog()), true;
 
+    // ---------------- project status (privacy-isolated, requires exact ID + email match) ----------------
+    if (p === '/api/project-status' && m === 'POST') {
+      const w = rl.hit('pstatus-ip:' + ip, 25, 600e3);
+      if (w) return fail(res, 429, 'Too many status inquiries. Please try again later.', { 'Retry-After': w }), true;
+      const b = await readJson(req, 2048);
+      const rawId = String(b.id || '').replace(/[^0-9]/g, '');
+      const id = parseInt(rawId, 10);
+      const email = typeof b.email === 'string' ? b.email.trim().toLowerCase().slice(0, 254) : '';
+
+      if (!id || id <= 0) return fail(res, 400, 'Please provide a valid project ID number.'), true;
+      if (!EMAIL.test(email)) return fail(res, 400, 'Please provide a valid registered email address.'), true;
+
+      const q = await db.quotes.getById(id);
+      // Privacy & isolation check: the registered email must match the quote's client email exactly.
+      // If no match or not found, return generic 404 to prevent enumeration/interception of other users' projects.
+      if (!q || !q.email || q.email.toLowerCase().trim() !== email) {
+        return fail(res, 404, 'No project found matching that Request ID and email address.'), true;
+      }
+
+      const services = typeof q.services === 'string' ? JSON.parse(q.services) : (q.services || []);
+      const reqs = typeof q.reqs === 'string' ? JSON.parse(q.reqs) : (q.reqs || {});
+      const pr = services.length ? price(services, reqs) : null;
+      const planName = q.plan && pr && pr.plans[q.plan] ? PLANS[q.plan].name : (q.plan || 'Draft');
+
+      return send(res, 200, {
+        ok: true,
+        project: {
+          id: q.id,
+          title: q.idea ? (q.idea.length > 70 ? q.idea.slice(0, 70) + '…' : q.idea) : `Project #${q.id}`,
+          status: q.status,
+          status_label: LABEL[q.status] || q.status,
+          project_status: q.project_status,
+          plan: planName,
+          services_count: services.length,
+          created_at: q.created_at,
+          updated_at: q.updated_at
+        }
+      }), true;
+    }
+
     // ---------------- accounts ----------------
     if (p === '/api/client/register' && m === 'POST') {
       const b = await readJson(req, 2048), name = one(b.name, 100), email = one(b.email, 254).toLowerCase(), pw = typeof b.password === 'string' ? b.password : '';
