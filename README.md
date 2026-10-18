@@ -72,9 +72,30 @@ Until email is set up, in local mode codes and alerts are printed in the termina
 ## Prices
 Starting prices are placeholders in `server/pricing.js`. **Set your real prices there.** Prices are calculated only on the server.
 
+## Security, Firewalls & Apeiron Shield WAF
+Apeiron includes built-in enterprise security protections:
+- **Apeiron Shield WAF (`server/waf.js`)**: Real-time inspection blocking SQL Injection (SQLi), Cross-Site Scripting (XSS), Path Traversal, Command Injection (RCE), and automated bot scanner probes (`wp-admin`, `phpmyadmin`, `cgi-bin`, etc.).
+- **Automatic IP Jail Firewall**: Malicious IPs attempting repeated exploit probes are automatically jailed for 15 minutes.
+- **Token-Bucket Rate Limiter (`server/ratelimit.js`)**: Smooth sliding-window rate limiting protecting login, enquiries, and project queries against brute force and DDOS while preventing legitimate user lockouts.
+- **Zero Cross-User Leakage**: Cryptographic isolation ensures clients can only access their own quotes and project status.
+- **Hardened HTTP Headers**: Strict CSP, `X-Frame-Options: SAMEORIGIN` (`DENY` on `/admin/`), `X-XSS-Protection`, `X-Content-Type-Options: nosniff`, and secure cookie protections.
+
+## Eliminating Render.com Spin-Down Delays
+On Render's free tier, services automatically sleep after 15 minutes of inactivity, causing a 50-second spin-up screen ("Render - Service Spinning Up"). Apeiron provides three solutions to eliminate this:
+1. **Built-in Auto Keep-Alive**: When deployed to Render (`KEEP_ALIVE=1` in `render.yaml`), the server automatically pings itself every 9 minutes to stay warm 24/7.
+2. **GitHub Actions Keep-Alive Workflow**: `.github/workflows/keepalive.yml` pings your live site (`https://your-app.onrender.com/healthz`) every 10 minutes directly from GitHub's cloud.
+3. **Vercel Zero-Cold-Start Edge Hosting**: Deploy static frontend assets instantly to Vercel using the included `vercel.json` with 0ms cold starts.
+
+## Fast AI Project Concierge ("Alex")
+- **Snappy Responsiveness**: Low natural latency (90–150ms) with typing indicators and quick chip suggestions.
+- **Instant Project Status Check**: Single-step or multi-step confidential lookup using Project ID and registered email.
+- **Deep Technical Knowledge Base**: Explains tech stack, custom AI/LLM engineering, code ownership, timelines, and live infrastructure health.
+- **Live Website Uptime Ping**: Integrated real-time health check calling `/api/ping`.
+- **Intelligent Sub-Flow Escape**: Type `cancel`, `back`, or `menu` at any time to exit sub-flows without getting stuck.
+
 ## Test (run before every deploy)
 ```
-npm test                                 # 41 backend, security and journey tests
+npm test                                 # 43 backend, security, WAF, rate-limit and journey tests
 pip install playwright && playwright install chromium
 python tests/smoke.py                    # the whole journey in a real browser (73 checks)
 ```
@@ -83,7 +104,7 @@ python tests/smoke.py                    # the whole journey in a real browser (
 Use a host that runs Node or Docker: `docker build -t apeiron . && docker run -p 8080:8080 -p 8081:8081 -v apeiron-data:/data --env-file .env apeiron`. Mount a persistent volume for `/data` and back it up (`npm run backup`). Put HTTPS in front. **Never expose the admin website openly**: set `ADMIN_ALLOWED_IPS` (your own IPs) and/or put it behind a firewall or VPN; ideally publish it on its own address such as admin.yourdomain.com. Set `NODE_ENV=production` only on the live server.
 
 ## Folders
-`site/` public website, `admin-site/` admin website, `server/` API, `scripts/` tools (`create-admin`, `erase`, `backup`), `tests/`, `docs/` (rules, audit, architecture, memory; not published).
+`site/` public website, `admin-site/` admin website, `server/` API & WAF, `scripts/` tools (`create-admin`, `erase`, `backup`, `keepalive`), `tests/`, `docs/` (rules, audit, architecture, memory; not published).
 
 ## Privacy requests
 Clients can delete their own account on the Profile page. Staff can run `npm run erase -- person@example.com`.

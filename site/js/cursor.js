@@ -5,7 +5,8 @@ export function initCursor() {
   const canvas = document.getElementById('glow-cursor-canvas');
   if (!canvas) return;
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduce) return;
+  const coarse = matchMedia('(pointer: coarse)').matches;
+  if (reduce || coarse) return;
 
   const gl = canvas.getContext('webgl', {
     alpha: true,
@@ -167,6 +168,8 @@ export function initCursor() {
   resize();
   window.addEventListener('resize', resize, { passive: true });
 
+  let animating = false;
+
   window.addEventListener('pointermove', e => {
     if (e.pointerType === 'touch') return;
     const pr = Math.min(window.devicePixelRatio || 1, config.maxDevicePixelRatio);
@@ -183,6 +186,11 @@ export function initCursor() {
     target.y = y;
     pointerInside = true;
     lastInputTime = performance.now();
+    if (!animating) {
+      animating = true;
+      lastFrameTime = performance.now();
+      requestAnimationFrame(render);
+    }
   }, { passive: true });
 
   document.addEventListener('mouseleave', () => {
@@ -191,8 +199,10 @@ export function initCursor() {
   });
 
   function render(now) {
-    requestAnimationFrame(render);
-    if (document.hidden) return;
+    if (document.hidden) {
+      animating = false;
+      return;
+    }
     const delta = Math.min((now - lastFrameTime) / 16.667, 3);
     lastFrameTime = now;
 
@@ -222,6 +232,7 @@ export function initCursor() {
 
     if (fade < 0.001) {
       gl.clear(gl.COLOR_BUFFER_BIT);
+      animating = false;
       return;
     }
 
@@ -247,6 +258,18 @@ export function initCursor() {
 
     gl.clear(gl.COLOR_BUFFER_BIT);
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+
+    if (animating) {
+      requestAnimationFrame(render);
+    }
   }
-  requestAnimationFrame(render);
+
+  // Wake on visibility restore
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden && pointerInside && !animating) {
+      animating = true;
+      lastFrameTime = performance.now();
+      requestAnimationFrame(render);
+    }
+  });
 }

@@ -340,11 +340,22 @@ const defs={
 const secs=Object.keys(defs).map(id=>Object.assign({id,el:document.getElementById(id),top:0,h:1,lp:0},defs[id],{sticky:id==='hero'||id==='how'}));
 secs.forEach(s=>S[s.id]=s);
 const intakeSec={ox:.26,spec:()=>({a:INT_SH[st.intake.step],link:1,scale:1}),hot:()=>.5};
-function measure(){secs.forEach(s=>{const r=s.el.getBoundingClientRect();s.top=r.top+scrollY;s.h=s.el.offsetHeight})}
+let measurePending = false;
+function measure(){
+  if(measurePending)return;
+  measurePending=true;
+  requestAnimationFrame(()=>{
+    measurePending=false;
+    secs.forEach(s=>{const r=s.el.getBoundingClientRect();s.top=r.top+scrollY;s.h=s.el.offsetHeight});
+  });
+}
 measure();addEventListener('load',measure);addEventListener('resize',measure);
 setTimeout(measure,600);setTimeout(measure,1800);
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(measure);
-if('ResizeObserver' in window)new ResizeObserver(measure).observe(document.body);
+if('ResizeObserver' in window){
+  let roTimer;
+  new ResizeObserver(()=>{clearTimeout(roTimer);roTimer=setTimeout(measure,150)}).observe(document.body);
+}
 
 function sceneTarget(){
   const vh=innerHeight,y=scrollY,probe=y+vh*.55;
@@ -420,38 +431,50 @@ function prepareScrollReveal(){
   });
 }
 
-function updateScrollReveal(){
+let lastRevealScrollY = -1;
+function updateScrollReveal(force = false){
   if(typeof reduce!=='undefined'&&reduce)return;
-  const vh=innerHeight;
+  const curY = window.scrollY || window.pageYOffset || 0;
+  if(!force && curY === lastRevealScrollY && revealContainers.length > 0)return;
+  lastRevealScrollY = curY;
+  const vh = innerHeight;
 
-  revealContainers.forEach(({container,words})=>{
-    const rect=container.getBoundingClientRect();
-    const rawProgress=clamp((vh*.95-rect.top)/(vh*.55),0,1);
-    
-    const baseRotation=3.0;
-    const rot=(1-rawProgress)*baseRotation;
-    if(rawProgress<0.99){
-      container.style.transform=`rotate(${rot.toFixed(2)}deg)`;
-    }else{
-      container.style.transform='none';
+  for(let idx = revealContainers.length - 1; idx >= 0; idx--){
+    const item = revealContainers[idx];
+    const {container, words} = item;
+    const rect = container.getBoundingClientRect();
+    if(rect.top > vh * 1.25 || rect.bottom < -100) continue;
+
+    const rawProgress = clamp((vh * 0.95 - rect.top) / (vh * 0.55), 0, 1);
+    if(rawProgress >= 0.99){
+      container.style.transform = 'none';
+      words.forEach(w => {
+        w.style.opacity = '1';
+        w.style.filter = 'none';
+      });
+      revealContainers.splice(idx, 1);
+      continue;
     }
 
-    const numWords=words.length;
-    words.forEach((w,i)=>{
-      const staggerOffset=(i/Math.max(1,numWords))*.35;
-      const pWord=clamp((rawProgress-staggerOffset)/.65,0,1);
-      
-      const opacity=.10+.90*pWord;
-      const blur=(1-pWord)*4.0;
+    const baseRotation = 3.0;
+    const rot = (1 - rawProgress) * baseRotation;
+    container.style.transform = `rotate(${rot.toFixed(2)}deg)`;
 
-      w.style.opacity=opacity.toFixed(2);
-      if(blur>0.1){
-        w.style.filter=`blur(${blur.toFixed(1)}px)`;
+    const numWords = words.length;
+    words.forEach((w, i) => {
+      const staggerOffset = (i / Math.max(1, numWords)) * 0.35;
+      const pWord = clamp((rawProgress - staggerOffset) / 0.65, 0, 1);
+      const opacity = 0.10 + 0.90 * pWord;
+      const blur = (1 - pWord) * 4.0;
+
+      w.style.opacity = opacity.toFixed(2);
+      if(blur > 0.2){
+        w.style.filter = `blur(${blur.toFixed(1)}px)`;
       }else{
-        w.style.filter='none';
+        w.style.filter = 'none';
       }
     });
-  });
+  }
 }
 
 addEventListener('DOMContentLoaded',prepareScrollReveal);

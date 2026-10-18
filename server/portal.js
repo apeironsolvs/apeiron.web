@@ -68,7 +68,7 @@ export function createPortal(c) {
 
     // ---------------- project status (privacy-isolated, requires exact ID + email match) ----------------
     if (p === '/api/project-status' && m === 'POST') {
-      const w = rl.hit('pstatus-ip:' + ip, 25, 600e3);
+      const w = rl.hit('pstatus-ip:' + ip, 50, 600e3);
       if (w) return fail(res, 429, 'Too many status inquiries. Please try again later.', { 'Retry-After': w }), true;
       const b = await readJson(req, 2048);
       const rawId = String(b.id || '').replace(/[^0-9]/g, '');

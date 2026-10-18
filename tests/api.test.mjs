@@ -30,10 +30,16 @@ async function login(pw = PW, ip) {
 
 test('health and static security headers', async () => {
   assert.equal((await fetch(base + '/healthz')).status, 200);
+  const ping = await fetch(base + '/api/ping');
+  assert.equal(ping.status, 200);
+  const pingBody = await ping.json();
+  assert.equal(pingBody.shield, 'active');
   const r = await fetch(base + '/index.html');
   assert.equal(r.status, 200);
   assert.match(r.headers.get('content-security-policy'), /default-src 'self'/);
   assert.equal(r.headers.get('x-content-type-options'), 'nosniff');
+  assert.equal(r.headers.get('x-frame-options'), 'SAMEORIGIN');
+  assert.equal(r.headers.get('x-xss-protection'), '1; mode=block');
 });
 test('path traversal, dotfiles and config files are not served', async () => {
   for (const p of ['/..%2f..%2fpackage.json', '/%2e%2e/package.json', '/_headers', '/.env', '/.git/config', '/server/index.js', '/data/apeiron.db'])
@@ -171,4 +177,11 @@ test('backup script writes a private, readable snapshot and prunes old ones', as
     const { DatabaseSync } = await import('node:sqlite'); const b = new DatabaseSync(join(d, 'backups', files[1]));
     assert.ok(b.prepare("SELECT name FROM sqlite_master WHERE name='quotes'").get(), 'snapshot contains the tables'); b.close();
   } finally { rmSync(d, { recursive: true, force: true }); }
+});
+
+test('Apeiron Shield WAF blocks exploit scanner probes and injection queries', async () => {
+  const probe = await fetch(base + '/wp-login.php');
+  assert.equal(probe.status, 404);
+  const sqli = await fetch(base + '/api/catalog?q=1%20UNION%20SELECT%201,2,3');
+  assert.equal(sqli.status, 403);
 });

@@ -20,3 +20,5 @@ services:
         value: apeironsolvs@gmail.com
       - key: SINGLE_PORT
         value: "1"
+      - key: KEEP_ALIVE
+        value: "1"

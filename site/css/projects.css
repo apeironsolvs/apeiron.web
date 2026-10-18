@@ -79,6 +79,9 @@
 .sup-log::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:99px}
 
 .sup-m{max-width:88%;padding:10px 14px;border-radius:16px;line-height:1.52;font-size:14px;white-space:pre-wrap;word-break:break-word}
+.sup-m strong{color:#fff;font-weight:600}
+.sup-link{color:#38d5ff;text-decoration:underline;text-underline-offset:2px}
+.sup-link:hover{color:#a5f3fc}
 .sup-m.bot{background:rgba(24,32,40,0.85);border:1px solid rgba(255,255,255,0.08);color:#edf1f4;align-self:flex-start;border-bottom-left-radius:4px;box-shadow:0 4px 12px rgba(0,0,0,0.25)}
 .sup-m.me{background:linear-gradient(135deg,#38d5ff 0%,#28a8cc 100%);color:#04141a;font-weight:500;align-self:flex-end;border-bottom-right-radius:4px;box-shadow:0 4px 14px rgba(56,213,255,0.25)}
 

@@ -14,7 +14,8 @@
     "erase": "node --no-warnings=ExperimentalWarning scripts/erase.js",
     "backup": "node --no-warnings=ExperimentalWarning scripts/backup.js",
     "test-supabase": "node --no-warnings=ExperimentalWarning scripts/test-supabase.js",
-    "migrate-supabase": "node --no-warnings=ExperimentalWarning scripts/migrate-to-supabase.js"
+    "migrate-supabase": "node --no-warnings=ExperimentalWarning scripts/migrate-to-supabase.js",
+    "keepalive": "node --no-warnings=ExperimentalWarning scripts/keepalive.js --loop"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.118.0"

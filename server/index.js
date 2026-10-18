@@ -10,6 +10,7 @@ import { validateEnquiry, validatePatch, csvCell } from './validate.js';
 import { limiter } from './ratelimit.js';
 import { createMailer } from './mailer.js';
 import { createPortal } from './portal.js';
+import { createWAF } from './waf.js';
 
 const ROOT = resolve(fileURLToPath(new URL('..', import.meta.url)));
 const MIME = { '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.json': 'application/json', '.svg': 'image/svg+xml', '.png': 'image/png', '.webp': 'image/webp', '.jpg': 'image/jpeg', '.woff2': 'font/woff2', '.txt': 'text/plain; charset=utf-8', '.xml': 'application/xml', '.webmanifest': 'application/manifest+json' };
@@ -26,6 +27,7 @@ export function createApp(env = process.env) {
   if ([siteDir, adminDir].some(d => dataDir === d || dataDir.startsWith(d + sep))) throw new Error('DATA_DIR must NOT be inside the public site folder or the admin site folder: the database would be downloadable.');
   const db = openDb(dataDir, env);
   const rl = limiter();
+  const waf = createWAF({ log: o => console.log(JSON.stringify({ ts: new Date().toISOString(), ...o })) });
   const trustProxy = env.TRUST_PROXY === '1' || Boolean(env.RENDER || env.RAILWAY_ENVIRONMENT || env.VERCEL);
   const retentionDays = Math.max(1, parseInt(env.RETENTION_DAYS || '365', 10) || 365);
   const allowedOrigin = env.ALLOWED_ORIGIN || '';
@@ -46,8 +48,13 @@ export function createApp(env = process.env) {
   } catch { /* no _headers file: fall through with API defaults below */ }
   if (!prod) delete baseHeaders['Strict-Transport-Security'];
   baseHeaders['X-Content-Type-Options'] = 'nosniff';
+  baseHeaders['X-Frame-Options'] = 'SAMEORIGIN';
+  baseHeaders['X-XSS-Protection'] = '1; mode=block';
+  baseHeaders['Referrer-Policy'] = 'strict-origin-when-cross-origin';
+  baseHeaders['Cross-Origin-Opener-Policy'] = 'same-origin';
   // The admin website is never framed by anything, and loads nothing from other sites.
   const adminHeaders = { ...baseHeaders };
+  adminHeaders['X-Frame-Options'] = 'DENY';
   if (adminHeaders['Content-Security-Policy']) adminHeaders['Content-Security-Policy'] = adminHeaders['Content-Security-Policy'].replace("frame-src 'self'", "frame-src 'none'").replace("frame-ancestors 'self'", "frame-ancestors 'none'");
   adminHeaders['Cache-Control'] = 'no-store';
 
@@ -126,9 +133,13 @@ export function createApp(env = process.env) {
     const ip = clientIp(req);
 
     if (pathname === '/api/enquiries' && m === 'POST') {
-      let wait = rl.hit('enq:' + ip, 5, 3600e3) || rl.hit('enq:all', 200, 3600e3);
+      const body = await readJson(req);
+      const isSupport = body && body.source === 'support';
+      const limitKey = isSupport ? 'enq:sup:' + ip : 'enq:' + ip;
+      const limitMax = isSupport ? 25 : 5;
+      let wait = rl.hit(limitKey, limitMax, 3600e3) || rl.hit('enq:all', 500, 3600e3);
       if (wait) return fail(res, 429, 'Too many requests. Please try again later.', { 'Retry-After': wait });
-      const body = await readJson(req), v = validateEnquiry(body);
+      const v = validateEnquiry(body);
       if (!v.ok) return fail(res, 400, v.error);
       if (v.bot) return send(res, 201, { ok: true });                    // pretend success, store nothing
       const d = v.value;
@@ -141,7 +152,7 @@ export function createApp(env = process.env) {
         phone: d.phone,
         ip_hash: await ipHash(ip),
         consent: 1,
-        source: body && body.source === 'support' ? 'support' : 'form'
+        source: isSupport ? 'support' : 'form'
       });
       notify(`New enquiry #${r.id} from ${d.name}`);
       return send(res, 201, { ok: true });
@@ -252,7 +263,15 @@ export function createApp(env = process.env) {
     try {
       const host = req.headers.host || 'localhost';
       const url = new URL(req.url, 'http://' + host);
-      if (url.pathname === '/healthz') return send(res, 200, { ok: true });
+      const ip = clientIp(req);
+      const block = waf.inspect(req, url, ip);
+      if (block) {
+        if (block.status === 404) return notFound(req, res, kind === 'admin' ? adminDir : siteDir);
+        return fail(res, block.status, block.reason);
+      }
+      if (url.pathname === '/healthz' || url.pathname === '/api/ping') {
+        return send(res, 200, { ok: true, uptime: Math.round(process.uptime()), shield: 'active' });
+      }
       if (isUnified && kind === 'public') {
         if (url.pathname.startsWith('/api/admin/')) return await api(req, res, url, 'admin');
         if (url.pathname.startsWith('/api/')) return await api(req, res, url, 'public');
@@ -294,7 +313,30 @@ export function createApp(env = process.env) {
     await audit(db, 'startup', 'admin-created', email);
     warn('Admin account created from .env. Delete the ADMIN_PASSWORD line from .env now (the password is stored only as a hash in the database).');
   }
-  const close = () => new Promise(r => { rl.stop(); clearInterval(purgeTimer); let n = 2; const done = async () => { if (--n === 0) { await db.close(); r(); } }; server.close(done); adminServer.close(done); server.closeAllConnections?.(); adminServer.closeAllConnections?.(); });
+  let keepAliveTimer = null;
+  const keepAliveUrl = env.KEEP_ALIVE_URL || env.RENDER_EXTERNAL_URL || (env.RENDER ? `https://${env.RENDER_SERVICE_NAME || 'apeiron-web'}.onrender.com` : '');
+  if (keepAliveUrl && (env.KEEP_ALIVE === '1' || env.RENDER || prod)) {
+    keepAliveTimer = setInterval(async () => {
+      try {
+        const pingTarget = keepAliveUrl.replace(/\/+$/, '') + '/healthz';
+        await fetch(pingTarget, { headers: { 'User-Agent': 'ApeironKeepAlive/1.0' }, signal: AbortSignal.timeout(10000) });
+      } catch (_) {}
+    }, 540e3); // 9 minutes (Render free spins down at 15m)
+    keepAliveTimer.unref();
+  }
+
+  const close = () => new Promise(r => {
+    if (keepAliveTimer) clearInterval(keepAliveTimer);
+    waf.stop();
+    rl.stop();
+    clearInterval(purgeTimer);
+    let n = 2;
+    const done = async () => { if (--n === 0) { await db.close(); r(); } };
+    server.close(done);
+    adminServer.close(done);
+    server.closeAllConnections?.();
+    adminServer.closeAllConnections?.();
+  });
   return { server, adminServer, db, close, hashPassword, bootstrapAdmin };
 }
 
