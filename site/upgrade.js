@@ -31,20 +31,6 @@ if(track&&!reduce){
   $$('.u-pill',track).forEach(p=>{const c=p.cloneNode(true);c.classList.add('dup');c.setAttribute('aria-hidden','true');track.append(c)});
 }
 
-/* marquee pause control (WCAG 2.2.2) */
-const marqueeBtn=$('#u-marquee-toggle');
-const marqueeSection=$('#stack');
-if(marqueeBtn&&marqueeSection){
-  marqueeBtn.addEventListener('click',()=>{
-    const isPaused=marqueeSection.classList.toggle('is-paused');
-    marqueeBtn.setAttribute('aria-pressed',isPaused?'true':'false');
-    const label=marqueeBtn.querySelector('.u-pause-label');
-    const icon=marqueeBtn.querySelector('.u-pause-icon');
-    if(label)label.textContent=isPaused?'Play':'Pause';
-    if(icon)icon.textContent=isPaused?'▶':'⏸';
-  });
-}
-
 /* FAQ: one open at a time */
 const faq=$$('.u-faq details');
 faq.forEach(d=>d.addEventListener('toggle',()=>{if(d.open)faq.forEach(o=>{if(o!==d)o.open=false})}));

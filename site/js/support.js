@@ -187,15 +187,14 @@ export function initSupport() {
 
   // --- Default Home Menu ---
   const home = () => offer([
+    ['🚀 How to build / Start', () => reply('how_to_build', false)],
     ['Prices', () => reply('prices', false)],
     ['Check project status', startProjectStatus],
     ['What do you build?', () => reply('build', false)],
+    ['✨ Continue Building Advantages', () => reply('continue_advantages', false)],
     ['Tech stack', () => reply('tech', false)],
     ['Security & Firewalls', () => reply('security', false)],
     ['Website status', () => reply('webstatus', false)],
-    ['How does it work?', () => reply('process', false)],
-    ['Plans', () => reply('plans', false)],
-    ['Contact us', () => reply('contact', false)],
     ['Talk to an engineer', startHuman]
   ]);
 
@@ -206,31 +205,131 @@ export function initSupport() {
       if (clientSession && clientSession.name) {
         say(`Hi ${clientSession.name}! 👋 Welcome back. I'm Alex, your Apeiron project concierge. You're logged in as **${clientSession.email}**.\n\nHow can I help you today?`);
       } else {
-        say("Hello! 👋 I'm **Alex from Apeiron Solutions**.\n\nI'm here to answer questions about our services, instant pricing estimates, technology stack, system uptime, or securely check the status of your project.\n\nHow can I help you today?");
+        say("Hello! 👋 I'm **Alex from Apeiron Solutions**.\n\nYou don't even need to be logged into an account to chat with me or get started!\n\n• **Starting a new project**: You can just select what you want or type what you envision, and our team will build it from scratch!\n• **Checking an existing project**: You can securely look up your project's live status and timeline right here using your Project ID and email (or log in anytime).\n\nHow can I help you today?");
       }
       home();
+    },
+
+    how_to_build: async () => {
+      say(
+        "You can just **select what you want or type what you envision**, and our dedicated engineering team will build it completely from scratch!\n\n" +
+        "Here is the simple, transparent process to get your project built:\n\n" +
+        "1. **Step 1: Choose or Describe What You Want**\n" +
+        "   Click **'Bring your idea'** (or use the button below). You can select a product category (Website/Shop, Mobile App, Web Platform, Custom AI) or simply type your vision in plain words into the prompt box.\n\n" +
+        "2. **Step 2: Customize Key Features**\n" +
+        "   Pick the exact requirements you need (e.g. shopping cart, payments, customer logins, admin inventory dashboard, SEO & fast loading).\n\n" +
+        "3. **Step 3: Select 'Continue building with us'**\n" +
+        "   We strongly recommend choosing **'Continue building with us'**! Here are the huge advantages:\n" +
+        "   • **10% Instant Build Discount**: Save 10% off the total initial development cost right away!\n" +
+        "   • **Zero Maintenance Stress**: We take full responsibility for 24/7 server monitoring, security firewalls, database backups, and bug fixes so you never have technical headaches.\n" +
+        "   • **Continuous Post-Launch Evolution**: As your customers and business grow, our engineers regularly push feature upgrades, speed optimizations, and new tools.\n" +
+        "   • **Dedicated Engineering Support**: Priority access to senior developers with guaranteed response times.\n\n" +
+        "4. **Step 4: Review Instant Estimate & Submit**\n" +
+        "   You get an instant, transparent price estimate and delivery timeline with zero hidden fees. Submit your request, and our engineering team will review it and reach out within 24 hours to begin engineering!"
+      );
+      offer([
+        ['🚀 Bring your idea (Open Form)', () => { close(); document.querySelector('[data-open-intake]')?.click(); }],
+        ['✨ Continue Building Advantages', () => reply('continue_advantages', false)],
+        ['💰 Prices & Estimates', () => reply('prices', false)],
+        ['📞 Talk to an engineer', startHuman],
+        ['Main menu', home]
+      ]);
+    },
+
+    build_shop: async () => {
+      say(
+        "Building a high-performing website for your shop is fast, seamless, and completely turnkey with Apeiron Solutions!\n\n" +
+        "**You don't need any technical knowledge at all.** You can just select what you want or type what you envision, and our engineering team will build everything from scratch!\n\n" +
+        "Here is how to get your shop online:\n\n" +
+        "1. **Open the Project Builder**: Click **'Bring your idea'** (or the button below).\n" +
+        "2. **Describe Your Shop**: Select 'Website' or simply type what kind of shop you run (retail, clothing, grocery, cafe, electronics, services, etc.) and what products you sell.\n" +
+        "3. **Select Your Shop Features**: Check off e-commerce essentials like a clean product catalog, instant payment gateway (UPI, cards, NetBanking), customer shopping cart, order tracking, and an easy admin dashboard to update stock.\n" +
+        "4. **Select 'Continue building with us'**: We strongly recommend choosing **'Continue building with us'** for your shop! The advantages are massive:\n" +
+        "   • **10% Instant Build Discount**: Reduces your upfront store build cost immediately.\n" +
+        "   • **Hands-Off Maintenance**: We monitor server uptime 24/7, secure customer transactions behind our Apeiron Shield WAF, and fix bugs instantly.\n" +
+        "   • **Continuous Feature Rollouts**: As sales grow, we add festival discount codes, customer loyalty points, WhatsApp order alerts, and automated invoices for you.\n" +
+        "5. **Review Instant Estimate & Submit**: Review your transparent quote and submit. Our lead engineer will contact you within 24 hours to begin building your shop!"
+      );
+      offer([
+        ['🚀 Start Building My Shop (Open Form)', () => { close(); document.querySelector('[data-open-intake]')?.click(); }],
+        ['✨ Continue Building Advantages', () => reply('continue_advantages', false)],
+        ['💰 Pricing Estimates', () => reply('prices', false)],
+        ['📞 Talk to an engineer', startHuman],
+        ['Main menu', home]
+      ]);
+    },
+
+    form_process: async () => {
+      say(
+        "Filling out our project form is super simple and takes under 60 seconds!\n\n" +
+        "**Here is the exact step-by-step process:**\n\n" +
+        "1. **Click 'Bring your idea'** at the top right (or tap the button below).\n" +
+        "2. **Step 1: Describe what you want** — Simply type what you want in plain words (for example: *'A website for my clothing shop with online payments and order tracking'*).\n" +
+        "3. **Step 2: Choose matching services** — We analyze your words and highlight the best options (e.g., Website & Web Apps, Mobile App, etc.). You can select or unselect with one click.\n" +
+        "4. **Step 3: Pick requirements** — Select optional features like payments, user logins, notifications, or custom admin tools. Included essentials are 100% free.\n" +
+        "5. **Step 4: Select 'Continue building with us'** — **Always select this option!**\n" +
+        "   **Why? Here are the advantages:**\n" +
+        "   • **10% Instant Discount** on your total build cost.\n" +
+        "   • **Zero Maintenance**: All server hosting, security patches, backups, and bug fixes handled for you.\n" +
+        "   • **Continuous Improvements**: Our engineers regularly roll out new features and optimizations as you grow.\n" +
+        "6. **Step 5: Review & Submit** — See an immediate, transparent estimate and delivery timeline. Click Submit, and our team will start working on your project!"
+      );
+      offer([
+        ['🚀 Open the Form Now', () => { close(); document.querySelector('[data-open-intake]')?.click(); }],
+        ['✨ Continue Building Advantages', () => reply('continue_advantages', false)],
+        ['Check project status', startProjectStatus],
+        ['Main menu', home]
+      ]);
+    },
+
+    continue_advantages: async () => {
+      say(
+        "Selecting **'Continue building with us'** is the smartest way to build your product. Here are the key advantages:\n\n" +
+        "• **10% Instant Build Discount**: You save 10% on your upfront engineering and development fees immediately.\n" +
+        "• **Zero Maintenance Headaches**: You don't need a DevOps engineer or system admin. We manage all cloud servers, security patches, database backups, and SSL certificates for you.\n" +
+        "• **Continuous Feature Evolution**: Software is never static. As your business gains users and feedback, our team regularly engineers and releases new features, design improvements, and performance boosts.\n" +
+        "• **Free Bug Fixes & Compatibility**: Whenever web browsers, iOS, or Android update, we proactively update your codebase so your product never breaks.\n" +
+        "• **Apeiron Shield 24/7 Security**: Your product is protected under our multi-layer WAF firewalls, brute-force rate limiters, and live monitoring.\n" +
+        "• **Priority Engineering Support**: Direct hotline to our senior engineering team whenever you need help or new ideas implemented."
+      );
+      offer([
+        ['🚀 Bring your idea (Open Form)', () => { close(); document.querySelector('[data-open-intake]')?.click(); }],
+        ['💰 Starting prices', () => reply('prices', false)],
+        ['Talk to an engineer', startHuman],
+        ['Main menu', home]
+      ]);
     },
 
     prices: async () => {
       const c = await getCatalog();
       if (c && c.services) {
         const lines = Object.values(c.services).map(s => `• **${s.name}**: starting from ${inr(s.base)}`).join('\n');
-        say(`Here are our current starting estimates (before tax):\n\n${lines}\n\nOur interactive project builder calculates an instant estimate tailored to your exact requirements. Final build costs are always locked in writing before development starts.`);
+        say(`Here are our current starting estimates (before tax):\n\n${lines}\n\nOur interactive project builder calculates an instant estimate tailored to your exact requirements. When you select **'Continue building with us'**, your build price includes a **10% discount**!`);
       } else {
-        say("Our starting estimates are ₹40,000 for frontend websites, ₹1,20,000 for full-stack platforms, and ₹1,50,000 for mobile apps. The final price is always confirmed in writing before work begins.");
+        say("Our starting estimates are ₹40,000 for frontend websites, ₹1,20,000 for full-stack platforms, and ₹1,50,000 for mobile apps. Selecting **'Continue building with us'** gives you a **10% discount** on the build cost! The final price is always confirmed in writing before work begins.");
       }
       offer([
-        ['Get an estimate', () => { close(); document.querySelector('[data-open-intake]')?.click(); }],
+        ['🚀 Get an estimate (Open Form)', () => { close(); document.querySelector('[data-open-intake]')?.click(); }],
+        ['✨ Continue Building Advantages', () => reply('continue_advantages', false)],
         ['Check project status', startProjectStatus],
-        ['Plans & subscriptions', () => reply('plans', false)],
         ['Talk to an engineer', startHuman],
         ['Main menu', home]
       ]);
     },
 
     build: async () => {
-      say("We design and engineer complete technology solutions from scratch:\n\n• **Websites & Web Apps**: High-performance, SEO-optimized, responsive modern web apps\n• **Full-Stack Platforms**: SaaS platforms, client portals, robust backends & dashboards\n• **Mobile Apps**: Native iOS and Android products\n• **Custom AI Solutions**: Autonomous agents, LLM pipelines, RAG knowledge search & chatbots\n• **Cloud & Automation**: Scalable infrastructure, database engineering, and workflow automation\n\nYou can interact directly with live demos in the 'What We Build' section!");
+      say(
+        "We design and engineer complete technology solutions from scratch:\n\n" +
+        "• **Websites & Web Apps**: High-performance, SEO-optimized, responsive modern web apps\n" +
+        "• **Full-Stack Platforms**: SaaS platforms, client portals, robust backends & dashboards\n" +
+        "• **Mobile Apps**: Native iOS and Android products\n" +
+        "• **Custom AI Solutions**: Autonomous agents, LLM pipelines, RAG knowledge search & chatbots\n" +
+        "• **Cloud & Automation**: Scalable infrastructure, database engineering, and workflow automation\n\n" +
+        "**How to get started**: You can just select what you want or type what you envision, and our team will build it! In the form, make sure to select **'Continue building with us'** to get a **10% build discount** and ongoing feature updates."
+      );
       offer([
+        ['🚀 Start Building (Open Form)', () => { close(); document.querySelector('[data-open-intake]')?.click(); }],
+        ['✨ Continue Building Advantages', () => reply('continue_advantages', false)],
         ['Show me live demos', () => { close(); document.getElementById('build')?.scrollIntoView({ behavior: 'smooth' }); }],
         ['Tech stack', () => reply('tech', false)],
         ['Prices', () => reply('prices', false)],
@@ -258,9 +357,10 @@ export function initSupport() {
     },
 
     process: async () => {
-      say("We operate through three clear engagement models:\n\n1. **Idea Sprint (1–2 weeks)**: We transform your concept into wireframes, technical specs, and an architecture blueprint.\n2. **MVP Build (4–8 weeks)**: Our engineering team builds, tests, and deploys your first production product.\n3. **Dedicated Product Team**: Continuous post-launch feature releases, security patches, monitoring, and scaling.");
+      say("We operate through three clear engagement models:\n\n1. **Idea Sprint (1–2 weeks)**: We transform your concept into wireframes, technical specs, and an architecture blueprint.\n2. **MVP Build (4–8 weeks)**: Our engineering team builds, tests, and deploys your first production product.\n3. **Dedicated Product Team**: Continuous post-launch feature releases, security patches, monitoring, and scaling.\n\nTo begin, simply open our form, type what you want, and choose **'Continue building with us'** for an instant 10% discount!");
       offer([
-        ['Plans & updates', () => reply('plans', false)],
+        ['🚀 Bring your idea (Open Form)', () => { close(); document.querySelector('[data-open-intake]')?.click(); }],
+        ['✨ Continue Building Advantages', () => reply('continue_advantages', false)],
         ['Code ownership', () => reply('ownership', false)],
         ['Talk to an engineer', startHuman],
         ['Main menu', home]
@@ -268,9 +368,10 @@ export function initSupport() {
     },
 
     plans: async () => {
-      say("When building with us, you can choose between two straightforward plans:\n\n• **Build only**: Fixed one-time price. We engineer the product, complete full QA testing, and deliver complete source handover.\n• **Build + keep improving**: 10% discount on the build fee, plus an ongoing monthly subscription for continuous improvements, proactive updates, security patches, and feature additions.");
+      say("When building with us, you can choose between two straightforward plans:\n\n• **Continue building with us (Recommended)**: 10% instant discount on the build fee, plus an ongoing monthly subscription for continuous improvements, proactive updates, security patches, and feature additions.\n• **Build only**: Fixed one-time price. We engineer the product, complete full QA testing, and deliver complete source handover.");
       offer([
-        ['Get an estimate', () => { close(); document.querySelector('[data-open-intake]')?.click(); }],
+        ['🚀 Get an estimate (Open Form)', () => { close(); document.querySelector('[data-open-intake]')?.click(); }],
+        ['✨ Continue Building Advantages', () => reply('continue_advantages', false)],
         ['Check project status', startProjectStatus],
         ['Prices', () => reply('prices', false)],
         ['Main menu', home]
@@ -296,9 +397,10 @@ export function initSupport() {
     },
 
     nontech: async () => {
-      say("You don't need any technical knowledge at all! That's why we're here. You bring the business idea and vision; we handle the engineering, architecture, code, testing, and deployment. Every decision is explained in plain, transparent language.");
+      say("You don't need any technical knowledge at all! That's why we're here. You can just select what you want or type what you envision in plain words, and our team will build it from scratch! Make sure to select **'Continue building with us'** for zero-headache ongoing maintenance and an instant 10% discount.");
       offer([
-        ['Get an estimate', () => { close(); document.querySelector('[data-open-intake]')?.click(); }],
+        ['🚀 Bring your idea (Open Form)', () => { close(); document.querySelector('[data-open-intake]')?.click(); }],
+        ['✨ Continue Building Advantages', () => reply('continue_advantages', false)],
         ['Talk to an engineer', startHuman],
         ['Main menu', home]
       ]);
@@ -344,20 +446,11 @@ export function initSupport() {
     },
 
     account: async () => {
-      say("To access your dashboard, click **'Log in'** at the top right. If you're new, select 'Create account' to register with your name, email, and password. If you ever lose your credentials, choose 'Forgot password' and we'll email a secure 6-digit code to reset it.");
+      say("To access your dashboard, click **'Log in'** at the top right. If you're new, select 'Create account' to register with your name, email, and password. If you ever lose your credentials, choose 'Forgot password' and we'll email a secure 6-digit code to reset it.\n\nNote: You do not need to log in to start a new project or check existing project status right here in chat!");
       offer([
         ['Log in', () => { close(); document.querySelector('[data-login]')?.click(); }],
         ['Check project status', startProjectStatus],
         ['Main menu', home]
-      ]);
-    },
-
-    contact: async () => {
-      say("You can email our team directly at apeironsolvs@gmail.com, or leave a message right here and we will reply to you promptly.");
-      offer([
-        ['Send message here', startHuman],
-        ['Get an estimate', () => { close(); document.querySelector('[data-open-intake]')?.click(); }],
-        ['Check project status', startProjectStatus]
       ]);
     },
 
@@ -376,27 +469,50 @@ export function initSupport() {
     },
 
     fallback: async () => {
-      say("I want to make sure you get the exact information you need. I can look up your project status, share our pricing and build capabilities, explain our security firewalls, or connect you directly with an Apeiron engineer.");
+      say(
+        "I want to make sure you get the exact answer you're looking for!\n\n" +
+        "• **Want to build something?** You can just select what you want or type your idea, and our team will build it from scratch! In our form, remember to select **'Continue building with us'** for a **10% build discount** and zero-headache ongoing engineering.\n" +
+        "• **Have an existing project?** You can securely check your live project stage and timeline right here using your Project ID and email (no login required).\n" +
+        "• **Need pricing or tech stack details?** Choose from the options below or ask me directly!"
+      );
       offer([
+        ['🚀 How to build / Fill form', () => reply('how_to_build', false)],
+        ['✨ Continue Building Advantages', () => reply('continue_advantages', false)],
         ['Check project status', startProjectStatus],
-        ['Prices', () => reply('prices', false)],
-        ['Tech stack', () => reply('tech', false)],
-        ['Website status', () => reply('webstatus', false)],
-        ['Talk to an engineer', startHuman]
+        ['Prices & Estimates', () => reply('prices', false)],
+        ['Talk to an engineer', startHuman],
+        ['Main menu', home]
       ]);
     }
   };
 
   const RULES = [
+    // 1. Specific building & form questions (highest priority)
+    [/\b(shop|store|e-?commerce|sell online|products? (for|in|on)|retail|boutique|merchandise|inventory)\b/i, 'build_shop'],
+    [/\b(how to (fill|use|complete|submit) (the )?forms?|fill(ing)? (the |a )?forms?|form (process|steps?|guide)|intake form|step by step form)\b/i, 'form_process'],
+    [/\b(how to build|how do (i|we) build|how can (i|we) build|what to do( to build)?|how to create|how to start|where (do|can) i start|want to build|how does it get built|build (it|something|my|a)|process of building|build website|build app)\b/i, 'how_to_build'],
+    [/\b(continue building( with us)?|advantages?|benefits?|why continue|why subscribe|subscription advantage|plan advantages?)\b/i, 'continue_advantages'],
+
+    // 2. Project status & lookup
+    [/\b(status of (my|the|our|there|their)?\s*project|project status|check project|track project|where is my project|order status|quote status|my project|about my project|status)\b/i, 'project_status'],
+
+    // 3. Contact & human handover
     [/\b(email|e-mail|mail id|contact( info(rmation)?)?|reach you|reach out|write to)\b/i, 'contact'],
     [/\b(human|person|agent|someone|call me|speak|talk to|engineer|founder|phone|whatsapp)\b/i, 'human'],
-    [/\b(status of (my|the|our|there|their)?\s*project|project status|check project|track project|where is my project|order status|quote status)\b/i, 'project_status'],
+
+    // 4. Infrastructure & Security
     [/\b(website status|server status|site status|uptime|operational|systems? status|is (the )?site (down|up)|healthz?|ping)\b/i, 'webstatus'],
     [/\b(security|firewall|waf|hack|hack ?proof|ddos|safe|data protection|gdpr|confidential|encrypt\w*)\b/i, 'security'],
+
+    // 5. Tech & AI
     [/\b(tech(nology)?\s*stack|technologies|react|python|node|three\.?js|database|postgres|framework|tools)\b/i, 'tech'],
     [/\b(ai|artificial intelligence|llm|gpt|chatbots?|rag|machine learning|model|agents?)\b/i, 'ai'],
+
+    // 6. Greetings & Social
     [/\b(hi|hello|hey|namaste|good (morning|afternoon|evening)|greetings|hola)\b/i, 'hello'],
     [/\b(thanks|thank you|thx|awesome|great|perfect|appreciate|cool)\b/i, 'thanks'],
+
+    // 7. Commercial & Process
     [/\b(price|prices|pricing|cost|costs|how much|budget|quote|estimate|rate|fees?|inr|rupees?)\b/i, 'prices'],
     [/\b(plan|plans|subscription|maintenance|updates?|monthly|support plan)\b/i, 'plans'],
     [/\b(code ownership|intellectual property|\bip\b|who owns|own the code|copyright)\b/i, 'ownership'],
@@ -404,6 +520,8 @@ export function initSupport() {
     [/\b(how long|timeline|deadline|duration|weeks?|months?|delivery|when|turnaround)\b/i, 'time'],
     [/\b(pay|payment|invoice|upi|card|bank|schedule)\b/i, 'pay'],
     [/\b(login|log in|sign in|code|otp|account|password|verify|forgot)\b/i, 'account'],
+
+    // 8. General fallbacks
     [/\b(build|services?|offer|website|app|mobile|custom|automation|cloud|demo|projects?)\b/i, 'build'],
     [/\b(process|how does|how do you|work|sprint|mvp|steps?)\b/i, 'process']
   ];
