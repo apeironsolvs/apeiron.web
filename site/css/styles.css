@@ -115,11 +115,11 @@ p{margin:0 0 1em}
 
 /* layout */
 .wrap{width:100%;max-width:1320px;margin:0 auto;padding:0 clamp(20px,5vw,72px)}
-.sec{position:relative;min-height:100vh;display:flex;align-items:center;padding:16vh 0}
+.sec{position:relative;display:block;min-height:auto;padding:0}
 .col{max-width:560px}
 .grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px;align-items:center;width:100%}
 .grid.flip .stage{order:-1}
-.stage{min-height:56vh}
+.stage{min-height:auto}
 .tall{position:relative}
 .stick{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
 .ul{list-style:none;margin:28px 0;padding:0}
@@ -129,7 +129,7 @@ p{margin:0 0 1em}
   .grid{grid-template-columns:1fr;gap:0}
   .stage{display:none}
   .col{max-width:none}
-  .sec{padding:12vh 0}
+  .sec{padding:0}
   .sec::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(6,8,10,0),rgba(6,8,10,.78) 22%,rgba(6,8,10,.78) 82%,rgba(6,8,10,0))}
 }
 
@@ -193,7 +193,7 @@ header.nav.compact{padding-top:calc(12px + env(safe-area-inset-top,0px));padding
 @media (max-width:979px){.nav nav,.nav .btn.sm{display:none}.burger{display:block}}
 
 /* hero */
-#hero{height:340vh}
+#hero{height:160vh}
 .hero-in{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:0 24px}
 .hero-in h1{display:grid;font-size:clamp(46px,10vw,152px);line-height:.92;letter-spacing:-.04em;text-transform:uppercase;margin:22px 0 28px;text-shadow:0 0 50px rgba(6,8,10,.9)}
 .hero-in h1 span{grid-area:1/1;transition:opacity .9s,transform .9s cubic-bezier(.2,.8,.2,1),filter .9s}
@@ -355,7 +355,7 @@ dl.case dd{margin:0;color:#c3ccd4}
 .center{text-align:center;margin-inline:auto}
 .about h2{max-width:11em;margin-inline:auto}
 .about p{max-width:34em;margin:30px auto 0;color:#c3ccd4;font-size:clamp(17px,1.5vw,21px)}
-#cta{min-height:110vh}
+#cta{min-height:auto;padding:0}
 #cta h2{font-size:clamp(52px,10vw,150px);text-shadow:0 0 60px rgba(6,8,10,.95)}
 #cta .lede{margin:26px auto 0;text-shadow:0 0 26px rgba(6,8,10,.95)}
 #cta .cta-row{justify-content:center}
