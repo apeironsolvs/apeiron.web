@@ -1,4 +1,4 @@
-Contact: mailto:security@YOUR-DOMAIN.com
+Contact: mailto:apeironsolvs@gmail.com
 Expires: 2027-10-11T00:00:00.000Z
 Preferred-Languages: en
 Canonical: https://YOUR-DOMAIN.com/.well-known/security.txt

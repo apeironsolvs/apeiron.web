@@ -154,7 +154,7 @@ export function initSupport() {
     ['Website status', () => reply('webstatus')],
     ['How does it work?', () => reply('process')],
     ['Plans', () => reply('plans')],
-    ['Talk to a person', startHuman]
+    ['Contact us', () => reply('contact')]
   ]);
 
   // --- Knowledge Base Responses ---
@@ -268,6 +268,15 @@ export function initSupport() {
       ]);
     },
 
+    contact: async () => {
+      say("You can email our team directly at apeironsolvs@gmail.com, or leave a message right here and we will reply to you promptly.");
+      offer([
+        ['Send message here', startHuman],
+        ['Get an estimate', () => { close(); document.querySelector('[data-open-intake]')?.click(); }],
+        ['Check project status', startProjectStatus]
+      ]);
+    },
+
     thanks: async () => {
       say("You're very welcome! Is there anything else about our projects, pricing, or status I can help with?");
       home();
@@ -285,7 +294,8 @@ export function initSupport() {
   };
 
   const RULES = [
-    [/\b(human|person|agent|someone|call me|contact|speak|talk to|engineer|founder)\b/i, 'human'],
+    [/\b(email|e-mail|mail id|contact( info(rmation)?)?|reach you|reach out|write to)\b/i, 'contact'],
+    [/\b(human|person|agent|someone|call me|speak|talk to|engineer|founder)\b/i, 'human'],
     [/\b(status of (my|the|our|there|their)?\s*project|project status|check project|track project|where is my project|order status|quote status)\b/i, 'project_status'],
     [/\b(website status|server status|site status|uptime|operational|systems? status|is (the )?site (down|up)|healthz?)\b/i, 'webstatus'],
     [/\b(hi|hello|hey|namaste|good (morning|afternoon|evening)|greetings)\b/i, 'hello'],
@@ -475,7 +485,7 @@ export function initSupport() {
       }
     } catch (_) {
       t.remove();
-      say('Sorry, I could not reach our server. Please try again in a moment.');
+      say('Sorry, I could not reach our server. Please email us directly at apeironsolvs@gmail.com.');
     }
     home();
   }
