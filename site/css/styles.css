@@ -417,36 +417,9 @@ a, button { cursor: pointer; }
 }
 
 /* ==========================================================================
-   WCAG 2.2.2: Marquee Animation Pause Controls
-   ========================================================================== */
 .u-stack-header {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 28px;
-}
-.u-marquee-pause {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 16px;
-  border-radius: 999px;
-  border: 1px solid var(--glass-border-primary);
-  background: var(--glass-surface-subtle);
-  color: var(--mute);
-  font: 500 13px var(--m);
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-.u-marquee-pause:hover,
-.u-marquee-pause:focus-visible {
-  border-color: var(--cyan);
-  color: var(--text);
-  box-shadow: 0 0 14px rgba(56, 213, 255, 0.25);
-  outline: 2px solid var(--cyan);
-  outline-offset: 2px;
-}
-.u-stack.is-paused .u-track {
-  animation-play-state: paused !important;
+  margin-bottom: 24px;
 }
