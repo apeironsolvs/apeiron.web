@@ -35,29 +35,8 @@
 .menu-chat-btn{display:flex;align-items:center;gap:8px;padding:14px 20px;font:600 17px var(--f);color:#dfe7ec;border-bottom:1px solid rgba(255,255,255,.06);text-decoration:none;transition:color .2s,background .2s}
 .menu-chat-btn:hover{color:var(--cyan);background:rgba(56,213,255,.06)}
 
-/* home floating message button */
-.home-floating-chat{position:fixed;z-index:98;right:24px;bottom:24px;display:inline-flex;align-items:center;gap:10px;padding:12px 20px;border-radius:999px;background:linear-gradient(135deg, rgba(14,22,30,0.95) 0%, rgba(8,12,16,0.98) 100%);border:1px solid rgba(56,213,255,0.45);box-shadow:0 10px 32px rgba(0,0,0,0.65), 0 0 20px rgba(56,213,255,0.25);color:#fff;font:600 14px var(--f);text-decoration:none;cursor:pointer;transition:transform .25s cubic-bezier(0.16,1,0.3,1), border-color .25s, box-shadow .25s, background .25s;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
-.home-floating-chat:hover,.home-floating-chat:focus-visible{transform:translateY(-3px) scale(1.03);border-color:var(--cyan);box-shadow:0 16px 42px rgba(0,0,0,0.75), 0 0 30px rgba(56,213,255,0.45);color:#fff}
-.home-floating-chat:active{transform:translateY(0) scale(0.98)}
-.home-floating-chat .floating-chat-icon{display:flex;align-items:center;justify-content:center;color:var(--cyan);width:20px;height:20px}
-.home-floating-chat .floating-chat-beacon{width:8px;height:8px;border-radius:50%;background:#10b981;box-shadow:0 0 8px #10b981;display:inline-block}
-@media (max-width:768px){.home-floating-chat{right:16px;bottom:20px;padding:10px 16px;font-size:13px;gap:8px}}
-
-.nav-login{background:none;border:1px solid rgba(255,255,255,.22);color:#dfe7ec;border-radius:999px;padding:8px 18px;font:500 14px var(--f);cursor:pointer;margin-right:10px;transition:border-color .2s,background .2s}
-.nav-login:hover,.nav-login:focus-visible{border-color:var(--cyan);background:rgba(56,213,255,.1)}.nav-login[data-state=in]{border-color:var(--cyan);color:var(--cyan)}
-@media (max-width:979px){.nav-login{display:none}}
-.seg2{display:flex;gap:6px;margin:0 0 14px}.seg2 button{flex:1;background:transparent;border:1px solid rgba(255,255,255,.2);color:#cfd8de;border-radius:999px;padding:9px 12px;font:500 14px var(--f);cursor:pointer}
-.seg2 button[aria-pressed=true]{background:rgba(56,213,255,.16);border-color:var(--cyan);color:#fff}
-.intake.login-only .prog,.intake.login-only #istep-label{display:none}
-/* project thumbnails inside cards */
-.he-proj{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:16px}
-.he-open.he-thumb{padding:0;overflow:hidden;align-items:stretch;gap:0;flex:none}
-.he-thumb img{display:block;width:100%;height:auto;aspect-ratio:8/5;object-fit:cover;border-bottom:1px solid rgba(255,255,255,.1);background:#0b0f13}
-.he-cap{display:flex;flex-direction:column;gap:2px;padding:8px 10px 10px}.he-cap b{font-size:13px;line-height:1.25}.he-cap small{font:500 11px/1.35 var(--f);letter-spacing:0;color:var(--cyan)}
-.he-thumb small::after{content:''}
-@media (max-width:420px){.he-proj{grid-template-columns:1fr}}
-/* support chat & floating bottom-right launcher (kept on hold) */
-.sup-launcher{display:none!important}
+/* support chat & floating bottom-right launcher */
+.sup-launcher{position:fixed;z-index:97;right:24px;bottom:24px;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,rgba(20,28,36,0.92) 0%,rgba(10,14,18,0.96) 100%);border:1px solid rgba(56,213,255,0.45);box-shadow:0 12px 36px rgba(0,0,0,0.6),0 0 20px rgba(56,213,255,0.3);color:var(--cyan);cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;outline:none;transition:transform .3s cubic-bezier(0.16,1,0.3,1),opacity .3s ease,box-shadow .3s ease;opacity:0;pointer-events:none;transform:translateY(24px) scale(0.85)}
 .sup-launcher.visible{opacity:1;pointer-events:auto;transform:translateY(0) scale(1)}
 .sup-launcher:hover{transform:translateY(-2px) scale(1.05);border-color:rgba(56,213,255,0.7);box-shadow:0 16px 42px rgba(0,0,0,0.75),0 0 28px rgba(56,213,255,0.45)}
 .sup-launcher:active{transform:translateY(0) scale(0.98)}

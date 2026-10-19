@@ -15,7 +15,7 @@ export function initSupport() {
   let box, launcher, teaser, log, chips, input, form, opener;
   let catalog = null, clientSession = null, flow = null;
   let handoverData = {}, statusData = {};
-  let hasScrolled25 = false;
+  let hasScrolled25 = true;
 
   const el = (t, c, x) => {
     const e = document.createElement(t);
@@ -190,6 +190,7 @@ export function initSupport() {
     ['🚀 How to build / Start', () => reply('how_to_build', false)],
     ['Prices', () => reply('prices', false)],
     ['Check project status', startProjectStatus],
+    ['💬 Messages with Team', () => { close(); location.href = 'account/#chat'; }],
     ['What do you build?', () => reply('build', false)],
     ['✨ Continue Building Advantages', () => reply('continue_advantages', false)],
     ['Tech stack', () => reply('tech', false)],
@@ -483,6 +484,15 @@ export function initSupport() {
         ['Talk to an engineer', startHuman],
         ['Main menu', home]
       ]);
+    },
+
+    team_messages: async () => {
+      say("You can access your private, confidential conversations directly with the Apeiron engineering and architecture team in your Client Portal.\n\nAll submitted requests have an isolated message thread with our team.");
+      offer([
+        ['💬 Open Messages with Team', () => { close(); location.href = 'account/#chat'; }],
+        ['Check project status', startProjectStatus],
+        ['Main menu', home]
+      ]);
     }
   };
 
@@ -495,6 +505,7 @@ export function initSupport() {
 
     // 2. Project status & lookup
     [/\b(status of (my|the|our|there|their)?\s*project|project status|check project|track project|where is my project|order status|quote status|my project|about my project|status)\b/i, 'project_status'],
+    [/\b(messages?|client chat|team chat|chat with team|talk to team|portal chat|direct message|dm)\b/i, 'team_messages'],
 
     // 3. Contact & human handover
     [/\b(email|e-mail|mail id|contact( info(rmation)?)?|reach you|reach out|write to)\b/i, 'contact'],
