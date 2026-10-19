@@ -1,9 +1,25 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Your projects — Apeiron Solutions</title><meta name="robots" content="noindex,nofollow"><meta name="referrer" content="no-referrer">
+<title>Client Dashboard — Apeiron Solutions</title><meta name="robots" content="noindex,nofollow"><meta name="referrer" content="no-referrer">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../css/fonts.css"><link rel="stylesheet" href="../css/portal.css"></head>
 <body>
-<header class="bar"><a class="logo" href="../">APEIRON</a><span class="who" id="who"></span></header>
+<header class="bar">
+  <div class="bar-brand">
+    <a class="logo" href="../" aria-label="Apeiron Solutions home">APEIRON</a>
+  </div>
+  <nav class="portal-nav" id="portal-nav" aria-label="Client Portal Navigation">
+    <button type="button" class="portal-nav-btn active" id="tab-dash" aria-selected="true" role="tab">Projects</button>
+    <button type="button" class="portal-nav-btn nav-chat-btn" id="tab-chat" aria-selected="false" role="tab" aria-label="Messages" title="Messages (Client–Team Conversations)" hidden>
+      <svg class="nav-chat-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+      </svg>
+      <span class="nav-chat-label">Messages</span>
+      <span class="nav-chat-badge" id="chat-badge" hidden></span>
+    </button>
+    <button type="button" class="portal-nav-btn" id="tab-prof" aria-selected="false" role="tab">Profile</button>
+  </nav>
+  <div class="who" id="who"></div>
+</header>
 <main class="wrap" id="app"><p class="mono">Loading…</p></main>
 <script type="module" src="account.js"></script>
 </body></html>

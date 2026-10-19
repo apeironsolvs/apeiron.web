@@ -305,4 +305,83 @@ test('project status check: matching ID and email succeeds, mismatched email or 
   assert.equal(s4.status, 400);
 });
 
+test('client portal messaging: chat eligibility, submitted request lifecycle, message persistence, team replies, and multiple distinct conversations', async () => {
+  const c1 = await reg('chatclient@example.com', 'Chat User');
+  const other = await reg('otherclient@example.com', 'Other User');
+  const ad = await adminLogin();
+
+  // 1. Initial state: No quotes -> 0 submitted quotes (chat icon hidden)
+  const initial = await (await fetch(base + '/api/client/quotes', get(c1))).json();
+  assert.equal(initial.quotes.length, 0);
+  const eligible0 = initial.quotes.filter(q => q.status !== 'draft');
+  assert.equal(eligible0.length, 0, 'No chat eligibility with 0 quotes');
+
+  // 2. Create draft quote -> status is draft -> still 0 submitted quotes (chat icon hidden)
+  const cr1 = await fetch(base + '/api/client/quotes', authed(c1, { idea: 'Real-time logistics platform for fleet tracking' }));
+  const q1 = (await cr1.json()).id;
+  const draftList = await (await fetch(base + '/api/client/quotes', get(c1))).json();
+  const draftQuote = draftList.quotes.find(q => q.id === q1);
+  assert.equal(draftQuote.status, 'draft');
+  const eligibleDraft = draftList.quotes.filter(q => q.status !== 'draft');
+  assert.equal(eligibleDraft.length, 0, 'Draft does not qualify for chat icon');
+
+  // 3. Submit quote 1 with a comment -> status becomes submitted
+  const sub1 = await fetch(base + `/api/client/quotes/${q1}/submit`, authed(c1, { plan: 'build', comment: 'Initial scope question on delivery time' }));
+  assert.equal(sub1.status, 200);
+
+  // 4. Verify authoritative submission state: now 1 submitted quote exists (chat icon visible!)
+  const subList1 = await (await fetch(base + '/api/client/quotes', get(c1))).json();
+  const eligibleSub1 = subList1.quotes.filter(q => q.status !== 'draft');
+  assert.equal(eligibleSub1.length, 1, 'Submitted quote qualifies for chat icon');
+  assert.equal(eligibleSub1[0].id, q1);
+  assert.equal(eligibleSub1[0].comments.length, 1);
+  assert.equal(eligibleSub1[0].comments[0].author, 'client');
+  assert.equal(eligibleSub1[0].comments[0].message, 'Initial scope question on delivery time');
+
+  // 5. Client posts a new message to quote 1
+  const postMsg = await fetch(base + `/api/client/quotes/${q1}/comments`, authed(c1, { message: 'Can we also support iOS and Android tablets?' }));
+  assert.equal(postMsg.status, 200);
+  const postRes = await postMsg.json();
+  assert.equal(postRes.quote.comments.length, 2);
+
+  // 6. Admin portal checks quotes and replies to quote 1
+  const adQuotes = await (await fetch(abase + '/api/admin/quotes', { headers: { cookie: ad.cookie } })).json();
+  const adQ1 = adQuotes.rows.find(r => r.id === q1);
+  assert.ok(adQ1, 'Admin can see client request');
+  assert.equal(adQ1.comments.length, 2);
+
+  const adReply = await fetch(abase + `/api/admin/quotes/${q1}/comments`, J({ message: 'Yes, tablet optimization is included in our design.' }, { cookie: ad.cookie, 'X-CSRF-Token': ad.csrf }));
+  assert.equal(adReply.status, 200);
+
+  // 7. Client fetches quote 1: all 3 messages present, correctly ordered, with proper authors
+  const q1Updated = (await (await fetch(base + `/api/client/quotes/${q1}`, get(c1))).json()).quote;
+  assert.equal(q1Updated.comments.length, 3);
+  assert.equal(q1Updated.comments[0].author, 'client');
+  assert.equal(q1Updated.comments[1].author, 'client');
+  assert.equal(q1Updated.comments[2].author, 'admin');
+  assert.equal(q1Updated.comments[2].message, 'Yes, tablet optimization is included in our design.');
+
+  // 8. Client creates a second quote and submits it -> now 2 submitted quotes exist (conversation selector shown)
+  const cr2 = await fetch(base + '/api/client/quotes', authed(c1, { idea: 'Secondary internal analytics dashboard' }));
+  const q2 = (await cr2.json()).id;
+  await fetch(base + `/api/client/quotes/${q2}/submit`, authed(c1, { plan: 'subscription' }));
+
+  const subList2 = await (await fetch(base + '/api/client/quotes', get(c1))).json();
+  const eligibleSub2 = subList2.quotes.filter(q => q.status !== 'draft');
+  assert.equal(eligibleSub2.length, 2, 'Two submitted quotes qualify for conversation selector');
+
+  // 9. Client posts to quote 2 -> message is isolated to quote 2, does not leak into quote 1
+  await fetch(base + `/api/client/quotes/${q2}/comments`, authed(c1, { message: 'Regarding quote 2: what database is used?' }));
+  const checkQ1 = (await (await fetch(base + `/api/client/quotes/${q1}`, get(c1))).json()).quote;
+  const checkQ2 = (await (await fetch(base + `/api/client/quotes/${q2}`, get(c1))).json()).quote;
+  assert.equal(checkQ1.comments.length, 3, 'Quote 1 comments undisturbed');
+  assert.equal(checkQ2.comments.length, 1, 'Quote 2 has its own isolated message');
+  assert.equal(checkQ2.comments[0].message, 'Regarding quote 2: what database is used?');
+
+  // 10. Privacy isolation: Another client cannot view or comment on quote 1 or quote 2
+  assert.equal((await fetch(base + `/api/client/quotes/${q1}`, get(other))).status, 404);
+  assert.equal((await fetch(base + `/api/client/quotes/${q1}/comments`, authed(other, { message: 'Intrusion test' }))).status, 404);
+});
+
+
 

@@ -47,8 +47,8 @@ export function initIntake({ config, state, onStateChange }) {
 
   async function finish(user) {
     me = user; paintHeader();
-    if (after && !after.stay) { location.href = startUrl(after); return; }
-    closeIntake();
+    if (after && !after.stay && (after.idea || after.need)) { location.href = startUrl(after); return; }
+    location.href = 'account/';
   }
 
   async function submit() {

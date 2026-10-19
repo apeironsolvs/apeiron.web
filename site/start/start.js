@@ -137,7 +137,7 @@ function render() { app.replaceChildren([stepPrompt, stepOptions, stepReqs, step
 
 (async function init() {
   const m = await api('/api/client/me'); if (!m.ok) { location.replace('../?signin=1'); return; }
-  me = m.body; csrf = me.csrf; const who = $('#who'), out = h('button', 'btn sm', 'Log out'); who.append(me.name || me.email, out);
+  me = m.body; csrf = me.csrf; const who = $('#who'), dash = h('a', 'btn sm', 'Dashboard'), out = h('button', 'btn sm', 'Log out'); dash.href = '../account/'; who.append(dash, me.name || me.email, out);
   out.addEventListener('click', async () => { await api('/api/client/logout', {}); location.href = '../'; });
   const c = await api('/api/catalog'); if (!c.ok) { app.replaceChildren(h('p', 'err', 'Something went wrong. Please refresh the page.')); return; }
   cat = c.body; payNote = c.body.paymentNote || '';
