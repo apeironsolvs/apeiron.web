@@ -27,6 +27,33 @@ export function initIntake({ config, state, onStateChange }) {
 
   function paintHeader() {           // top-right button: "Log in" before login, "Profile" after
     $$('[data-login]').forEach(b => { b.textContent = me ? 'Profile' : 'Log in'; b.dataset.state = me ? 'in' : 'out'; });
+    checkSubmittedMessages();
+  }
+
+  async function checkSubmittedMessages() {
+    if (!me) return;
+    try {
+      const r = await api('/api/client/quotes');
+      if (r.ok && r.body.quotes) {
+        const submitted = r.body.quotes.filter(q => q && q.status && q.status !== 'draft');
+        let total = 0;
+        submitted.forEach(q => {
+          if (q.comments && q.comments.length) total += q.comments.length;
+        });
+        $$('.nav-chat-badge').forEach(b => {
+          if (total > 0) {
+            b.textContent = String(total);
+            b.hidden = false;
+            b.title = `${total} message${total === 1 ? '' : 's'} with Apeiron team`;
+          } else {
+            b.hidden = true;
+          }
+        });
+        $$('[data-chat-link]').forEach(el => {
+          el.classList.toggle('has-messages', total > 0);
+        });
+      }
+    } catch (_) {}
   }
   const startUrl = a => { const p = new URLSearchParams(); if (a && a.idea) p.set('idea', a.idea.slice(0, 600)); else if (a && a.need) p.set('need', a.need.slice(0, 80)); const q = p.toString(); return 'start/' + (q ? '?' + q : ''); };
 
@@ -47,6 +74,8 @@ export function initIntake({ config, state, onStateChange }) {
 
   async function finish(user) {
     me = user; paintHeader();
+    if (after && after.chatAfter) { location.href = 'account/#chat'; return; }
+    if (location.hash === '#chat') { location.href = 'account/#chat'; return; }
     if (after && !after.stay && (after.idea || after.need)) { location.href = startUrl(after); return; }
     location.href = 'account/';
   }
@@ -95,8 +124,13 @@ export function initIntake({ config, state, onStateChange }) {
 
   async function openIntake(opts = {}) {
     if (!me) { const r = await api('/api/client/session'); if (r.ok && r.body.signedIn) { me = r.body; paintHeader(); } }
-    after = opts.loginOnly ? { stay: true } : { need: opts.need, idea: opts.idea };
-    if (me) { if (opts.loginOnly) { location.href = 'account/'; return; } location.href = startUrl(after); return; }   // already logged in: straight to the build page
+    after = opts.loginOnly ? { stay: true, chatAfter: opts.chatAfter } : { need: opts.need, idea: opts.idea };
+    if (me) {
+      if (opts.chatAfter) { location.href = 'account/#chat'; return; }
+      if (opts.loginOnly) { location.href = 'account/'; return; }
+      location.href = startUrl(after);
+      return;
+    }   // already logged in: straight to destination
     state.intake.open = true; state.intake.step = 0; if (onStateChange) onStateChange();
     lastFocus = document.activeElement; dialog.classList.add('open'); setInert(true);
     for (const id of ['#s-pass', '#s-code']) $(id).value = ''; $('#s-terms').checked = false; $('#s-show').checked = false; $('#s-pass').type = 'password';
@@ -121,6 +155,14 @@ export function initIntake({ config, state, onStateChange }) {
     if (burger) { burger.setAttribute('aria-expanded', 'false'); burger.textContent = 'Menu'; }
     openIntake({ loginOnly: true });
   }));
+  $$('[data-chat-link]').forEach(btn => btn.addEventListener('click', e => {
+    const menu = $('#menu'), burger = $('#burger'); if (menu) menu.classList.remove('open');
+    if (burger) { burger.setAttribute('aria-expanded', 'false'); burger.textContent = 'Menu'; }
+    if (!me) {
+      e.preventDefault();
+      openIntake({ loginOnly: true, chatAfter: true });
+    }
+  }));
   $('#mode-in').addEventListener('click', () => setMode('login')); $('#mode-up').addEventListener('click', () => setMode('register'));
   $('#s-forgot').addEventListener('click', () => { setMode('forgot'); $('#s-email').focus(); });
   backBtn.addEventListener('click', () => setMode('login'));
@@ -131,7 +173,7 @@ export function initIntake({ config, state, onStateChange }) {
   nextBtn.addEventListener('click', submit);
   api('/api/client/session').then(r => { if (r.ok && r.body.signedIn) { me = r.body; paintHeader(); } });   // remembered login: header shows Profile
   if (new URLSearchParams(location.search).get('signin') === '1') {   // sent back here because they were not logged in
-    const auto = () => openIntake({});
+    const auto = () => openIntake({ loginOnly: true, chatAfter: location.hash === '#chat' });
     document.readyState === 'complete' ? setTimeout(auto, 0) : addEventListener('load', () => setTimeout(auto, 0));
   }
   return { open: openIntake, close: closeIntake };

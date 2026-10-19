@@ -57,11 +57,11 @@ function updateNav() {
 
   if (tabChat) {
     const hasSubmitted = submitted.length > 0;
-    tabChat.hidden = !hasSubmitted;
+    tabChat.hidden = !hasSubmitted && activeTab !== 'chat';
     tabChat.classList.toggle('active', activeTab === 'chat');
     tabChat.setAttribute('aria-selected', String(activeTab === 'chat'));
 
-    if (hasSubmitted && badge) {
+    if (badge) {
       let totalMessages = 0;
       submitted.forEach(q => {
         if (q.comments && q.comments.length) totalMessages += q.comments.length;
@@ -74,11 +74,6 @@ function updateNav() {
         badge.hidden = true;
       }
     }
-  }
-
-  // If currently on chat tab but no submitted quotes exist, switch back to dashboard
-  if (activeTab === 'chat' && submitted.length === 0) {
-    switchTab('dashboard');
   }
 }
 
