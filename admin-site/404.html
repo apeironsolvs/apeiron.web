@@ -55,11 +55,43 @@
 <header class="top">
   <div class="brand-bar">
     <a href="/" class="brand-link" aria-label="Apeiron Solutions">
-      <svg class="brand-glyph" viewBox="0 0 64 64" width="28" height="28" aria-hidden="true">
-        <rect width="64" height="64" rx="14" fill="rgba(56, 213, 255, 0.08)"/>
-        <circle cx="32" cy="32" r="18" fill="none" stroke="#38d5ff" stroke-width="3" opacity="0.6"/>
-        <circle cx="32" cy="32" r="7" fill="#38d5ff"/>
-      </svg>
+      <span class="apeiron-logo-wrap is-flowing">
+        <img src="apeiron-logo-sm.webp" alt="Apeiron Solutions" class="apeiron-logo-art" width="1024" height="572">
+        <svg class="apeiron-energy-svg" viewBox="0 0 1024 572" aria-hidden="true" focusable="false">
+          <defs>
+            <linearGradient id="apeironEnergyGrad404" x1="95" y1="235" x2="925" y2="235" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#38D5FF" stop-opacity="0.9"/>
+              <stop offset="35%" stop-color="#38D5FF" stop-opacity="0.95"/>
+              <stop offset="46%" stop-color="#4ac5f8" stop-opacity="0.95"/>
+              <stop offset="54%" stop-color="#e6b84a" stop-opacity="0.95"/>
+              <stop offset="65%" stop-color="#FFAA45" stop-opacity="0.95"/>
+              <stop offset="100%" stop-color="#FFAA45" stop-opacity="0.9"/>
+            </linearGradient>
+            <linearGradient id="apeironCoreGrad404" x1="95" y1="235" x2="925" y2="235" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#e0f8ff"/>
+              <stop offset="35%" stop-color="#e8faff"/>
+              <stop offset="50%" stop-color="#ffffff"/>
+              <stop offset="65%" stop-color="#fff5e6"/>
+              <stop offset="100%" stop-color="#ffebd0"/>
+            </linearGradient>
+            <filter id="apeironSoftGlow404" x="-25%" y="-25%" width="150%" height="150%">
+              <feGaussianBlur stdDeviation="11" result="blur"/>
+            </filter>
+            <filter id="apeironCrispGlow404" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="3.2" result="blur"/>
+            </filter>
+          </defs>
+          <path class="energy-glow"
+            d="M 260 370 C 165 370, 95 315, 95 235 C 95 155, 165 100, 265 100 C 365 100, 435 160, 512 232 C 590 305, 665 368, 760 368 C 850 368, 925 315, 925 250 C 925 185, 850 125, 755 125 C 665 125, 590 165, 512 232 C 435 300, 355 370, 260 370 Z"
+            stroke="url(#apeironEnergyGrad404)" stroke-width="22" stroke-linecap="round" filter="url(#apeironSoftGlow404)"/>
+          <path class="energy-mid"
+            d="M 260 370 C 165 370, 95 315, 95 235 C 95 155, 165 100, 265 100 C 365 100, 435 160, 512 232 C 590 305, 665 368, 760 368 C 850 368, 925 315, 925 250 C 925 185, 850 125, 755 125 C 665 125, 590 165, 512 232 C 435 300, 355 370, 260 370 Z"
+            stroke="url(#apeironEnergyGrad404)" stroke-width="9" stroke-linecap="round" filter="url(#apeironCrispGlow404)"/>
+          <path class="energy-core"
+            d="M 260 370 C 165 370, 95 315, 95 235 C 95 155, 165 100, 265 100 C 365 100, 435 160, 512 232 C 590 305, 665 368, 760 368 C 850 368, 925 315, 925 250 C 925 185, 850 125, 755 125 C 665 125, 590 165, 512 232 C 435 300, 355 370, 260 370 Z"
+            stroke="url(#apeironCoreGrad404)" stroke-width="3.2" stroke-linecap="round"/>
+        </svg>
+      </span>
       <b class="brand">APEIRON <span class="portal-badge">ADMIN</span></b>
     </a>
   </div>

@@ -1,9 +1,11 @@
 /* ==========================================================================
    Apeiron Solutions — Admin Portal Design System
-   Liquid Glass Administrative Interface
+   High-Transparency Liquid Glass Administrative Interface
    ========================================================================== */
 
-/* Self-hosted Typography */
+/* --------------------------------------------------------------------------
+   Self-Hosted Typography (Strict CSP compliant)
+   -------------------------------------------------------------------------- */
 @font-face {
   font-family: 'Space Grotesk';
   font-style: normal;
@@ -61,46 +63,53 @@
   src: url('assets/fonts/BigShouldersStencilText_600_normal.woff2') format('woff2');
 }
 
+/* --------------------------------------------------------------------------
+   Design Tokens: Colors, Liquid Glass & Typography
+   -------------------------------------------------------------------------- */
 :root {
   color-scheme: dark;
   
-  /* Brand Palette */
+  /* Core Cinematic Palette */
   --ink: #06080a;
   --panel: #0d1216;
   --panel-elevated: #11171d;
+  --line: #1c252c;
+  --line-subtle: rgba(255, 255, 255, 0.08);
+  --line-strong: rgba(255, 255, 255, 0.16);
   --text: #edf1f4;
   --mute: #8d98a2;
   --faint: #56626c;
-  --line: rgba(255, 255, 255, 0.08);
-  --line-strong: rgba(255, 255, 255, 0.16);
 
   /* Accents & Status Colors */
-  --cy: #38d5ff;
   --cyan: #38d5ff;
+  --cy: #38d5ff;
   --cyan-subtle: rgba(56, 213, 255, 0.12);
-  --cyan-glow: rgba(56, 213, 255, 0.28);
+  --cyan-glow: rgba(56, 213, 255, 0.32);
   --amber: #ffaa45;
   --amber-subtle: rgba(255, 170, 69, 0.12);
+  --amber-glow: rgba(255, 170, 69, 0.28);
   --green: #4ade80;
   --green-subtle: rgba(74, 222, 128, 0.14);
+  --green-glow: rgba(74, 222, 128, 0.28);
   --red: #ff6b6b;
   --red-subtle: rgba(255, 107, 107, 0.14);
+  --red-glow: rgba(255, 107, 107, 0.28);
 
-  /* Typography */
+  /* Typography Stacks */
   --f: 'Space Grotesk', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   --fh: 'Bespoke Stencil', 'Big Shoulders Stencil Text', 'Space Grotesk', system-ui, sans-serif;
   --m: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
-  /* Transparent Liquid Glass Tokens */
+  /* Transparent Liquid Glass Tokens (Matching Main Apeiron Website) */
   --liquid-glass-clear: rgba(255, 255, 255, 0.02);
   --liquid-glass-surface: rgba(255, 255, 255, 0.035);
-  --liquid-glass-interactive: rgba(20, 28, 38, 0.40);
-  --liquid-glass-elevated: rgba(14, 20, 28, 0.65);
-  --liquid-glass-card: rgba(12, 17, 24, 0.52);
+  --liquid-glass-interactive: rgba(20, 28, 38, 0.38);
+  --liquid-glass-elevated: rgba(14, 20, 28, 0.60);
+  --liquid-glass-card: rgba(12, 17, 24, 0.48);
 
-  --liquid-glass-edge: rgba(255, 255, 255, 0.14);
+  --liquid-glass-edge: rgba(255, 255, 255, 0.13);
   --liquid-glass-edge-subtle: rgba(255, 255, 255, 0.08);
-  --liquid-glass-edge-hover: rgba(255, 255, 255, 0.30);
+  --liquid-glass-edge-hover: rgba(255, 255, 255, 0.28);
   --liquid-glass-edge-active: rgba(56, 213, 255, 0.45);
 
   --liquid-glass-highlight: inset 0 1px 1px 0 rgba(255, 255, 255, 0.22), inset 0 0 16px 0 rgba(255, 255, 255, 0.02);
@@ -111,8 +120,14 @@
   --liquid-glass-blur-medium: 12px;
   --liquid-glass-blur-strong: 18px;
 
-  --liquid-glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
-  --liquid-glass-shadow-elevated: 0 16px 48px rgba(0, 0, 0, 0.45), 0 0 24px rgba(56, 213, 255, 0.05);
+  --liquid-glass-shadow: 0 10px 32px rgba(0, 0, 0, 0.32);
+  --liquid-glass-shadow-elevated: 0 18px 54px rgba(0, 0, 0, 0.45), 0 0 24px rgba(56, 213, 255, 0.06);
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
 }
 
 *, *::before, *::after {
@@ -130,14 +145,14 @@ body {
   min-height: 100vh;
   background: var(--ink);
   color: var(--text);
-  font: 400 15.5px/1.6 var(--f);
+  font: 400 15px/1.6 var(--f);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   position: relative;
   overflow-x: hidden;
 }
 
-/* Atmospheric Optical Glow */
+/* Atmospheric Optical Dual-Tone Glow */
 .bg-glow, body::before {
   content: "";
   position: fixed;
@@ -145,23 +160,23 @@ body {
   z-index: 0;
   pointer-events: none;
   background:
-    radial-gradient(circle at 18% 18%, rgba(56, 213, 255, 0.055) 0%, transparent 45%),
-    radial-gradient(circle at 82% 75%, rgba(255, 170, 69, 0.04) 0%, transparent 45%);
+    radial-gradient(circle at 18% 15%, rgba(56, 213, 255, 0.065) 0%, transparent 45%),
+    radial-gradient(circle at 82% 75%, rgba(255, 170, 69, 0.045) 0%, transparent 45%);
 }
 
 :focus-visible {
   outline: 2px solid var(--cyan);
   outline-offset: 2px;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
 }
 
 [hidden] {
   display: none !important;
 }
 
-/* ==========================================================================
-   Header Navigation Shell
-   ========================================================================== */
+/* --------------------------------------------------------------------------
+   Header Navigation Shell & Brand Lockup
+   -------------------------------------------------------------------------- */
 header.top {
   position: sticky;
   top: 0;
@@ -170,12 +185,12 @@ header.top {
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  padding: 14px clamp(20px, 4vw, 44px);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(14, 20, 28, 0.55) 60%, rgba(6, 8, 10, 0.75) 100%);
-  -webkit-backdrop-filter: blur(var(--liquid-glass-blur-medium)) saturate(130%);
-  backdrop-filter: blur(var(--liquid-glass-blur-medium)) saturate(130%);
+  padding: 12px clamp(20px, 4vw, 44px);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(14, 20, 28, 0.60) 55%, rgba(6, 8, 10, 0.82) 100%);
+  -webkit-backdrop-filter: blur(var(--liquid-glass-blur-medium)) saturate(135%);
+  backdrop-filter: blur(var(--liquid-glass-blur-medium)) saturate(135%);
   border-bottom: 1px solid var(--liquid-glass-edge);
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35), var(--liquid-glass-highlight-soft);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.38), var(--liquid-glass-highlight-soft);
   transition: padding .3s, background .3s, border-color .3s;
 }
 
@@ -187,15 +202,124 @@ header.top {
 .brand-link {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   text-decoration: none;
   color: var(--text);
+  cursor: default;
 }
 
-.brand-glyph {
+a.brand-link {
+  cursor: pointer;
+}
+
+/* Authentic Apeiron Energy Loop Logo */
+.apeiron-logo-wrap {
+  position: relative;
   display: block;
+  height: 38px;
+  width: auto;
+  aspect-ratio: 1024 / 572;
   flex-shrink: 0;
-  filter: drop-shadow(0 0 10px rgba(56, 213, 255, 0.35));
+  overflow: visible;
+  isolation: isolate;
+  filter: drop-shadow(0 0 12px rgba(56, 213, 255, 0.28));
+  transition: transform .3s ease;
+}
+
+.apeiron-logo-link:hover .apeiron-logo-wrap {
+  transform: scale(1.03);
+}
+
+.apeiron-logo-art {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.apeiron-energy-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: visible;
+  mix-blend-mode: screen;
+}
+
+.apeiron-energy-svg path {
+  fill: none;
+  opacity: 0;
+  pointer-events: none;
+  stroke-dasharray: 400 2080;
+  stroke-dashoffset: 420;
+}
+
+/* Active flowing energy loop state */
+.apeiron-logo-wrap.is-flowing .energy-glow {
+  animation: apeironFlowGlow 3.6s cubic-bezier(0.35, 0.05, 0.25, 1) infinite;
+}
+
+.apeiron-logo-wrap.is-flowing .energy-mid {
+  animation: apeironFlowMid 3.6s cubic-bezier(0.35, 0.05, 0.25, 1) infinite;
+}
+
+.apeiron-logo-wrap.is-flowing .energy-core {
+  animation: apeironFlowCore 3.6s cubic-bezier(0.35, 0.05, 0.25, 1) infinite;
+}
+
+@keyframes apeironFlowGlow {
+  0% {
+    stroke-dashoffset: 420;
+    opacity: 0;
+  }
+  4% {
+    opacity: 0.75;
+  }
+  86% {
+    opacity: 0.75;
+  }
+  100% {
+    stroke-dashoffset: -2080;
+    opacity: 0;
+  }
+}
+
+@keyframes apeironFlowMid {
+  0% {
+    stroke-dashoffset: 400;
+    opacity: 0;
+  }
+  4% {
+    opacity: 0.95;
+  }
+  86% {
+    opacity: 0.95;
+  }
+  100% {
+    stroke-dashoffset: -2100;
+    opacity: 0;
+  }
+}
+
+@keyframes apeironFlowCore {
+  0% {
+    stroke-dashoffset: 360;
+    opacity: 0;
+  }
+  4% {
+    opacity: 1;
+  }
+  86% {
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: -2140;
+    opacity: 0;
+  }
 }
 
 .brand {
@@ -210,7 +334,7 @@ header.top {
 
 .brand span, .portal-badge {
   font: 600 10.5px/1 var(--m);
-  letter-spacing: .12em;
+  letter-spacing: .14em;
   text-transform: uppercase;
   color: var(--cyan);
   background: var(--cyan-subtle);
@@ -223,7 +347,7 @@ header.top {
 .auth-bar {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
 }
 
 .user-chip {
@@ -247,29 +371,29 @@ header.top {
 }
 
 .who {
-  font: 500 13px var(--m);
+  font: 500 12.5px var(--m);
   letter-spacing: .04em;
   color: #c3ccd4;
 }
 
-/* ==========================================================================
-   Buttons & Interactive Elements
-   ========================================================================== */
+/* --------------------------------------------------------------------------
+   Buttons & Interactive Controls
+   -------------------------------------------------------------------------- */
 button, .btn, .btn-signout {
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  font: 600 13.5px/1 var(--f);
+  font: 600 13px/1 var(--f);
   padding: 9px 18px;
   border-radius: var(--radius-full);
   border: 1px solid var(--liquid-glass-edge);
   color: var(--text);
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.06) 0%, rgba(20, 28, 38, 0.40) 50%, rgba(10, 14, 20, 0.55) 100%);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.065) 0%, rgba(20, 28, 38, 0.40) 50%, rgba(10, 14, 20, 0.55) 100%);
   -webkit-backdrop-filter: blur(var(--liquid-glass-blur-subtle));
   backdrop-filter: blur(var(--liquid-glass-blur-subtle));
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.20), var(--liquid-glass-highlight-soft);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.22), var(--liquid-glass-highlight-soft);
   cursor: pointer;
   text-decoration: none;
   isolation: isolate;
@@ -281,8 +405,8 @@ button:hover, .btn:hover, .btn-signout:hover {
   transform: translateY(-1px);
   color: #fff;
   border-color: var(--liquid-glass-edge-hover);
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.10) 0%, rgba(20, 28, 38, 0.50) 50%, rgba(10, 14, 20, 0.65) 100%);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.30), inset 0 1px 1px rgba(255, 255, 255, 0.25);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.10) 0%, rgba(20, 28, 38, 0.52) 50%, rgba(10, 14, 20, 0.68) 100%);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.32), inset 0 1px 1px rgba(255, 255, 255, 0.25);
 }
 
 button:active, .btn:active, .btn-signout:active {
@@ -296,20 +420,22 @@ button:disabled, .btn:disabled {
   box-shadow: none !important;
 }
 
+/* Primary Cyan Action (Signature Apeiron Metallic Cyan Gradient) */
 .primary {
   background: linear-gradient(145deg, rgba(120, 230, 255, 0.95) 0%, rgba(56, 213, 255, 0.88) 60%, rgba(20, 160, 200, 0.95) 100%) !important;
   color: #021218 !important;
   font-weight: 700 !important;
   border: 1px solid rgba(255, 255, 255, 0.45) !important;
-  box-shadow: 0 6px 20px rgba(56, 213, 255, 0.28), inset 0 1px 2px rgba(255, 255, 255, 0.7) !important;
+  box-shadow: 0 6px 20px rgba(56, 213, 255, 0.28), inset 0 1px 2px rgba(255, 255, 255, 0.70) !important;
 }
 
 .primary:hover {
   background: linear-gradient(145deg, rgba(150, 240, 255, 0.98) 0%, rgba(70, 220, 255, 0.92) 60%, rgba(30, 180, 220, 0.98) 100%) !important;
   border-color: rgba(255, 255, 255, 0.65) !important;
-  box-shadow: 0 8px 28px rgba(56, 213, 255, 0.40), inset 0 1px 2.5px rgba(255, 255, 255, 0.85) !important;
+  box-shadow: 0 8px 28px rgba(56, 213, 255, 0.42), inset 0 1px 2.5px rgba(255, 255, 255, 0.85) !important;
 }
 
+/* Decision Approval (Emerald Glass) */
 .approve {
   background: rgba(74, 222, 128, 0.12) !important;
   border-color: rgba(74, 222, 128, 0.45) !important;
@@ -321,9 +447,10 @@ button:disabled, .btn:disabled {
   background: rgba(74, 222, 128, 0.22) !important;
   border-color: var(--green) !important;
   color: #fff !important;
-  box-shadow: 0 6px 24px rgba(74, 222, 128, 0.30), inset 0 1px 1.5px rgba(255, 255, 255, 0.4) !important;
+  box-shadow: 0 6px 24px rgba(74, 222, 128, 0.32), inset 0 1px 1.5px rgba(255, 255, 255, 0.40) !important;
 }
 
+/* Decision Rejection (Crimson Glass) */
 .reject {
   background: rgba(255, 107, 107, 0.12) !important;
   border-color: rgba(255, 107, 107, 0.45) !important;
@@ -335,12 +462,12 @@ button:disabled, .btn:disabled {
   background: rgba(255, 107, 107, 0.22) !important;
   border-color: var(--red) !important;
   color: #fff !important;
-  box-shadow: 0 6px 24px rgba(255, 107, 107, 0.30), inset 0 1px 1.5px rgba(255, 255, 255, 0.4) !important;
+  box-shadow: 0 6px 24px rgba(255, 107, 107, 0.32), inset 0 1px 1.5px rgba(255, 255, 255, 0.40) !important;
 }
 
 .btn-signout {
-  padding: 7px 16px;
-  font-size: 13px;
+  padding: 6px 14px;
+  font-size: 12.5px;
   background: rgba(255, 255, 255, 0.03);
   border-color: var(--liquid-glass-edge-subtle);
   color: var(--mute);
@@ -352,17 +479,17 @@ button:disabled, .btn:disabled {
   background: rgba(255, 107, 107, 0.08);
 }
 
-/* ==========================================================================
+/* --------------------------------------------------------------------------
    Inputs, Textarea & Form Elements
-   ========================================================================== */
+   -------------------------------------------------------------------------- */
 input, select, textarea {
   width: 100%;
-  font: 400 14.5px/1.5 var(--f);
+  font: 400 14px/1.5 var(--f);
   color: var(--text);
   background: rgba(10, 15, 22, 0.55);
   border: 1px solid var(--liquid-glass-edge);
   border-radius: 12px;
-  padding: 10px 14px;
+  padding: 9px 14px;
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.40), var(--liquid-glass-highlight-soft);
   transition: border-color .2s, box-shadow .2s, background .2s;
   -webkit-appearance: none;
@@ -376,8 +503,8 @@ input::placeholder, textarea::placeholder {
 input:focus, select:focus, textarea:focus {
   outline: none;
   border-color: var(--cyan);
-  background: rgba(14, 20, 28, 0.70);
-  box-shadow: 0 0 0 3px rgba(56, 213, 255, 0.16), inset 0 1px 2px rgba(0, 0, 0, 0.4);
+  background: rgba(14, 20, 28, 0.72);
+  box-shadow: 0 0 0 3px rgba(56, 213, 255, 0.16), inset 0 1px 2px rgba(0, 0, 0, 0.40);
 }
 
 select {
@@ -403,42 +530,42 @@ textarea {
 label {
   display: grid;
   gap: 7px;
-  font: 500 13px/1.2 var(--m);
+  font: 500 12.5px/1.2 var(--m);
   letter-spacing: .06em;
   text-transform: uppercase;
   color: var(--mute);
 }
 
-/* ==========================================================================
+/* --------------------------------------------------------------------------
    Main Content Layout
-   ========================================================================== */
+   -------------------------------------------------------------------------- */
 main {
   position: relative;
   z-index: 1;
-  max-width: 1180px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 32px clamp(20px, 4vw, 44px) 100px;
+  padding: 28px clamp(18px, 4vw, 44px) 100px;
 }
 
-/* ==========================================================================
-   Login Card (Staff Authentication)
-   ========================================================================== */
+/* --------------------------------------------------------------------------
+   Staff Authentication (Login Card)
+   -------------------------------------------------------------------------- */
 #login {
   display: grid;
   gap: 20px;
   max-width: 420px;
-  margin: clamp(40px, 9vh, 100px) auto 0;
-  padding: clamp(28px, 4vw, 40px);
+  margin: clamp(40px, 9vh, 90px) auto 0;
+  padding: clamp(28px, 4vw, 42px);
   background: linear-gradient(145deg, rgba(255, 255, 255, 0.055) 0%, rgba(18, 25, 35, 0.55) 50%, rgba(10, 15, 22, 0.75) 100%);
   -webkit-backdrop-filter: blur(var(--liquid-glass-blur-strong)) saturate(130%);
   backdrop-filter: blur(var(--liquid-glass-blur-strong)) saturate(130%);
   border: 1px solid var(--liquid-glass-edge);
-  border-radius: 24px;
+  border-radius: var(--radius-xl);
   box-shadow: 0 24px 64px rgba(0, 0, 0, 0.50), var(--liquid-glass-highlight-focal);
 }
 
 .login-header {
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 }
 
 .login-badge {
@@ -448,7 +575,7 @@ main {
   text-transform: uppercase;
   color: var(--cyan);
   background: var(--cyan-subtle);
-  border: 1px solid rgba(56, 213, 255, 0.3);
+  border: 1px solid rgba(56, 213, 255, 0.30);
   padding: 3px 10px;
   border-radius: var(--radius-full);
   margin-bottom: 12px;
@@ -471,8 +598,8 @@ main {
 
 #login button.primary {
   margin-top: 8px;
-  padding: 13px 20px;
-  font-size: 15px;
+  padding: 12px 20px;
+  font-size: 14.5px;
 }
 
 .err {
@@ -482,29 +609,29 @@ main {
   margin: 0;
 }
 
-/* ==========================================================================
-   Dashboard Shell & Tabs
-   ========================================================================== */
+/* --------------------------------------------------------------------------
+   Dashboard Shell & Executive Header
+   -------------------------------------------------------------------------- */
 .dashboard-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
   gap: 16px;
-  margin-bottom: 24px;
+  margin-bottom: 22px;
   flex-wrap: wrap;
 }
 
 .mono-badge {
   display: inline-block;
   font: 500 11px/1 var(--m);
-  letter-spacing: .12em;
+  letter-spacing: .14em;
   text-transform: uppercase;
   color: var(--mute);
   margin-bottom: 6px;
 }
 
 .dashboard-header h2 {
-  font: 700 clamp(26px, 3vw, 36px)/1.08 var(--fh);
+  font: 700 clamp(24px, 3vw, 34px)/1.08 var(--fh);
   letter-spacing: -.01em;
   text-transform: uppercase;
   margin: 0;
@@ -540,12 +667,103 @@ main {
   50% { opacity: .4; transform: scale(.85); }
 }
 
-/* Segmented Tab Navigation */
+/* --------------------------------------------------------------------------
+   Executive Operations Metrics Bar
+   -------------------------------------------------------------------------- */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.metric-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 16px 20px;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.045) 0%, rgba(14, 20, 28, 0.40) 50%, rgba(8, 12, 16, 0.55) 100%);
+  -webkit-backdrop-filter: blur(var(--liquid-glass-blur-subtle));
+  backdrop-filter: blur(var(--liquid-glass-blur-subtle));
+  border: 1px solid var(--liquid-glass-edge);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25), var(--liquid-glass-highlight);
+  transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+
+.metric-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--liquid-glass-edge-hover);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35), 0 0 20px rgba(56, 213, 255, 0.05);
+}
+
+.metric-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.metric-label {
+  font: 500 11.5px/1.2 var(--m);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+
+.metric-icon {
+  font-size: 15px;
+  opacity: .8;
+}
+
+.metric-value {
+  font: 700 clamp(26px, 2.5vw, 32px)/1.1 var(--fh);
+  letter-spacing: .02em;
+  color: #fff;
+  margin-bottom: 6px;
+}
+
+.metric-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font: 400 12px var(--f);
+  color: #8c9ba7;
+}
+
+.metric-status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.pulse-amber {
+  background: var(--amber);
+  box-shadow: 0 0 8px var(--amber);
+  animation: pulseGlow 2.5s infinite;
+}
+
+.pulse-green {
+  background: var(--green);
+  box-shadow: 0 0 8px var(--green);
+}
+
+.pulse-cyan {
+  background: var(--cyan);
+  box-shadow: 0 0 8px var(--cyan);
+  animation: pulseGlow 2.5s infinite;
+}
+
+/* --------------------------------------------------------------------------
+   Segmented Tab Navigation
+   -------------------------------------------------------------------------- */
 .tabs {
   display: inline-flex;
   gap: 6px;
   padding: 5px;
-  margin-bottom: 22px;
+  margin-bottom: 20px;
   background: rgba(14, 20, 28, 0.45);
   -webkit-backdrop-filter: blur(var(--liquid-glass-blur-subtle));
   backdrop-filter: blur(var(--liquid-glass-blur-subtle));
@@ -558,8 +776,8 @@ main {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  padding: 10px 22px;
-  font: 600 14px var(--f);
+  padding: 9px 20px;
+  font: 600 13.5px var(--f);
   color: var(--mute);
   background: transparent;
   border: 1px solid transparent;
@@ -597,14 +815,14 @@ main {
 
 .tabs button[role=tab][aria-selected=true] .count {
   background: rgba(56, 213, 255, 0.22);
-  border-color: rgba(56, 213, 255, 0.5);
+  border-color: rgba(56, 213, 255, 0.50);
   color: #fff;
   box-shadow: 0 0 8px rgba(56, 213, 255, 0.25);
 }
 
-/* ==========================================================================
+/* --------------------------------------------------------------------------
    Filter & Search Toolbar (.bar)
-   ========================================================================== */
+   -------------------------------------------------------------------------- */
 .bar {
   display: flex;
   gap: 12px;
@@ -617,7 +835,7 @@ main {
   -webkit-backdrop-filter: blur(var(--liquid-glass-blur-subtle));
   backdrop-filter: blur(var(--liquid-glass-blur-subtle));
   border: 1px solid var(--liquid-glass-edge);
-  border-radius: 16px;
+  border-radius: var(--radius-md);
   box-shadow: var(--liquid-glass-highlight-soft);
 }
 
@@ -652,7 +870,7 @@ main {
 }
 
 .btn-export {
-  padding: 9px 18px;
+  padding: 8px 16px;
   font-size: 13px;
   background: rgba(56, 213, 255, 0.06);
   border-color: rgba(56, 213, 255, 0.28);
@@ -666,9 +884,9 @@ main {
   box-shadow: 0 4px 18px rgba(56, 213, 255, 0.25);
 }
 
-/* ==========================================================================
+/* --------------------------------------------------------------------------
    Data Rows & Record Cards (.row)
-   ========================================================================== */
+   -------------------------------------------------------------------------- */
 .cards-stream {
   display: grid;
   gap: 16px;
@@ -679,10 +897,10 @@ main {
   display: grid;
   gap: 14px;
   border: 1px solid var(--liquid-glass-edge);
-  border-radius: 20px;
+  border-radius: var(--radius-lg);
   padding: 22px clamp(18px, 3vw, 28px);
   margin: 0;
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.05) 0%, rgba(14, 20, 28, 0.45) 45%, rgba(8, 12, 16, 0.60) 100%);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.055) 0%, rgba(14, 20, 28, 0.45) 45%, rgba(8, 12, 16, 0.60) 100%);
   -webkit-backdrop-filter: blur(var(--liquid-glass-blur-medium)) saturate(125%);
   backdrop-filter: blur(var(--liquid-glass-blur-medium)) saturate(125%);
   box-shadow: 0 10px 32px rgba(0, 0, 0, 0.28), var(--liquid-glass-highlight);
@@ -709,10 +927,10 @@ main {
 .badge {
   display: inline-flex;
   align-items: center;
-  font: 600 11.5px/1 var(--m);
+  font: 600 11px/1 var(--m);
   letter-spacing: .08em;
   text-transform: uppercase;
-  padding: 4px 12px;
+  padding: 4px 11px;
   border-radius: var(--radius-full);
   border: 1px solid;
   transition: all .2s;
@@ -757,12 +975,12 @@ main {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 10px 24px;
-  margin: 6px 0 12px;
+  margin: 4px 0 10px;
   padding: 14px 18px;
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 14px;
-  font-size: 14px;
+  border-radius: var(--radius-md);
+  font-size: 13.5px;
   color: #c3ccd4;
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.25);
 }
@@ -775,7 +993,7 @@ main {
 }
 
 .facts b {
-  font: 500 11.5px/1.2 var(--m);
+  font: 500 11px/1.2 var(--m);
   letter-spacing: .08em;
   text-transform: uppercase;
   color: var(--mute);
@@ -785,27 +1003,27 @@ main {
 .idea {
   white-space: pre-wrap;
   word-break: break-word;
-  margin: 4px 0 12px;
+  margin: 4px 0 10px;
   color: #cdd7df;
-  font-size: 14.5px;
+  font-size: 14px;
   line-height: 1.6;
   border-left: 3px solid var(--cyan);
   padding: 12px 18px;
   background: rgba(8, 12, 16, 0.35);
-  border-radius: 0 12px 12px 0;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.35);
 }
 
 /* Discussion / Reply Thread (.thread) */
 .thread {
-  margin: 10px 0;
+  margin: 8px 0;
   display: grid;
   gap: 10px;
 }
 
 .msg {
   padding: 12px 18px;
-  border-radius: 14px;
+  border-radius: var(--radius-md);
   font-size: 14px;
   line-height: 1.55;
   white-space: pre-wrap;
@@ -848,7 +1066,7 @@ main {
   gap: 10px;
   flex-wrap: wrap;
   align-items: center;
-  margin-top: 8px;
+  margin-top: 6px;
   padding-top: 14px;
   border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
@@ -863,38 +1081,141 @@ main {
   min-width: 150px;
 }
 
-/* Project Progression Stage (.stage) */
+/* --------------------------------------------------------------------------
+   Project Progression Pipeline (.stage) & Milestone Stepper
+   -------------------------------------------------------------------------- */
 .stage {
+  display: grid;
+  gap: 12px;
+  margin-top: 10px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.stage-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stage-title {
+  font: 500 11px/1 var(--m);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+
+/* Stepper Bar */
+.stage-progress {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  padding: 8px 12px;
+  background: rgba(6, 9, 13, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-md);
+  gap: 4px;
+}
+
+.stage-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  position: relative;
+  text-align: center;
+}
+
+.stage-step:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  width: 100%;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.08);
+  z-index: 1;
+  transition: background .3s;
+}
+
+.stage-step.is-done:not(:last-child)::after {
+  background: var(--cyan);
+  box-shadow: 0 0 6px rgba(56, 213, 255, 0.40);
+}
+
+.stage-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  z-index: 2;
+  transition: all .3s;
+}
+
+.stage-step.is-done .stage-dot {
+  background: var(--cyan);
+  border-color: #fff;
+  box-shadow: 0 0 10px var(--cyan);
+}
+
+.stage-step.is-current .stage-dot {
+  background: var(--amber);
+  border-color: #fff;
+  box-shadow: 0 0 12px var(--amber);
+  animation: pulseGlow 2.5s infinite;
+}
+
+.stage-lbl {
+  font: 500 11px/1.2 var(--m);
+  letter-spacing: .04em;
+  color: var(--faint);
+  transition: color .3s;
+}
+
+.stage-step.is-done .stage-lbl {
+  color: #c3ccd4;
+}
+
+.stage-step.is-current .stage-lbl {
+  color: var(--amber);
+  font-weight: 600;
+}
+
+.stage-controls {
   display: flex;
   gap: 10px;
   align-items: center;
   flex-wrap: wrap;
-  margin-top: 10px;
-  padding-top: 12px;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-.stage select {
+.stage-controls select {
   width: auto;
   min-width: 170px;
 }
 
-/* ==========================================================================
-   Responsive Breakpoints
-   ========================================================================== */
+/* --------------------------------------------------------------------------
+   Responsive Layout & Mobile Adaptation
+   -------------------------------------------------------------------------- */
 @media (max-width: 820px) {
   header.top {
-    padding: 12px 18px;
+    padding: 10px 16px;
   }
   
   main {
-    padding: 24px 16px 80px;
+    padding: 20px 14px 80px;
   }
 
   .dashboard-header {
     flex-direction: column;
     align-items: flex-start;
     gap: 12px;
+  }
+
+  .metrics-grid {
+    grid-template-columns: 1fr 1fr;
   }
 
   .tabs {
@@ -905,7 +1226,7 @@ main {
   .tabs button[role=tab], .tab-btn {
     flex: 1;
     justify-content: center;
-    padding: 10px 14px;
+    padding: 9px 12px;
   }
 
   .bar {
@@ -930,12 +1251,17 @@ main {
     width: 100%;
   }
 
-  .stage {
+  .stage-progress {
+    overflow-x: auto;
+    padding: 10px 6px;
+  }
+
+  .stage-controls {
     flex-direction: column;
     align-items: stretch;
   }
 
-  .stage select, .stage button {
+  .stage-controls select, .stage-controls button {
     width: 100%;
   }
 
@@ -949,6 +1275,10 @@ main {
     display: none;
   }
 
+  .metrics-grid {
+    grid-template-columns: 1fr;
+  }
+
   .who {
     max-width: 140px;
     overflow: hidden;
@@ -957,6 +1287,9 @@ main {
   }
 }
 
+/* --------------------------------------------------------------------------
+   Accessibility: Reduced Motion
+   -------------------------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
@@ -964,14 +1297,19 @@ main {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+  .apeiron-energy-svg {
+    display: none !important;
+  }
 }
 
-/* Fallback for browsers without backdrop-filter */
+/* --------------------------------------------------------------------------
+   Browser Fallback (without backdrop-filter support)
+   -------------------------------------------------------------------------- */
 @supports not (backdrop-filter: blur(10px)) {
   header.top {
     background: rgba(14, 20, 28, 0.95);
   }
-  #login, .row {
+  #login, .row, .metric-card {
     background: rgba(14, 20, 28, 0.92);
   }
   button, .btn, .btn-signout {
