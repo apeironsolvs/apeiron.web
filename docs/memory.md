@@ -174,3 +174,27 @@ Start Phase 0 in `task.md`, beginning with 0.1 (review the unseen part of `index
   - Fixed Windows CRLF header parsing and file mode permission assertion.
 - Verified (run): `npm test` 41/41 passing tests (100% pass rate).
 
+## 2026-10-20 — Complete Premium Light + Dark Theme System
+- Who/what: Senior frontend architect & visual QA.
+- Task: Master Prompt — Implement a Premium Light + Dark Theme Across the Entire Apeiron Solutions Website.
+- Changed:
+  - Created standalone zero-FOUC theme controllers: `site/theme.js` and `admin-site/theme.js` (synchronously loaded in `<head>`, managing `apeiron_theme` in `localStorage`, SVG icon toggling, multi-tab sync, and accessible `aria-label`/`aria-pressed` attributes).
+  - Enhanced stylesheets with CSS custom property tokens for `:root, [data-theme="dark"]` and `[data-theme="light"]`:
+    - `site/css/styles.css`: public site tokens, liquid-glass cards, buttons, capabilities accordion, sticky process steps, Q&A definition cards, intake modal, navigation.
+    - `site/upgrade.css`: marquee tech pills, service cards, FAQ glass containers.
+    - `site/css/projects.css`: live demo modal window, support chat trigger and teaser, support chat dialog.
+    - `site/css/portal.css`: client portal tokens, navigation glass, overview cards, conversation list, message bubbles, composer, settings tabs, and Section F Preferences theme selector.
+    - `admin-site/admin.css`: admin portal tokens, glass header, metrics facts, request cards, client/request tables, admin messaging dialog, and settings modal.
+    - `site/legal.css`: legal document pages light mode layout and typography.
+  - Added theme toggle controls:
+    - Public website desktop header & mobile drawer (`site/index.html`).
+    - Client portal header & Settings Section F: Preferences dropdown (`site/account/index.html`, `site/account/account.js`).
+    - Admin portal navigation bar & Admin Settings dialog dropdown (`admin-site/index.html`, `admin-site/admin.js`).
+    - Start journey builder (`site/start/index.html`), 404 pages (`site/404.html`, `admin-site/404.html`), and legal documents (`terms.html`, `privacy.html`, `security.html`).
+- Decisions:
+  - Strictly respected Content Security Policy (`script-src 'self'`) by creating self-hosted `theme.js` scripts rather than prohibited inline `<script>` tags.
+  - Zero backend/database/API modification: all server files, routes, tests, and configuration remained untouched.
+  - Preserved Three.js particle canvas with transparent rendering, allowing the soft light background gradient to illuminate the scene organically without shader tampering.
+- Verified: `npm test` 44/44 tests passing (0 failures).
+
+

@@ -135,3 +135,105 @@
 .linkbtn{background:none;border:0;color:var(--cyan);text-decoration:underline;font:inherit;cursor:pointer;padding:0}
 .intake.login-only .prog,.intake.login-only #istep-label{display:none}
 #s-title{margin:6px 0 16px}.seg2{margin-top:4px}
+
+/* ==========================================================================
+   Project Showcase & Floating Support — Light Mode Overrides
+   ========================================================================== */
+[data-theme="light"] .he-open {
+  background: rgba(11, 141, 181, 0.08);
+  border-color: rgba(11, 141, 181, 0.35);
+  color: #0c4a60;
+}
+[data-theme="light"] .he-open:hover,
+[data-theme="light"] .he-open:focus-visible {
+  background: rgba(11, 141, 181, 0.16);
+}
+[data-theme="light"] .pw {
+  background: #ffffff;
+  border-color: rgba(26, 42, 58, 0.14);
+  box-shadow: 0 30px 90px rgba(15, 23, 42, 0.20), 0 0 0 1px rgba(11, 141, 181, 0.15);
+}
+[data-theme="light"] .pw-bar {
+  background: #f1f5f9;
+  border-bottom-color: rgba(26, 42, 58, 0.10);
+}
+[data-theme="light"] .pw-title {
+  color: #0f172a;
+}
+[data-theme="light"] .pw-btn {
+  color: #334155;
+  border-color: rgba(26, 42, 58, 0.14);
+}
+[data-theme="light"] .pw-btn:hover,
+[data-theme="light"] .pw-btn:focus-visible,
+[data-theme="light"] .pw-btn[aria-pressed=true] {
+  background: rgba(11, 141, 181, 0.12);
+  border-color: var(--cyan);
+  color: var(--cyan);
+}
+[data-theme="light"] .pw-note {
+  background: #f8fafc;
+  color: #64748b;
+  border-top-color: rgba(26, 42, 58, 0.08);
+}
+[data-theme="light"] .chk {
+  color: #334155;
+}
+[data-theme="light"] .lede-s {
+  color: #64748b;
+}
+[data-theme="light"] .nav-chat-btn {
+  border-color: rgba(26, 42, 58, 0.16);
+  color: #334155;
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: inset 0 1px 1px #ffffff;
+}
+[data-theme="light"] .nav-chat-btn:hover,
+[data-theme="light"] .nav-chat-btn:focus-visible {
+  border-color: var(--cyan);
+  background: rgba(11, 141, 181, 0.10);
+  color: var(--cyan);
+  box-shadow: 0 0 14px rgba(11, 141, 181, 0.18);
+}
+[data-theme="light"] .menu-chat-btn {
+  color: #1e293b;
+  border-bottom-color: rgba(26, 42, 58, 0.08);
+}
+[data-theme="light"] .menu-chat-btn:hover {
+  color: var(--cyan);
+  background: rgba(11, 141, 181, 0.08);
+}
+[data-theme="light"] .sup-launcher {
+  background: linear-gradient(135deg, #ffffff 0%, #f0f7fa 100%);
+  border-color: rgba(11, 141, 181, 0.45);
+  color: var(--cyan);
+  box-shadow: 0 12px 32px rgba(20, 35, 50, 0.15), 0 0 20px rgba(11, 141, 181, 0.20), inset 0 1px 1px #ffffff;
+}
+[data-theme="light"] .sup-teaser {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(11, 141, 181, 0.35);
+  color: #0f172a;
+  box-shadow: 0 12px 32px rgba(20, 35, 50, 0.12), inset 0 1px 1px #ffffff;
+}
+[data-theme="light"] .sup {
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.96) 0%, rgba(246, 249, 253, 0.98) 100%);
+  border-color: rgba(11, 141, 181, 0.25);
+  box-shadow: 0 24px 64px rgba(20, 35, 50, 0.20), 0 0 24px rgba(11, 141, 181, 0.10), inset 0 1px 1.5px #ffffff;
+}
+[data-theme="light"] .sup-bar {
+  background: rgba(241, 245, 249, 0.90);
+  border-bottom-color: rgba(26, 42, 58, 0.08);
+}
+[data-theme="light"] .sup-bar h3 {
+  color: #0f172a;
+}
+[data-theme="light"] .sup-in {
+  background: rgba(248, 250, 252, 0.85);
+  border-top-color: rgba(26, 42, 58, 0.08);
+}
+[data-theme="light"] .sup-in input {
+  background: #ffffff;
+  border-color: rgba(26, 42, 58, 0.14);
+  color: #0f172a;
+}
+

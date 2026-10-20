@@ -169,6 +169,7 @@
     const rate = prefs.pollInterval !== undefined ? Number(prefs.pollInterval) : 15000;
     if (prefs.density === 'compact') $('app').classList.add('compact-density');
     else $('app').classList.remove('compact-density');
+    if (prefs.theme && window.ApeironTheme) window.ApeironTheme.set(prefs.theme);
 
     setTimeout(() => { loadQuotes(true); loadMessages(); }, 50);
     setPollRate(rate);
@@ -183,6 +184,7 @@
       if ($('admin-pref-poll')) $('admin-pref-poll').value = String(prefs.pollInterval !== undefined ? prefs.pollInterval : 15000);
       if ($('admin-pref-density')) $('admin-pref-density').value = prefs.density || 'standard';
       if ($('admin-pref-sound')) $('admin-pref-sound').checked = prefs.sound !== false;
+      if ($('admin-pref-theme') && window.ApeironTheme) $('admin-pref-theme').value = window.ApeironTheme.get();
       if ($('admin-settings-msg')) $('admin-settings-msg').textContent = '';
       if (typeof sDlg.showModal === 'function') sDlg.showModal(); else sDlg.setAttribute('open', '');
     });
@@ -192,7 +194,9 @@
         const rate = Number($('admin-pref-poll').value);
         const density = $('admin-pref-density').value;
         const sound = $('admin-pref-sound').checked;
-        saveAdminPrefs({ pollInterval: rate, density, sound });
+        const theme = $('admin-pref-theme') ? $('admin-pref-theme').value : 'dark';
+        if (window.ApeironTheme) window.ApeironTheme.set(theme);
+        saveAdminPrefs({ pollInterval: rate, density, sound, theme });
         setPollRate(rate);
         if (density === 'compact') $('app').classList.add('compact-density');
         else $('app').classList.remove('compact-density');

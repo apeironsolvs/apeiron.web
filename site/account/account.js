@@ -1164,7 +1164,24 @@ function renderPreferencesSection(prefs) {
   });
   dateGrp.append(dateLbl, dateSel);
 
-  formGrid.append(curGrp, dateGrp);
+  // Color Theme Selector
+  const themeGrp = h('div', 'form-group');
+  const themeLbl = h('label', '', 'Color Theme');
+  const themeSel = document.createElement('select');
+  [
+    ['dark', 'Dark Theme (Cinematic Liquid Glass)'],
+    ['light', 'Light Theme (Luminous Liquid Glass)']
+  ].forEach(([val, txt]) => {
+    const opt = document.createElement('option');
+    opt.value = val;
+    opt.textContent = txt;
+    const curTheme = window.ApeironTheme ? window.ApeironTheme.get() : (prefs.theme || 'dark');
+    if (curTheme === val) opt.selected = true;
+    themeSel.append(opt);
+  });
+  themeGrp.append(themeLbl, themeSel);
+
+  formGrid.append(curGrp, dateGrp, themeGrp);
   card.append(formGrid);
 
   // Accessibility Toggles
@@ -1194,12 +1211,15 @@ function renderPreferencesSection(prefs) {
   const pMsg = h('span', 'note');
 
   saveBtn.addEventListener('click', () => {
+    const chosenTheme = themeSel.value;
+    if (window.ApeironTheme) window.ApeironTheme.set(chosenTheme);
     savePrefs(me.email, {
       currency: curSel.value,
       dateFormat: dateSel.value,
+      theme: chosenTheme,
       reduceMotion: mChk.checked
     });
-    pMsg.textContent = 'Preferences saved. Currency & format updated across portal.';
+    pMsg.textContent = 'Preferences saved. Theme & display format updated.';
     pMsg.className = 'note ok';
     setTimeout(() => { if (pMsg.textContent.includes('Preferences saved')) pMsg.textContent = ''; }, 3500);
   });
@@ -1408,6 +1428,10 @@ async function load(shouldRerender = true) {
   }
   me = m.body;
   csrf = me.csrf;
+  const clientPrefs = loadPrefs(me.email);
+  if (clientPrefs.theme && window.ApeironTheme) {
+    window.ApeironTheme.set(clientPrefs.theme);
+  }
 
   // Header user info and logout
   const who = $('#who');

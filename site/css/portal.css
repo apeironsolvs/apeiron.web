@@ -1,6 +1,24 @@
-/* Shared styles for /start/ (guided builder) and /account/ (live updates) */
-:root{--bg:#06080a;--fg:#e9eef2;--mut:#9aa6b0;--cy:#38d5ff;--card:#0e1317;--line:#222c33;--ok:#4ade80}
-*{box-sizing:border-box;margin:0}html{color-scheme:dark}
+:root,
+[data-theme="dark"] {
+  --bg: #06080a;
+  --fg: #e9eef2;
+  --mut: #9aa6b0;
+  --cy: #38d5ff;
+  --card: #0e1317;
+  --line: #222c33;
+  --ok: #4ade80;
+}
+
+[data-theme="light"] {
+  --bg: #F4F6F9;
+  --fg: #151A22;
+  --mut: #596575;
+  --cy: #0b8db5;
+  --card: #FFFFFF;
+  --line: rgba(26, 42, 58, 0.12);
+  --ok: #16a34a;
+}
+*{box-sizing:border-box;margin:0}html{color-scheme:dark light}
 body{background:var(--bg);color:var(--fg);font:17px/1.6 'Space Grotesk',system-ui,sans-serif;min-height:100vh}
 a{color:var(--cy)}.wrap{max-width:860px;margin:0 auto;padding:0 22px 80px}
 header.bar{display:flex;justify-content:space-between;align-items:center;gap:16px;max-width:860px;margin:0 auto;padding:22px;flex-wrap:wrap}
@@ -476,5 +494,146 @@ input[type=text],textarea{width:100%;background:#0b1014;border:1px solid var(--l
     font-size: 13px;
   }
 }
+
+/* ==========================================================================
+   Apeiron Client Portal — Light Mode Overrides
+   ========================================================================== */
+[data-theme="light"] body {
+  background: linear-gradient(180deg, #F8FAFC 0%, #EEF2F6 40%, #E6EDF5 100%);
+  color: var(--fg);
+}
+[data-theme="light"] .portal-nav-btn {
+  background: rgba(255, 255, 255, 0.7);
+  border-color: var(--line);
+  color: var(--mut);
+  box-shadow: inset 0 1px 1px #ffffff;
+}
+[data-theme="light"] .portal-nav-btn:hover {
+  border-color: rgba(11, 141, 181, 0.35);
+  color: var(--fg);
+}
+[data-theme="light"] .portal-nav-btn.active,
+[data-theme="light"] .portal-nav-btn[aria-selected=true] {
+  border-color: var(--cy);
+  background: rgba(11, 141, 181, 0.12);
+  color: var(--cy);
+}
+[data-theme="light"] .card,
+[data-theme="light"] .opt {
+  background: #ffffff;
+  border-color: var(--line);
+  box-shadow: 0 4px 16px rgba(20, 35, 50, 0.05), inset 0 1px 1px #ffffff;
+}
+[data-theme="light"] .opt:hover {
+  border-color: rgba(11, 141, 181, 0.35);
+}
+[data-theme="light"] .opt[aria-pressed=true] {
+  border-color: var(--cy);
+  background: rgba(11, 141, 181, 0.08);
+}
+[data-theme="light"] input[type=text],
+[data-theme="light"] input[type=email],
+[data-theme="light"] input[type=password],
+[data-theme="light"] input[type=tel],
+[data-theme="light"] textarea,
+[data-theme="light"] select {
+  background: #ffffff;
+  border-color: var(--line);
+  color: var(--fg);
+  box-shadow: inset 0 1px 2px rgba(20, 35, 50, 0.04);
+}
+[data-theme="light"] input:focus,
+[data-theme="light"] textarea:focus,
+[data-theme="light"] select:focus {
+  border-color: var(--cy);
+  box-shadow: 0 0 0 3px rgba(11, 141, 181, 0.15);
+}
+[data-theme="light"] .chat-box {
+  background: #ffffff;
+  border-color: var(--line);
+  box-shadow: 0 8px 24px rgba(20, 35, 50, 0.06), inset 0 1px 1px #ffffff;
+}
+[data-theme="light"] .chat-sel-btn {
+  background: #ffffff;
+  border-color: var(--line);
+  color: var(--mut);
+  box-shadow: 0 2px 8px rgba(20, 35, 50, 0.04);
+}
+[data-theme="light"] .chat-sel-btn:hover {
+  border-color: rgba(11, 141, 181, 0.35);
+  color: var(--fg);
+}
+[data-theme="light"] .chat-sel-btn.active,
+[data-theme="light"] .chat-sel-btn[aria-selected=true] {
+  border-color: var(--cy);
+  background: rgba(11, 141, 181, 0.08);
+}
+[data-theme="light"] .msg.client {
+  background: #f1f5f9;
+  border: 1px solid rgba(26, 42, 58, 0.12);
+  color: #1e293b;
+}
+[data-theme="light"] .msg.admin {
+  background: rgba(11, 141, 181, 0.10);
+  border: 1px solid rgba(11, 141, 181, 0.35);
+  color: #084c64;
+}
+[data-theme="light"] .settings-card {
+  background: linear-gradient(145deg, #ffffff 0%, rgba(248, 250, 253, 0.92) 50%, rgba(240, 245, 250, 0.88) 100%);
+  border-color: var(--line);
+  box-shadow: 0 8px 24px rgba(20, 35, 50, 0.06), inset 0 1px 1.5px #ffffff;
+}
+[data-theme="light"] .settings-sidebar {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.88) 0%, rgba(246, 248, 252, 0.80) 100%);
+  border-color: var(--line);
+  box-shadow: 0 8px 24px rgba(20, 35, 50, 0.05), inset 0 1px 1.5px #ffffff;
+}
+[data-theme="light"] .settings-nav-item {
+  color: var(--mut);
+}
+[data-theme="light"] .settings-nav-item:hover {
+  color: var(--fg);
+  background: rgba(20, 35, 50, 0.04);
+  border-color: rgba(26, 42, 58, 0.08);
+}
+[data-theme="light"] .settings-nav-item.active,
+[data-theme="light"] .settings-nav-item[aria-selected=true] {
+  color: var(--cy);
+  background: rgba(11, 141, 181, 0.10);
+  border-color: rgba(11, 141, 181, 0.35);
+  box-shadow: 0 2px 10px rgba(11, 141, 181, 0.12), inset 0 1px 1px #ffffff;
+}
+[data-theme="light"] .diag-item {
+  background: rgba(20, 35, 50, 0.03);
+  border-color: var(--line);
+}
+[data-theme="light"] .chip-toggle {
+  background: #ffffff;
+  border-color: var(--line);
+  color: var(--mut);
+}
+[data-theme="light"] .chip-toggle.active {
+  background: rgba(11, 141, 181, 0.10);
+  border-color: var(--cy);
+  color: var(--cy);
+}
+[data-theme="light"] .toggle-slider {
+  background: #cbd5e1;
+}
+[data-theme="light"] .btn {
+  border-color: rgba(26, 42, 58, 0.14);
+  color: var(--fg);
+}
+[data-theme="light"] .btn.primary {
+  background: linear-gradient(145deg, #06b6d4 0%, #0891b2 50%, #0284c7 100%);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.65);
+  box-shadow: 0 6px 20px rgba(6, 182, 212, 0.28);
+}
+[data-theme="light"] .btn.primary:hover {
+  background: linear-gradient(145deg, #08c5e6 0%, #0a9fc4 50%, #0396e0 100%);
+  color: #ffffff;
+}
+
 
 
