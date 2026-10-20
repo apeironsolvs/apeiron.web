@@ -17,14 +17,14 @@ ul{padding-left:1.2em;margin:0 0 1em}li{margin:.3em 0}h2+p,h2+ul{margin-top:.4em
 [data-theme="light"] .theme-toggle .theme-icon.moon{opacity:0;transform:translate(-50%,-50%) rotate(-90deg) scale(0.5)}
 
 /* Light Mode for Legal Pages */
-[data-theme="light"] body { background: #F8FAFC; color: #151A22; }
-[data-theme="light"] header { background: linear-gradient(180deg, rgba(255,255,255,0.92) 0%, rgba(246,248,252,0.85) 100%); border-bottom-color: rgba(26,42,58,0.12); box-shadow: 0 4px 16px rgba(20,35,50,0.06); }
-[data-theme="light"] .logo { color: #151A22; }
-[data-theme="light"] a { color: #0b8db5; }
-[data-theme="light"] p, [data-theme="light"] li { color: #334155; }
-[data-theme="light"] .meta { color: #64748b; }
-[data-theme="light"] .draft { border-color: rgba(26,42,58,0.12); color: #475569; background: rgba(255,255,255,0.75); }
-[data-theme="light"] footer { border-top-color: rgba(26,42,58,0.10); color: #64748b; }
-[data-theme="light"] td, [data-theme="light"] th { border-bottom-color: rgba(26,42,58,0.10); color: #334155; }
-[data-theme="light"] th { color: #151A22; }
+[data-theme="light"] body { background: linear-gradient(180deg, #F6F8FB 0%, #EEF2F7 50%, #E9EFF6 100%); color: #17212D; }
+[data-theme="light"] header { background: rgba(255, 255, 255, 0.72); border-bottom-color: rgba(32, 48, 66, 0.10); box-shadow: 0 4px 16px rgba(26, 42, 60, 0.04); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); }
+[data-theme="light"] .logo { color: #17212D; }
+[data-theme="light"] a { color: #168DB5; }
+[data-theme="light"] p, [data-theme="light"] li { color: #2b394a; }
+[data-theme="light"] .meta { color: #68778A; }
+[data-theme="light"] .draft { border-color: rgba(32, 48, 66, 0.10); color: #526174; background: rgba(255, 255, 255, 0.65); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
+[data-theme="light"] footer { border-top-color: rgba(32, 48, 66, 0.10); color: #68778A; }
+[data-theme="light"] td, [data-theme="light"] th { border-bottom-color: rgba(32, 48, 66, 0.10); color: #2b394a; }
+[data-theme="light"] th { color: #17212D; }
 
