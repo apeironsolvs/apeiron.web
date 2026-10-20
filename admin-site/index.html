@@ -56,6 +56,13 @@
     </div>
   </div>
   <div class="auth-bar">
+    <button id="admin-settings-btn" type="button" class="btn btn-settings" aria-label="Settings" title="Administrator Settings" hidden>
+      <svg class="settings-gear-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="3"></circle>
+        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+      </svg>
+      <span>Settings</span>
+    </button>
     <div class="user-chip"><span class="status-dot" aria-hidden="true"></span><span class="who" id="who"></span></div>
     <button id="out" type="button" class="btn-signout" hidden>Sign out</button>
   </div>
@@ -172,6 +179,85 @@
       <div id="list" class="cards-stream"></div>
     </div>
   </section>
+
+  <!-- Administrator Settings Modal Dialog -->
+  <dialog id="admin-settings-dialog" class="admin-settings-dialog" aria-labelledby="admin-settings-title">
+    <div class="admin-settings-card">
+      <div class="admin-settings-head">
+        <div>
+          <span class="mono-badge">ADMINISTRATION & OPERATIONS</span>
+          <h2 id="admin-settings-title">Administrator Settings</h2>
+        </div>
+        <button type="button" id="admin-settings-close" class="btn-close" aria-label="Close Settings">✕</button>
+      </div>
+
+      <div class="admin-settings-body">
+        <!-- Section 1: Identity -->
+        <div class="admin-settings-sec">
+          <h3>Administrator Profile</h3>
+          <div class="facts">
+            <div><b>Role:</b> Operations Staff</div>
+            <div><b>Staff Identity:</b> <span id="admin-who-static">—</span></div>
+            <div><b>Session Security:</b> Hardened __Host- HttpOnly Cookie</div>
+          </div>
+        </div>
+
+        <!-- Section 2: Display & Operations Preferences -->
+        <div class="admin-settings-sec">
+          <h3>Operations Preferences</h3>
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="admin-pref-poll">Auto-Refresh Frequency</label>
+              <select id="admin-pref-poll" aria-label="Auto-Refresh Frequency">
+                <option value="15000">Every 15 seconds (Default)</option>
+                <option value="30000">Every 30 seconds</option>
+                <option value="60000">Every 60 seconds</option>
+                <option value="0">Manual Refresh Only</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="admin-pref-density">Card Display Density</label>
+              <select id="admin-pref-density" aria-label="Card Display Density">
+                <option value="standard">Standard Liquid Glass</option>
+                <option value="compact">Compact Density</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 3: Notification Alerts -->
+        <div class="admin-settings-sec">
+          <h3>Notification Alerts</h3>
+          <div class="toggle-item">
+            <div class="toggle-text">
+              <span class="toggle-title">Audio chime on new incoming request</span>
+              <span class="toggle-desc">Plays a subtle alert sound when unreviewed client submissions arrive</span>
+            </div>
+            <label class="toggle-switch">
+              <input id="admin-pref-sound" type="checkbox" checked>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Section 4: Security Overview -->
+        <div class="admin-settings-sec">
+          <h3>Security & Infrastructure</h3>
+          <div class="facts">
+            <div><b>Content Security Policy:</b> Strict self-hosted policy active</div>
+            <div><b>CSRF Protection:</b> Enforced on all mutations</div>
+            <div><b>Sanitization:</b> Strict textContent DOM rendering (Zero inline HTML injection)</div>
+            <div><b>Database Layer:</b> SQLite Local / Supabase Cloud</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="admin-settings-foot">
+        <button type="button" id="admin-settings-save" class="btn primary sm">Save Preferences</button>
+        <span id="admin-settings-msg" class="meta"></span>
+      </div>
+    </div>
+  </dialog>
 </main>
 
 <script src="admin.js"></script>

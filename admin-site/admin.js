@@ -13,12 +13,14 @@
   const el = (t, c, x) => { const e = document.createElement(t); if (c) e.className = c; if (x !== undefined) e.textContent = x; return e; };
   const show = on => {
     $('login').hidden = on; $('app').hidden = !on; $('out').hidden = !on;
+    if ($('admin-settings-btn')) $('admin-settings-btn').hidden = !on;
     if (!on) {
       clearInterval(poll); $('who').textContent = '';
       if ($('m-pending')) $('m-pending').textContent = '0';
       if ($('m-accepted')) $('m-accepted').textContent = '0';
       if ($('m-total')) $('m-total').textContent = '0';
       if ($('m-messages')) $('m-messages').textContent = '0';
+      const d = $('admin-settings-dialog'); if (d && d.open) d.close();
     }
   };
   const inr = n => '₹' + Math.round(n).toLocaleString('en-IN');
@@ -152,11 +154,56 @@
     }
   }
 
+  const loadAdminPrefs = () => { try { return JSON.parse(localStorage.getItem('apeiron_admin_prefs') || '{}'); } catch (_) { return {}; } };
+  const saveAdminPrefs = p => { try { localStorage.setItem('apeiron_admin_prefs', JSON.stringify({ ...loadAdminPrefs(), ...p })); } catch (_) {} };
+  const setPollRate = ms => {
+    clearInterval(poll);
+    if (ms > 0) {
+      poll = setInterval(() => { if (!document.hidden) loadQuotes(false); }, ms);
+    }
+  };
+
   function enter(email) {
     $('who').textContent = email; show(true);
+    const prefs = loadAdminPrefs();
+    const rate = prefs.pollInterval !== undefined ? Number(prefs.pollInterval) : 15000;
+    if (prefs.density === 'compact') $('app').classList.add('compact-density');
+    else $('app').classList.remove('compact-density');
+
     setTimeout(() => { loadQuotes(true); loadMessages(); }, 50);
-    clearInterval(poll); poll = setInterval(() => { if (!document.hidden) { loadQuotes(false); } }, 15000);
+    setPollRate(rate);
   }
+
+  // Admin settings dialog wiring
+  const sBtn = $('admin-settings-btn'), sDlg = $('admin-settings-dialog'), sClose = $('admin-settings-close'), sSave = $('admin-settings-save');
+  if (sBtn && sDlg) {
+    sBtn.addEventListener('click', () => {
+      const prefs = loadAdminPrefs();
+      if ($('admin-who-static')) $('admin-who-static').textContent = $('who').textContent || 'Staff Administrator';
+      if ($('admin-pref-poll')) $('admin-pref-poll').value = String(prefs.pollInterval !== undefined ? prefs.pollInterval : 15000);
+      if ($('admin-pref-density')) $('admin-pref-density').value = prefs.density || 'standard';
+      if ($('admin-pref-sound')) $('admin-pref-sound').checked = prefs.sound !== false;
+      if ($('admin-settings-msg')) $('admin-settings-msg').textContent = '';
+      if (typeof sDlg.showModal === 'function') sDlg.showModal(); else sDlg.setAttribute('open', '');
+    });
+    if (sClose) sClose.addEventListener('click', () => { if (typeof sDlg.close === 'function') sDlg.close(); else sDlg.removeAttribute('open'); });
+    if (sSave) {
+      sSave.addEventListener('click', () => {
+        const rate = Number($('admin-pref-poll').value);
+        const density = $('admin-pref-density').value;
+        const sound = $('admin-pref-sound').checked;
+        saveAdminPrefs({ pollInterval: rate, density, sound });
+        setPollRate(rate);
+        if (density === 'compact') $('app').classList.add('compact-density');
+        else $('app').classList.remove('compact-density');
+        if ($('admin-settings-msg')) {
+          $('admin-settings-msg').textContent = 'Preferences saved.';
+          setTimeout(() => { if (sDlg.open && typeof sDlg.close === 'function') sDlg.close(); }, 800);
+        }
+      });
+    }
+  }
+
   $('login').addEventListener('submit', async ev => {
     ev.preventDefault(); $('lerr').textContent = '';
     const btn = $('login').querySelector('button[type="submit"]') || $('login').querySelector('button.primary') || $('login').querySelector('button');
