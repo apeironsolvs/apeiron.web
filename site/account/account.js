@@ -19,6 +19,8 @@ function savePrefs(email, patch) {
   } catch (_) { return patch; }
 }
 
+let me = null;
+
 function formatCurrency(amount, curPref) {
   const val = Math.round(amount || 0);
   if (!curPref || curPref === 'INR') {
@@ -114,7 +116,7 @@ function svgIcon(name) {
   return s;
 }
 
-let csrf = '', me = null, quotes = [], activeTab = 'dashboard', selectedQuoteId = null;
+let csrf = '', quotes = [], activeTab = 'dashboard', selectedQuoteId = null;
 let activeSettingsSection = 'profile';
 let sending = false, pollTimer = null, chatThreadEl = null;
 

@@ -197,4 +197,21 @@ Start Phase 0 in `task.md`, beginning with 0.1 (review the unseen part of `index
   - Preserved Three.js particle canvas with transparent rendering, allowing the soft light background gradient to illuminate the scene organically without shader tampering.
 - Verified: `npm test` 44/44 tests passing (0 failures).
 
+## 2026-11-21 — Comprehensive Repository Audit, Upstream Synchronization, and Bug Fixes
+- Who/what: Antigravity AI assistant.
+- Task: Full repository review and bug fixing.
+- Actions & Fixes:
+  - Synchronized local repository with remote GitHub `origin/main` (8 incoming commits: light/dark theme system, admin portal liquid glass redesign, client portal flow redesign, settings system, client-team messaging, and test additions).
+  - Created missing `.env.example` template with comprehensive documentation covering ports, admin credentials, Supabase Cloud keys, SMTP settings, WAF, proxy trust, retention, and keep-alive configuration.
+  - Fixed JavaScript temporal dead zone (TDZ) hazard in `site/account/account.js` by declaring `me` variable before `inr` and preference formatting helper functions.
+  - Fixed relative asset resolution in `site/404.html` (changed relative `href="css/fonts.css"` and `src="theme.js"` to `/css/fonts.css` and `/theme.js` to ensure font and theme engine load properly from nested 404 paths).
+  - Fixed navigation links in `admin-site/404.html` (changed hardcoded `/` to `./` to preserve admin portal session context in unified single-port mode).
+  - Added `.env` loading via `process.loadEnvFile` to `scripts/backup.js` and `scripts/keepalive.js` for consistency with all other CLI scripts.
+  - Hardened `api/index.js` for Vercel serverless deployments to default `DATA_DIR` to `/tmp/data` if not set, preventing read-only filesystem errors.
+  - Updated `package.json` description to reflect Node 22.5+ with Supabase Cloud PostgreSQL integration.
+- Verification:
+  - Full test suite: `npm test` passing 44/44 tests (100% pass rate).
+  - Verified static asset and link integrity across all 9 HTML documents and scripts.
+
+
 

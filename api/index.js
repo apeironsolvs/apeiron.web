@@ -8,7 +8,8 @@ async function getApp() {
   if (appInstance) return appInstance;
   if (!appInitPromise) {
     appInitPromise = (async () => {
-      const app = createApp({ ...process.env, SINGLE_PORT: '1' });
+      const dataDir = process.env.DATA_DIR || (process.env.VERCEL ? '/tmp/data' : undefined);
+      const app = createApp({ ...process.env, SINGLE_PORT: '1', ...(dataDir ? { DATA_DIR: dataDir } : {}) });
       await app.bootstrapAdmin();
       appInstance = app;
       return app;

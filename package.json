@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Apeiron Solutions website + API. Zero npm dependencies (Node 22.5+ built-ins only).",
+  "description": "Apeiron Solutions website + API. Built on Node 22.5+ with optional Supabase Cloud PostgreSQL integration.",
   "engines": {
     "node": ">=22.5"
   },

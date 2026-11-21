@@ -4,6 +4,11 @@
 import { createSqliteDb } from '../server/db.js';
 import { mkdirSync, chmodSync, readdirSync, rmSync } from 'node:fs';
 import { resolve, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const ROOT = resolve(fileURLToPath(new URL('..', import.meta.url)));
+try { process.loadEnvFile(join(ROOT, '.env')); } catch (_) {}
+
 const dataDir = resolve(process.env.DATA_DIR || 'data'), dir = join(dataDir, 'backups');
 mkdirSync(dir, { recursive: true, mode: 0o700 });
 const stamp = new Date().toISOString().replace(/[:T]/g, '-').slice(0, 19), file = join(dir, `apeiron-${stamp}.db`);

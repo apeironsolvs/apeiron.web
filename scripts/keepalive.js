@@ -2,6 +2,12 @@
 // Keep-Alive Worker for Apeiron Solutions
 // Pings the web service periodically to prevent Render.com / free-tier host spin-down delays.
 
+import { resolve, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const ROOT = resolve(fileURLToPath(new URL('..', import.meta.url)));
+try { process.loadEnvFile(join(ROOT, '.env')); } catch (_) {}
+
 const target = process.argv[2] || process.env.KEEP_ALIVE_URL || process.env.RENDER_EXTERNAL_URL;
 
 if (!target) {
