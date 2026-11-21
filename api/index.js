@@ -20,5 +20,11 @@ async function getApp() {
 
 export default async function handler(req, res) {
   const app = await getApp();
+  // Vercel internal rewrites may set req.url to destination (/api/index.js).
+  // Restore original request path from x-matched-path or x-forwarded-uri if present.
+  const matched = req.headers['x-matched-path'] || req.headers['x-forwarded-uri'];
+  if (matched && (req.url === '/api/index.js' || req.url === '/api' || !req.url.startsWith('/api/'))) {
+    req.url = matched;
+  }
   app.server.emit('request', req, res);
 }
