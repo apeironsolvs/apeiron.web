@@ -1,10 +1,17 @@
 // Database layer: Supports Supabase Cloud Database (default when configured) and SQLite (local fallback).
-import { DatabaseSync } from 'node:sqlite';
+let DatabaseSync = null;
+try {
+  const sqlite = await import('node:sqlite');
+  DatabaseSync = sqlite.DatabaseSync;
+} catch (_) {}
 import { mkdirSync } from 'node:fs';
 import { randomBytes } from 'node:crypto';
 import { createSupabaseClient, createSupabaseDb } from './supabase.js';
 
 export function createSqliteDb(dataDir) {
+  if (!DatabaseSync) {
+    throw new Error('SQLite (node:sqlite) is not available in this Node runtime. Please run on Node 22.x or configure SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY.');
+  }
   mkdirSync(dataDir, { recursive: true, mode: 0o700 });
   const raw = new DatabaseSync(`${dataDir}/apeiron.db`);
   raw.exec(`

@@ -64,7 +64,7 @@ export function createApp(env = process.env) {
   const log = o => console.log(JSON.stringify({ ts: new Date().toISOString(), ...o }));
   const clientIp = req => {
     if (trustProxy) { const x = String(req.headers['x-forwarded-for'] || '').split(',').map(s => s.trim()).filter(Boolean); if (x.length) return x[0]; }
-    return req.socket.remoteAddress || 'unknown';
+    return req.socket?.remoteAddress || req.connection?.remoteAddress || '127.0.0.1';
   };
   const ipHash = async ip => createHash('sha256').update((await getSalt()) + ip).digest('hex').slice(0, 16);
 

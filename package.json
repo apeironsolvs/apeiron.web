@@ -5,7 +5,7 @@
   "type": "module",
   "description": "Apeiron Solutions website + API. Built on Node 22.5+ with optional Supabase Cloud PostgreSQL integration.",
   "engines": {
-    "node": ">=22.5"
+    "node": "22.x"
   },
   "scripts": {
     "start": "node --no-warnings=ExperimentalWarning server/index.js",
