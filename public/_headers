@@ -1,0 +1,12 @@
+# Security Headers for Apeiron Solutions (Cloudflare Pages / Netlify)
+# NOTE: connect-src is 'self'. If you set CONFIG.endpoint to a form service, add that exact origin to connect-src.
+# NOTE: add '; preload' to Strict-Transport-Security only after the final domain is live on HTTPS and you submit it to hstspreload.org.
+# All scripts, styles, and fonts are self-hosted. Third-party domains removed.
+
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; frame-src 'self'; frame-ancestors 'self'; base-uri 'none'; form-action 'self'
+  Strict-Transport-Security: max-age=63072000; includeSubDomains
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()
+  Cross-Origin-Opener-Policy: same-origin

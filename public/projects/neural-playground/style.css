@@ -1,0 +1,6 @@
+:root{--bg:#0a0d14;--fg:#e8edf7;--mut:#8b97ad;--ac:#fb923c;--acfg:#1a0c02;--card:#111722;--line:#1f2937;--r:12px}
+.shell{max-width:960px;margin:0 auto;padding:22px 20px}h1{font-size:26px}h1 span{color:var(--ac)}header p{margin:6px 0 16px}.lay{display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:start}
+canvas{width:min(440px,100%);height:auto;border-radius:14px;border:1px solid var(--line);display:block}.cvw{max-width:440px}
+aside{display:grid;gap:14px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.stats b{display:block;font-size:20px;font-variant-numeric:tabular-nums}label{display:grid;gap:6px;font-size:14px}input[type=range]{width:100%;accent-color:var(--ac)}
+.seg{display:flex;gap:6px}.seg button{flex:1;background:transparent;border:1px solid var(--line);border-radius:8px;padding:7px;cursor:pointer}.seg .on{background:var(--ac);color:var(--acfg);border-color:var(--ac);font-weight:700}.row{display:flex;gap:8px}.row .btn{flex:1;padding:10px}.small{font-size:12px}
+@media(max-width:760px){.lay{grid-template-columns:1fr}}

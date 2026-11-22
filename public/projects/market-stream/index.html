@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Market Stream — concept demo</title><meta name="robots" content="noindex,nofollow"><link rel="stylesheet" href="../_shared/base.css"><link rel="stylesheet" href="style.css"></head>
+<body>
+
+<div class="shell"><header><div><h1>Market<span>.</span> Stream</h1><p class="mut">Streaming price feed (simulated, 10 ticks per second)</p></div><div class="px"><b id="px">0</b><span id="chg"></span></div></header>
+<div class="tools"><button class="btn" id="pp" type="button">Pause</button><label class="mut">Volatility <select id="vol"><option value="0.5">Low</option><option value="1" selected>Medium</option><option value="2.2">High</option></select></label><span class="mut" id="hl"></span></div>
+<div class="card cw"><canvas id="c" width="940" height="420" role="img" aria-label="Live price chart"></canvas></div></div>
+
+<div class="demo-foot">Concept demo by Apeiron Solutions · fictional company, sample data · Data</div>
+<script src="app.js"></script></body></html>
