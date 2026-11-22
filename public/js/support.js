@@ -15,6 +15,7 @@ export function initSupport() {
   let box, launcher, teaser, log, chips, input, form, opener;
   let catalog = null, clientSession = null, flow = null;
   let handoverData = {}, statusData = {};
+  let conversationHistory = [];
   let hasScrolled25 = true;
 
   const el = (t, c, x) => {
@@ -32,13 +33,21 @@ export function initSupport() {
     const lines = text.split('\n');
     lines.forEach((line, idx) => {
       if (idx > 0) frag.appendChild(document.createElement('br'));
-      // Format bold **text** and links
-      const parts = line.split(/(\*\*[^*]+\*\*|\[[^\]]+\]\([^)]+\))/g);
+      // Format bold **text**, inline `code`, and links
+      const parts = line.split(/(\*\*[^*]+\*\*|`[^`]+`|\[[^\]]+\]\([^)]+\))/g);
       parts.forEach(part => {
         if (part.startsWith('**') && part.endsWith('**')) {
           const b = document.createElement('strong');
           b.textContent = part.slice(2, -2);
           frag.appendChild(b);
+        } else if (part.startsWith('`') && part.endsWith('`') && part.length > 2) {
+          const c = document.createElement('code');
+          c.style.background = 'rgba(255,255,255,0.08)';
+          c.style.padding = '1px 5px';
+          c.style.borderRadius = '4px';
+          c.style.fontSize = '0.9em';
+          c.textContent = part.slice(1, -1);
+          frag.appendChild(c);
         } else if (part.startsWith('[') && part.includes('](') && part.endsWith(')')) {
           const match = part.match(/\[([^\]]+)\]\(([^)]+)\)/);
           if (match) {
@@ -833,6 +842,7 @@ export function initSupport() {
       flow = null;
       handoverData = {};
       statusData = {};
+      conversationHistory = [];
       KB.hello();
     });
 
@@ -868,6 +878,89 @@ export function initSupport() {
     sendBtn.type = 'submit';
     form.append(input, sendBtn);
 
+    async function handleChatQuery(queryText) {
+      if (isCancel(queryText)) {
+        flow = null;
+        say("How else can I assist you with your project today?");
+        return home();
+      }
+
+      // Explicit local triggers
+      if (/\b(human|person|agent|talk to an engineer|speak with engineer)\b/i.test(queryText)) {
+        return startHuman();
+      }
+      if (/\b(project status|check project|track project|where is my project)\b/i.test(queryText)) {
+        return startProjectStatus();
+      }
+
+      const tElement = showTyping();
+      conversationHistory.push({ role: 'user', content: queryText });
+      if (conversationHistory.length > 10) conversationHistory.shift();
+
+      try {
+        const res = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: queryText, history: conversationHistory })
+        });
+        tElement.remove();
+
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.reply) {
+            conversationHistory.push({ role: 'assistant', content: data.reply });
+            say(data.reply);
+
+            const chipButtons = [];
+            if (data.action && data.action.type === 'open_form') {
+              chipButtons.push(['🚀 Bring your idea (Open Form)', () => {
+                close();
+                document.querySelector('[data-open-intake]')?.click();
+              }]);
+            }
+
+            if (data.suggestions && Array.isArray(data.suggestions)) {
+              data.suggestions.forEach(label => {
+                if (label.includes('Open Form') || label.includes('Bring your idea') || label.includes('Start')) {
+                  chipButtons.push([label, () => {
+                    close();
+                    document.querySelector('[data-open-intake]')?.click();
+                  }]);
+                } else if (label.includes('Status')) {
+                  chipButtons.push([label, startProjectStatus]);
+                } else if (label.includes('Talk to') || label.includes('Engineer')) {
+                  chipButtons.push([label, startHuman]);
+                } else if (label.includes('Main menu')) {
+                  chipButtons.push([label, home]);
+                } else {
+                  chipButtons.push([label, () => {
+                    say(label, 'me');
+                    handleChatQuery(label);
+                  }]);
+                }
+              });
+            }
+
+            if (chipButtons.length) offer(chipButtons);
+            else home();
+            return;
+          }
+        }
+      } catch (_) {
+        tElement.remove();
+      }
+
+      // Offline / Local Rule Fallback
+      const hit = RULES.find(r => r[0].test(queryText));
+      if (hit) {
+        if (hit[1] === 'human') return startHuman();
+        if (hit[1] === 'project_status') return startProjectStatus();
+        return reply(hit[1], true);
+      }
+
+      reply('fallback', true);
+    }
+
     form.addEventListener('submit', async e => {
       e.preventDefault();
       const t = input.value.trim();
@@ -895,15 +988,7 @@ export function initSupport() {
         return say('Please choose Yes or No above.');
       }
 
-      // Natural language rule matching
-      const hit = RULES.find(r => r[0].test(t));
-      if (hit) {
-        if (hit[1] === 'human') return startHuman();
-        if (hit[1] === 'project_status') return startProjectStatus();
-        return reply(hit[1], true);
-      }
-
-      reply('fallback', true);
+      handleChatQuery(t);
     });
 
     box.append(bar, log, chips, form);

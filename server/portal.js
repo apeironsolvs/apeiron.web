@@ -4,6 +4,7 @@ import { randomBytes, randomInt, createHash, timingSafeEqual } from 'node:crypto
 import { hashPassword, verifyPassword, DUMMY_HASH, clientPasswordError } from './auth.js';
 import { catalog, suggest, suggestReqs, cleanSelection, price, PLANS, PAYMENT_NOTE } from './pricing.js';
 import { TERMS_VERSION } from './legal.js';
+import { generateChatResponse } from './chat-ai.js';
 
 const sha = s => createHash('sha256').update(s).digest('hex');
 const EMAIL = /^[^\s@<>"',;:\\]+@[^\s@<>"',;:\\]+\.[^\s@<>"',;:\\]{2,}$/;
@@ -65,6 +66,18 @@ export function createPortal(c) {
   return async function handle(req, res, url) {
     const p = url.pathname, m = req.method, ip = clientIp(req);
     if (p === '/api/catalog' && m === 'GET') return send(res, 200, catalog()), true;
+
+    // ---------------- AI Chatbot Concierge Endpoint ----------------
+    if (p === '/api/chat' && m === 'POST') {
+      const waitTime = rl.hit('chat-ip:' + ip, 60, 60e3);
+      if (waitTime) return fail(res, 429, 'Too many chat messages. Please wait a moment.', { 'Retry-After': waitTime }), true;
+      const b = await readJson(req, 8192);
+      const msg = one(b.message, 1000);
+      if (!msg) return fail(res, 400, 'Please send a message.'), true;
+      const history = Array.isArray(b.history) ? b.history.slice(-8) : [];
+      const result = await generateChatResponse(msg, history, env);
+      return send(res, 200, result), true;
+    }
 
     // ---------------- project status (privacy-isolated, requires exact ID + email match) ----------------
     if (p === '/api/project-status' && m === 'POST') {
