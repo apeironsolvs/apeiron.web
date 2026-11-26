@@ -4,7 +4,13 @@
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api/index.js" },
     { "source": "/admin", "destination": "/admin/index.html" },
+    { "source": "/admin/", "destination": "/admin/index.html" },
     { "source": "/account", "destination": "/account/index.html" },
-    { "source": "/start", "destination": "/start/index.html" }
+    { "source": "/account/", "destination": "/account/index.html" },
+    { "source": "/start", "destination": "/start/index.html" },
+    { "source": "/start/", "destination": "/start/index.html" },
+    { "source": "/terms", "destination": "/terms.html" },
+    { "source": "/privacy", "destination": "/privacy.html" },
+    { "source": "/security", "destination": "/security.html" }
   ]
 }
