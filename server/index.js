@@ -1,6 +1,6 @@
 // Apeiron web server: static site + JSON API. Supports Supabase Cloud Database and SQLite.
 import http from 'node:http';
-import { readFileSync, statSync, createReadStream } from 'node:fs';
+import { readFileSync, statSync, createReadStream, existsSync } from 'node:fs';
 import { join, normalize, extname, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
@@ -21,8 +21,8 @@ try { process.loadEnvFile(join(ROOT, '.env')); } catch (_) {}
 
 export function createApp(env = process.env) {
   const prod = env.NODE_ENV === 'production';
-  const siteDir = resolve(env.SITE_DIR || join(ROOT, 'site'));
-  const adminDir = resolve(env.ADMIN_DIR || join(ROOT, 'admin-site'));
+  const siteDir = resolve(env.SITE_DIR || (existsSync(join(ROOT, 'site')) ? join(ROOT, 'site') : join(ROOT, 'public')));
+  const adminDir = resolve(env.ADMIN_DIR || (existsSync(join(ROOT, 'admin-site')) ? join(ROOT, 'admin-site') : (existsSync(join(ROOT, 'site', 'admin')) ? join(ROOT, 'site', 'admin') : join(ROOT, 'public', 'admin'))));
   const dataDir = resolve(env.DATA_DIR || join(ROOT, 'data'));
   if ([siteDir, adminDir].some(d => dataDir === d || dataDir.startsWith(d + sep))) throw new Error('DATA_DIR must NOT be inside the public site folder or the admin site folder: the database would be downloadable.');
   const db = openDb(dataDir, env);

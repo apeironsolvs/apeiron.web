@@ -24,8 +24,10 @@ export default async function handler(req, res) {
     // Vercel internal rewrites may set req.url to destination (/api/index.js).
     // Restore original request path from x-matched-path or x-forwarded-uri if present.
     const matched = req.headers['x-matched-path'] || req.headers['x-forwarded-uri'];
-    if (matched && (req.url === '/api/index.js' || req.url === '/api' || !req.url.startsWith('/api/'))) {
-      req.url = matched;
+    if (matched && (req.url.startsWith('/api/index.js') || req.url === '/api' || !req.url.startsWith('/api/'))) {
+      const qIdx = req.url.indexOf('?');
+      const query = qIdx >= 0 ? req.url.slice(qIdx) : '';
+      req.url = matched.includes('?') ? matched : (matched + query);
     }
     // Ensure socket object exists for environments where req.socket is undefined
     if (!req.socket) {
