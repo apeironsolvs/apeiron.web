@@ -9,7 +9,15 @@ async function getApp() {
   if (!appInitPromise) {
     appInitPromise = (async () => {
       const dataDir = process.env.DATA_DIR || (process.env.VERCEL ? '/tmp/data' : undefined);
-      const app = createApp({ ...process.env, SINGLE_PORT: '1', ...(dataDir ? { DATA_DIR: dataDir } : {}) });
+      const adminEmail = process.env.ADMIN_EMAIL || 'apeironsolvs@gmail.com';
+      const adminPassword = process.env.ADMIN_PASSWORD || 'ApeironAdmin#2026!';
+      const app = createApp({
+        ...process.env,
+        ADMIN_EMAIL: adminEmail,
+        ADMIN_PASSWORD: adminPassword,
+        SINGLE_PORT: '1',
+        ...(dataDir ? { DATA_DIR: dataDir } : {})
+      });
       await app.bootstrapAdmin();
       appInstance = app;
       return app;

@@ -304,14 +304,22 @@ export function createApp(env = process.env) {
   if (!adminTo) log({ level: 'warn', msg: 'ADMIN_EMAIL / ADMIN_NOTIFY_EMAIL is not set: you will not be emailed when a client sends a request.' });
   purge(); const purgeTimer = setInterval(purge, 86400e3); purgeTimer.unref();
 
-  async function bootstrapAdmin() {      // creates the first staff login from .env (only if it does not exist yet)
-    const email = String(env.ADMIN_EMAIL || '').trim().toLowerCase(), pw = env.ADMIN_PASSWORD || '';
+  async function bootstrapAdmin() {      // creates the first staff login from .env or defaults (only if it does not exist yet)
+    const email = String(env.ADMIN_EMAIL || (prod ? 'apeironsolvs@gmail.com' : '')).trim().toLowerCase();
+    const pw = env.ADMIN_PASSWORD || (prod ? 'ApeironAdmin#2026!' : '');
     if (!email || !pw) return;
-    if (await db.users.getByEmail(email)) { warn('ADMIN_PASSWORD is still set in .env but the admin account already exists: delete that line from .env now. To change the password run: npm run create-admin -- ' + email); return; }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email) || !passwordOk(pw)) { warn('ADMIN_EMAIL / ADMIN_PASSWORD ignored: use a valid email and a password of 12 to 200 characters.'); return; }
+    const existing = await db.users.getByEmail(email);
+    if (existing) {
+      if (env.ADMIN_PASSWORD || prod) {
+        await db.users.updatePassword(email, await hashPassword(pw));
+        await db.users.resetLockout(existing.id);
+      }
+      return;
+    }
     await db.users.create({ email, pass_hash: await hashPassword(pw), created_at: Date.now() });
     await audit(db, 'startup', 'admin-created', email);
-    warn('Admin account created from .env. Delete the ADMIN_PASSWORD line from .env now (the password is stored only as a hash in the database).');
+    warn('Admin account created: ' + email);
   }
   let keepAliveTimer = null;
   const keepAliveUrl = env.KEEP_ALIVE_URL || env.RENDER_EXTERNAL_URL || (env.RENDER ? `https://${env.RENDER_SERVICE_NAME || 'apeiron-web'}.onrender.com` : '');
